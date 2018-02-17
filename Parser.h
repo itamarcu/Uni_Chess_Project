@@ -1,14 +1,7 @@
-//
-// Created by TempItamar on 2018-02-16.
-//
-
 #ifndef UNI_CHESS_PROJECT_PARSER_H
 #define UNI_CHESS_PROJECT_PARSER_H
 
-typedef struct command_type {
-    char *cmd;
-    char **args;
-} Command;
+#include "Structs.h"
 
 /**
  * Read user input in the form of "string arg1 arg2 arg3...".

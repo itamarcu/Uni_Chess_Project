@@ -27,6 +27,7 @@ int main(int argc, char **argv) {
     game->user_color = USER_COLOR_WHITE;
     game->board = NULL;
     set_game_state_to_settings(game);
+
     main_loop(game);
 
     free_game(game);
