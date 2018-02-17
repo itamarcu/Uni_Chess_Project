@@ -44,20 +44,20 @@ bool cast_str_to_int(const char *str, int *int_ptr) {
 
 
 char *difficulty_int_to_string(int difficulty) {
-    if (difficulty == 1) {
-        return "amateur";
-    }
-    if (difficulty == 2) {
-        return "easy";
-    }
-    if (difficulty == 3) {
-        return "moderate";
-    }
-    if (difficulty == 4) {
-        return "hard";
-    }
-    if (difficulty == 5) {
-        return "expert";
+    switch (difficulty) {
+        case 1:
+            return "amateur";
+        case 2:
+            return "easy";
+        case 3:
+            return "moderate";
+        case 4:
+            return "hard";
+        case 5:
+            return "expert";
+        default:
+            println_debug("Difficulty is not in range 1 to 5");
+            return "what the fuck is going on???";
     }
 }
 

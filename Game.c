@@ -103,7 +103,6 @@ void cmd_quit(Game *game, Command *command) {
     game->state = GAME_STATE_QUIT;
 }
 
-
 void main_loop(Game *game) {
     while (game->state != GAME_STATE_QUIT) {
         switch (game->state) {

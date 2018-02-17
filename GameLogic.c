@@ -2,6 +2,7 @@
 #include <strings.h>
 #include <ctype.h>
 #include "GameLogic.h"
+#include "PossibleMoveLogic.h"
 
 
 bool is_partially_legal_move(char grid[8][8], int r1, int c1, int r2, int c2);
@@ -274,9 +275,6 @@ void abbreviated_cmd_move(Game *game, Command *command) {
     cmd_move(game, r1, c1, r2, c2);
 }
 
-char **get_possible_moves(Game *game, int r1, int c1) {
-    char **possible_moves = (char **) malloc(64 * sizeof(PossibleMove));
-}
 
 void cmd_get_moves(Game *game, Command *command) {
     // for example, "get_moves <1,A>"
@@ -289,7 +287,9 @@ void cmd_get_moves(Game *game, Command *command) {
     int r1 = command->args[0][1] - '1';
     int c1 = command->args[0][3] - 'A';
 
-    char **possible_moves = get_possible_moves(game, r1, c1);
+    PossibleMove *possibleMoves = get_possible_moves(game, r1, c1);
+
+
 }
 
 void cmd_save(Game *game, Command *command) {
