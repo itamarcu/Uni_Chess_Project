@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <mem.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include "Auxiliary.h"
@@ -36,32 +35,32 @@ void println_debug(const char *format, ...) {
     va_end(args);
 }
 
-Command *get_user_input_as_command() {
-    char input[1024 + 1];
-    fgets(input, 1024 + 1, stdin);
-    //remove trailing newline, possibly
-    char *pos;
-    if ((pos = strchr(input, '\n')) != NULL) {
-        *pos = NULL_CHAR;
-    }
+bool cast_str_to_int(const char *str, int *int_ptr) {
+    char *temp;
+    *int_ptr = strtol(str, &temp, 10); /*base 10*/
+    println_debug("&temp temp *temp:    %d    %d    %d", &temp, temp, *temp);
+    return temp == NULL;
+}
 
-    //getting the words from the string
-    Command *command = (Command *) malloc(sizeof(*command));
-    if (command == NULL) {
-        println_error("malloc resulted in NULL pointer!!!");
-        return NULL;
+
+char *difficulty_int_to_string(int difficulty) {
+    if (difficulty == 1) {
+        return "amateur";
     }
-    command->cmd = strtok(input, " \r\t\n");
-    if (command->cmd != NULL) {
-        command->cmd = strdup(command->cmd);
+    if (difficulty == 2) {
+        return "easy";
     }
-    command->args = (char **)malloc(sizeof(char *) * 3);
-    for (int i = 0; i < 3; i++) {
-        command->args[i] = strtok(NULL, " \r\t\n");
-        if (command->args[i] != NULL) {
-            command->args[i] = strdup(command->args[i]);
-        }
+    if (difficulty == 3) {
+        return "moderate";
     }
-    //cmd and args will be NULL if string wasn't long enough
-    return command;
+    if (difficulty == 4) {
+        return "hard";
+    }
+    if (difficulty == 5) {
+        return "expert";
+    }
+}
+
+int sign(int x) {
+    return (x > 0) - (x < 0);
 }

@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#include <stdbool.h>
 #include "Board.h"
 
 
@@ -10,14 +11,20 @@ Board *make_starting_board() {
         return NULL;
     }
 
-    board->grid[7] = {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'};
-    board->grid[6] = {'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M'};
-    board->grid[5] = {'_', '_', '_', '_', '_', '_', '_', '_'};
-    board->grid[4] = {'_', '_', '_', '_', '_', '_', '_', '_'};
-    board->grid[3] = {'_', '_', '_', '_', '_', '_', '_', '_'};
-    board->grid[2] = {'_', '_', '_', '_', '_', '_', '_', '_'};
-    board->grid[1] = {'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm'};
-    board->grid[0] = {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'};
+    char grid[8][8] = {{'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'},
+                       {'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M'},
+                       {'_', '_', '_', '_', '_', '_', '_', '_'},
+                       {'_', '_', '_', '_', '_', '_', '_', '_'},
+                       {'_', '_', '_', '_', '_', '_', '_', '_'},
+                       {'_', '_', '_', '_', '_', '_', '_', '_'},
+                       {'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
+                       {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'}};
+
+    //Copy array with reverse row order, because that's how it is...
+    for (int i = 0; i < 8; i++)
+        for (int j = 0; j < 8; j++)
+            board->grid[8 - 1 - i][j] = grid[i][j];
+
 
     return board;
 }
@@ -53,12 +60,10 @@ void print_board(Board *board) {
 }
 
 
-bool is_empty_space(char piece)
-{
+bool is_empty_space(char piece) {
     return piece == '_';
 }
 
-bool is_white_piece(char piece)
-{
+bool is_white_piece(char piece) {
     return tolower(piece) == piece;
 }

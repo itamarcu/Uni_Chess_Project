@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "Auxiliary.h"
+#include "Game.h"
 
 int main(int argc, char **argv) {
     if (argc <= 1) {

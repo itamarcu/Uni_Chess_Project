@@ -3,6 +3,8 @@
 #define UNI_CHESS_PROJECT_GAME_H
 
 #include "Board.h"
+#include "Parser.h"
+#include <stdbool.h>
 
 #define PROGRAM_MODE_CONSOLE 1
 #define PROGRAM_MODE_GRAPHICAL 2
@@ -33,11 +35,6 @@ typedef struct game_type {
     int winner; // GAME_CURRENT_WINNER_*
 } Game;
 
-typedef struct command_type {
-    char *cmd;
-    char **args;
-} Command;
-
 /**
  * Main game loop, the game takes place in a loop inside this function.
  */
@@ -61,6 +58,12 @@ void move_was_made(Game *game);
 
 void change_current_player(Game *game);
 
+/**
+ * @return true when the king of the current turn color is checked
+ */
+bool is_current_checked(Game *game);
+
+
 void cmd_game_mode(Game *game, Command *command);
 
 void cmd_difficulty(Game *game, Command *command);
@@ -77,7 +80,9 @@ void cmd_quit(Game *game, Command *command);
 
 void cmd_start(Game *game, Command *command);
 
-void cmd_move(Game *game, Command *command);
+void unabbreviated_cmd_move(Game *game, Command *command);
+
+void abbreviated_cmd_move(Game *game, Command *command);
 
 void cmd_get_moves(Game *game, Command *command);
 
