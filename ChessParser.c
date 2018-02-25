@@ -1,11 +1,8 @@
-//
-// Created by TempItamar on 2018-02-16.
-//
 #include "ChessParser.h"
 
 //TO-DO - fix according to new Command type with using checks that was coded in gameLogic and GameSettings.
 Command *get_user_input_as_command() {
-    /*
+
     char input[1024 + 1];
     fgets(input, 1024 + 1, stdin);
     //remove trailing newline, possibly
@@ -20,25 +17,46 @@ Command *get_user_input_as_command() {
         println_error("ERROR: malloc resulted in NULL pointer!");
         return NULL;
     }
-    command->cmd = strtok(input, " \r\t\n");
-    if (command->cmd != NULL) {
-        command->cmd = strdup(command->cmd);
-    }
-    command->args = (char **) malloc(sizeof(char *) * 3);
-    for (int i = 0; i < 3; i++) {
-        command->args[i] = strtok(NULL, " \r\t\n");
-        if (command->args[i] != NULL) {
-            command->args[i] = strdup(command->args[i]);
+
+    command->isValidCommand = false;
+    command->isValidArgs = false;
+    command->isValidPath = false;
+    command->path = NULL;
+
+    char *command_string = strtok(input, " \r\t\n");
+    if (command_string != NULL) {
+        command_string = strdup(command_string);
+    } else return command;
+
+    bool arg_valids[4];
+
+    for (int i = 0; i < 4; i++) {
+        command->args[i] = -666;
+        arg_valids[i] = false;
+
+        char *arg_string = strtok(NULL, " \r\t\n");
+        if (arg_string != NULL) {
+            if (i == 0) {
+                arg_valids[i] = true;
+                command->path = strdup(arg_string);
+                command->isValidPath = is_valid_path(command->path);
+            }
+
+            int arg_integer;
+            if (cast_str_to_int(arg_string, &arg_integer)) {
+                arg_valids[i] = true;
+                command->args[i] = arg_integer;
+            }
         }
+
     }
-    //cmd and args will be NULL if string wasn't long enough
+
     return command;
 
-    */
+
 }
 
-bool is_valid_path(char* path)
-{
+bool is_valid_path(char *path) {
 
 }
 

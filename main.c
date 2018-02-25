@@ -9,9 +9,7 @@ int main(int argc, char **argv) {
     Game *game = (Game *) malloc(sizeof(*game));
     if (argc <= 1) { //console mode is default
         game->program_mode = PROGRAM_MODE_CONSOLE;
-    }
-    else
-    if (strcmp(argv[1], "-c") == 0) //console mode
+    } else if (strcmp(argv[1], "-c") == 0) //console mode
     {
         game->program_mode = PROGRAM_MODE_CONSOLE;
 
@@ -21,10 +19,9 @@ int main(int argc, char **argv) {
         game->program_mode = PROGRAM_MODE_GRAPHICAL;
     }
 
-    set_default_settings(game);
+    reset_default_settings(game);
     game->board = NULL;
-    cmd_reset(game);
-    if(game->program_mode == PROGRAM_MODE_CONSOLE)
+    if (game->program_mode == PROGRAM_MODE_CONSOLE)
         CUI_main_loop(game);
     else
         GUI_main_loop(game);

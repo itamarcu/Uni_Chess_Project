@@ -1,8 +1,8 @@
 #ifndef UNI_CHESS_PROJECT_POSSIBLEMOVELOGIC_H
 #define UNI_CHESS_PROJECT_POSSIBLEMOVELOGIC_H
 
-#include "ChessGameSettings.h"
 #include <stdlib.h>
+#include "ChessGameSettings.h"
 
 typedef struct possible_move_type {
     int row, col;

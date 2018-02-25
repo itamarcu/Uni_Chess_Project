@@ -10,6 +10,9 @@
 #define DEBUG_MODE 1
 #define NULL_CHAR '\0'
 
+#define WHITE 1
+#define BLACK 2
+
 void println_error(const char *format, ...);
 
 void println_output(const char *format, ...);

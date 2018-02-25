@@ -32,28 +32,69 @@ void CUI_settings_case(Game *game) {
     Command *command = get_user_input_as_command();
     if (command == NULL) {
         println_error("Real error - malloc failed for command.");
-    } else if (command->cmd == NULL) {
+        return;
+    }
+
+    if (!command->isValidCommand || !command->isSettingsCommand) {
         println_error("Error: invalid command");
-    } else if (strcmp(command->cmd, "game_mode") == 0) {
-        cmd_game_mode(game, gameMode);
-    } else if (strcmp(command->cmd, "difficulty") == 0) {
-        cmd_difficulty(game, difficulty);
-    } else if (strcmp(command->cmd, "user_color") == 0) {
-        cmd_user_color(game, color);
-    } else if (strcmp(command->cmd, "load") == 0) {
-        cmd_load(game, path);
-    } else if (strcmp(command->cmd, "default") == 0) {
-        set_default_settings(game);
-        println_output("All settings reset to default");
-    } else if (strcmp(command->cmd, "print_settings") == 0) {
-        print_settings(game);
-    } else if (strcmp(command->cmd, "quit") == 0) {
-        cmd_quit(game);
-    } else if (strcmp(command->cmd, "start") == 0) {
-        println_output("Starting game...");
-        cmd_start(game);
-    } else {
-        println_error("Error: invalid command");
+    } else
+        switch (command->settingsCommand) {
+            case CMD_GAME_MODE:
+                if (command->args[0] == 1) {
+                    game->game_mode = GAME_MODE_SINGLEPLAYER;
+                    println_output("Game mode is set to 1-player");
+                } else if (command->args[0] == 2) {
+                    game->game_mode = GAME_MODE_MULTIPLAYER;
+                    println_output("Game mode is set to 2-player");
+                } else {
+                    println_error("ERROR: game mode was not parsed to only allow 1 and 2! :(");
+                }
+                break;
+            case CMD_DIFFICULTY:
+                if (game->game_mode == GAME_MODE_MULTIPLAYER) {
+                    println_error("Error: invalid command");
+                    break;
+                }
+                game->difficulty = command->args[0];
+                println_output("Difficulty level is set to %d", difficulty_string(game->difficulty));
+                break;
+            case CMD_USER_COLOR:
+                if (game->game_mode == GAME_MODE_MULTIPLAYER) {
+                    println_error("Error: invalid command");
+                    break;
+                }
+                game->user_color = command->args[0];
+                println_output("User color is set to %s", color_string(game->user_color));
+                break;
+            case CMD_LOAD:
+                //TODO load
+                println_debug("---The load command is not yet developed---");
+                break;
+            case CMD_DEFAULT:
+                reset_default_settings(game);
+                println_output("All settings reset to default");
+                break;
+            case CMD_PRINT_SETTINGS:
+                println_output("SETTINGS:");
+                if (game->game_mode == GAME_MODE_MULTIPLAYER) {
+                    println_output("GAME_MODE: 2-player");
+                } else {
+                    println_output("GAME_MODE: 1-player");
+                    println_output("DIFFICULTY: %s", difficulty_string(game->difficulty));
+                    println_output("USER_COLOR: %s", color_string(game->user_color));
+                }
+                break;
+            case CMD_QUIT_SETTINGS:
+                println_output("Exiting...");
+                game->state = GAME_STATE_QUIT;
+                break;
+            case CMD_START:
+                println_output("Starting game...");
+                start_game(game);
+                break;
+            default:
+                println_error("ERROR: unhandled settings command in switch-case:    " + command->settingsCommand);
+                break;
     }
 
     free(command);
@@ -64,43 +105,57 @@ void CUI_settings_case(Game *game) {
 void CUI_game_case(Game *game) {
     if (game->game_mode == GAME_MODE_MULTIPLAYER || game->current_user == game->user_color) {
         print_board(game->board);
-        char *player = game->current_user == USER_COLOR_WHITE ? "white" : "black";
-        println_output("Enter your move (%s player):", player);
+        println_output("Enter your move (%s player):", color_string(game->user_color));
 
         Command *command = get_user_input_as_command();
         if (command == NULL) {
             println_error("Real error - malloc failed for command.");
-        } else if (command->cmd == NULL) {
-            println_error("Error: invalid command");
-        } else if (strcmp(command->cmd, "move") == 0) {
-            cmd_move(game, r1,c1,r2,c2);
-        } else if (strcmp(command->cmd, "get_moves") == 0) {
-            cmd_get_moves(game, r, c);
-        } else if (strcmp(command->cmd, "save") == 0) {
-            cmd_save(game);
-        } else if (strcmp(command->cmd, "undo") == 0) {
-            cmd_undo(game);
-        } else if (strcmp(command->cmd, "reset") == 0) {
-            println_output("Restarting...");
-            println_output("Specify game settings or type 'start' to begin a game with the current settings:");
-            cmd_reset(game);
-        } else if (strcmp(command->cmd, "quit") == 0) {
-            println_output("Exiting...");
-            cmd_quit(game);
-        } else {
-            println_error("Error: invalid command");
+            return;
         }
+
+        if (!command->isValidCommand || command->isSettingsCommand) {
+            println_error("Error: invalid command");
+        } else
+            switch (command->gameCommand) {
+                case CMD_MOVE:
+                    console_cmd_move(game, command->args[0], command->args[1], command->args[2], command->args[3]);
+                    break;
+                case CMD_GET_MOVES:
+                    //TODO get_moves command
+                    println_debug("---The get_moves command is not yet developed---");
+                    break;
+                case CMD_SAVE:
+                    //TODO save command
+                    println_debug("---The save command is not yet developed---");
+                    break;
+                case CMD_UNDO:
+                    //TODO undo command
+                    println_debug("---The undo command is not yet developed---");
+                    break;
+                case CMD_RESET:
+                    println_output("Restarting...");
+                    println_output("Specify game settings or type 'start' to begin a game with the current settings:");
+                    game->state = GAME_STATE_SETTINGS;
+                    break;
+                case CMD_QUIT_GAME:
+                    println_output("Exiting...");
+                    game->state = GAME_STATE_QUIT;
+                    break;
+                default:
+                    println_error("ERROR: unhandled game command in switch-case:    " + command->gameCommand);
+                    break;
+            }
 
         free(command);
     } else //computer's turn
     {
-        //TODO
+        //TODO computer turn
         move_was_made(game);
     }
 }
 
 
-void CUI_main_loop(Game *game){
+void CUI_main_loop(Game *game) {
     println_output("Chess");
     println_output("-------");
     while (game->state != GAME_STATE_QUIT) {

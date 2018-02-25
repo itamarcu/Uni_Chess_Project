@@ -9,21 +9,21 @@ bool is_partially_legal_move(char grid[8][8], int r1, int c1, int r2, int c2);
 bool is_partially_legal_move_without_start(char grid[8][8], int r1, int c1, int r2, int c2, char moving_piece,
                                            char target_piece);
 
-void cmd_start(Game *game) {
+void start_game(Game *game) {
     game->state = GAME_STATE_GAME;
-    game->current_user = USER_COLOR_WHITE;
+    game->current_user = WHITE;
     game->winner = GAME_WINNER_NONE;
     free_board(game->board);
     game->board = make_starting_board();
 }
 
 bool is_current_checked(Game *game) {
-    bool is_white_king = game->current_user == USER_COLOR_WHITE;
+    bool is_white_king = game->current_user == WHITE;
     int rk, ck;
     for (int row = 0; row < 8; row++)
         for (int col = 0; col < 8; col++) {
-            if ((game->board->grid[row][col] == BLACK_KING && game->current_user == USER_COLOR_BLACK)
-                || (game->board->grid[row][col] == WHITE_KING && game->current_user == USER_COLOR_WHITE)) {
+            if ((game->board->grid[row][col] == BLACK_KING && game->current_user == BLACK)
+                || (game->board->grid[row][col] == WHITE_KING && game->current_user == WHITE)) {
                 rk = row;
                 ck = col;
                 goto FoundKing;
@@ -62,10 +62,10 @@ GAME_ACTION_RESULT move_was_made(Game *game) {
 }
 
 void change_current_player(Game *game) {
-    if (game->current_user == USER_COLOR_WHITE) {
-        game->current_user = USER_COLOR_BLACK;
+    if (game->current_user == WHITE) {
+        game->current_user = BLACK;
     } else {
-        game->current_user = USER_COLOR_WHITE;
+        game->current_user = WHITE;
     }
 }
 
@@ -242,12 +242,12 @@ void abbreviated_cmd_move(Game *game, Command *command) {
     int r2 = command->args[1][0] - '1';
     int c2 = toupper(command->args[1][1]) - 'A';
 
-    cmd_move(game, r1, c1, r2, c2);
+    console_cmd_move(game, r1, c1, r2, c2);
 }
 
 */
 
-GAME_ACTION_RESULT cmd_move(Game *game, int r1, int c1, int r2, int c2) {
+GAME_ACTION_RESULT console_cmd_move(Game *game, int r1, int c1, int r2, int c2) {
     if (0 > r1 || r1 >= 8 || 0 > c1 || c1 >= 8 || 0 > r2 || r2 >= 8 || 0 > c2 || c2 >= 8) {
         //println_error("Invalid position on the board");
         return INVALID_POS;
@@ -257,9 +257,9 @@ GAME_ACTION_RESULT cmd_move(Game *game, int r1, int c1, int r2, int c2) {
     char target_piece = game->board->grid[r2][c2];
 
     //If moving from empty, or moving enemy unit
-    if (is_empty_space(moving_piece) || (is_white_piece(moving_piece) != (game->current_user == USER_COLOR_WHITE))) {
+    if (is_empty_space(moving_piece) || (is_white_piece(moving_piece) != (game->current_user == WHITE))) {
         //println_error("The specified position does not contain your piece");
-        return NO_PEICE_IN_POS;
+        return NO_PIECE_IN_LOCATION;
     }
     //If moving into ally unit
     if (!is_empty_space(target_piece) && (is_white_piece(moving_piece) == is_white_piece(target_piece))) {
@@ -311,20 +311,4 @@ GAME_ACTION_RESULT cmd_get_moves(Game *game, int r, int c) {
     int c1 = command->args[0][3] - 'A';
     */
     PossibleMove *possibleMoves = get_possible_moves(game, r, c);
-}
-
-GAME_ACTION_RESULT cmd_save(Game *game) {
-
-}
-
-GAME_ACTION_RESULT cmd_undo(Game *game) {
-
-}
-
-void cmd_reset(Game *game) {
-    game->state = GAME_STATE_SETTINGS;
-}
-
-void cmd_quit(Game *game) {
-    game->state = GAME_STATE_QUIT;
 }
