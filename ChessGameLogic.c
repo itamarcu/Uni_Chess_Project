@@ -206,22 +206,7 @@ bool is_partially_legal_move_without_start(char grid[8][8], int r1, int c1, int 
 /* move this logic to Parser that will return a command with relavent args as r1,c1,r2,c2:
 void unabbreviated_cmd_move(Game *game, Command *command) {
 
-    // format should be: "move <r1,c1> to <r2,c2>"
-    // for example, "move <1,A> to <8,H>"
-    // here, command args should be "<1,A>", "to", "<8,H>"
-    if (command->args[2] == NULL || strcmp(command->args[1], "to") != 0
-        || strlen(command->args[0]) != 5 || strlen(command->args[2]) != 5
-        || command->args[0][0] != '<' || command->args[0][2] != ',' || command->args[0][4] != '>'
-        || command->args[2][0] != '<' || command->args[2][2] != ',' || command->args[2][4] != '>') {
-        println_error("Error: invalid command");
-        return;
-    }
 
-
-    int r1 = command->args[0][1] - '1';
-    int c1 = command->args[0][3] - 'A';
-    int r2 = command->args[2][1] - '1';
-    int c2 = command->args[2][3] - 'A';
 
     cmd_move(game, r1, c1, r2, c2);
 }
@@ -247,6 +232,9 @@ void abbreviated_cmd_move(Game *game, Command *command) {
 
 */
 
+/**
+ * This uses zero-based indexing for rows and columns, please remember
+ */
 GAME_ACTION_RESULT console_cmd_move(Game *game, int r1, int c1, int r2, int c2) {
     if (0 > r1 || r1 >= 8 || 0 > c1 || c1 >= 8 || 0 > r2 || r2 >= 8 || 0 > c2 || c2 >= 8) {
         //println_error("Invalid position on the board");
@@ -288,7 +276,7 @@ GAME_ACTION_RESULT console_cmd_move(Game *game, int r1, int c1, int r2, int c2) 
             //println_error("Illegal move: king is still threatened");
         else
             return KING_WILL_BE_THREATENED;
-            //println_error("Illegal move: king will be threatened");
+        //println_error("Illegal move: king will be threatened");
         //return;
     }
 
@@ -296,7 +284,7 @@ GAME_ACTION_RESULT console_cmd_move(Game *game, int r1, int c1, int r2, int c2) 
 }
 
 
-GAME_ACTION_RESULT cmd_get_moves(Game *game, int r, int c) {
+GAME_ACTION_RESULT console_cmd_get_moves(Game *game, int r, int c) {
     // for example, "get_moves <1,A>"
     /*
      * move this to Parser:

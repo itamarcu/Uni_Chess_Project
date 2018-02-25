@@ -10,6 +10,7 @@
 
  */
 typedef enum {
+    CMD_NONE_GAME,
     CMD_MOVE,
     CMD_GET_MOVES,
     CMD_SAVE,
@@ -19,6 +20,7 @@ typedef enum {
 } GAME_COMMAND;
 
 typedef enum {
+    CMD_NONE_SETTINGS,
     CMD_GAME_MODE,
     CMD_DIFFICULTY,
     CMD_USER_COLOR,
@@ -29,11 +31,9 @@ typedef enum {
     CMD_START
 } SETTINGS_COMMAND;
 
-//args gets maximum 4 numbers in move command - r1,c1,r2,c2 (c1 = 1 for Column A for example)
+//args gets maximum 4 numbers in move command - r1,c1,r2,c2 (c1 = 0 for Column A for example)
 typedef struct command_type {
-    bool isSettingsCommand;
     bool isValidCommand;
-    bool isValidArgs;
     bool isValidPath;
     GAME_COMMAND gameCommand;
     SETTINGS_COMMAND settingsCommand;

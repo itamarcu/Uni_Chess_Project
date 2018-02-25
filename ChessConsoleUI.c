@@ -35,7 +35,7 @@ void CUI_settings_case(Game *game) {
         return;
     }
 
-    if (!command->isValidCommand || !command->isSettingsCommand) {
+    if (!command->isValidCommand) {
         println_error("Error: invalid command");
     } else
         switch (command->settingsCommand) {
@@ -47,12 +47,16 @@ void CUI_settings_case(Game *game) {
                     game->game_mode = GAME_MODE_MULTIPLAYER;
                     println_output("Game mode is set to 2-player");
                 } else {
-                    println_error("ERROR: game mode was not parsed to only allow 1 and 2! :(");
+                    println_error("Wrong game mode");
                 }
                 break;
             case CMD_DIFFICULTY:
                 if (game->game_mode == GAME_MODE_MULTIPLAYER) {
                     println_error("Error: invalid command");
+                    break;
+                }
+                if (command->args[0] < 1 || command->args[0] > 5) {
+                    println_error("Wrong difficulty level. The value should be between 1 to 5");
                     break;
                 }
                 game->difficulty = command->args[0];
@@ -92,12 +96,15 @@ void CUI_settings_case(Game *game) {
                 println_output("Starting game...");
                 start_game(game);
                 break;
-            default:
-                println_error("ERROR: unhandled settings command in switch-case:    " + command->settingsCommand);
+            case CMD_NONE_SETTINGS:
+                println_error("ERROR: invalid command");
                 break;
-    }
+            default:
+                println_error("ERROR: unhandled settings command in switch-case:    %d", command->settingsCommand);
+                break;
+        }
 
-    free(command);
+    free_command(command);
 }
 
 
@@ -113,15 +120,34 @@ void CUI_game_case(Game *game) {
             return;
         }
 
-        if (!command->isValidCommand || command->isSettingsCommand) {
-            println_error("Error: invalid command");
+        if (!command->isValidCommand) {
+            println_error("ERROR: invalid command");
         } else
             switch (command->gameCommand) {
                 case CMD_MOVE:
-                    console_cmd_move(game, command->args[0], command->args[1], command->args[2], command->args[3]);
+                    switch (console_cmd_move(game, command->args[0], command->args[1], command->args[2],
+                                             command->args[3])) {
+                        case SUCCESS:
+                            break;
+                        case INVALID_POS:
+                            break;
+                        case NO_PIECE_IN_LOCATION:
+                            break;
+                        case ILLEGAL_MOVE:
+                            break;
+                        case KING_STILL_THREATENED:
+                            break;
+                        case KING_WILL_BE_THREATENED:
+                            break;
+                        case CANT_SAVE_FILE:
+                            break;
+                        case EMPTY_HISTORY:
+                            break;
+                    }
                     break;
                 case CMD_GET_MOVES:
                     //TODO get_moves command
+                    //use console_cmd_get_moves()
                     println_debug("---The get_moves command is not yet developed---");
                     break;
                 case CMD_SAVE:
@@ -141,12 +167,15 @@ void CUI_game_case(Game *game) {
                     println_output("Exiting...");
                     game->state = GAME_STATE_QUIT;
                     break;
+                case CMD_NONE_GAME:
+                    println_error("ERROR: invalid command");
+                    break;
                 default:
-                    println_error("ERROR: unhandled game command in switch-case:    " + command->gameCommand);
+                    println_error("ERROR: unhandled game command in switch-case:    %d", command->gameCommand);
                     break;
             }
 
-        free(command);
+        free_command(command);
     } else //computer's turn
     {
         //TODO computer turn
