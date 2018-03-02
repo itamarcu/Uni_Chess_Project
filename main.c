@@ -5,7 +5,7 @@
 #include "ChessConsoleUI.h"
 #include "ChessGUI.h"
 
-int main(int argc, char **argv) {
+int main(int argc, char *argv[]) {
     Game *game = (Game *) malloc(sizeof(*game));
     if (argc <= 1) { //console mode is default
         game->program_mode = PROGRAM_MODE_CONSOLE;
