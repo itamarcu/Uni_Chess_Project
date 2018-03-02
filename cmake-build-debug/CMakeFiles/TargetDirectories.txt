@@ -1,0 +1,3 @@
+C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/CMakeFiles/Uni_Chess_Project.dir
+C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
