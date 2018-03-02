@@ -21,8 +21,9 @@ int main(int argc, char **argv) {
 
     reset_default_settings(game);
     game->board = NULL;
-    if (game->program_mode == PROGRAM_MODE_CONSOLE)
+    if (game->program_mode == PROGRAM_MODE_CONSOLE) {
         CUI_main_loop(game);
+    }
     else
         GUI_main_loop(game);
     free_game(game);

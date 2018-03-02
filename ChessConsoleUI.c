@@ -187,6 +187,7 @@ void CUI_game_case(Game *game) {
 void CUI_main_loop(Game *game) {
     println_output("Chess");
     println_output("-------");
+    println_output("Specify game settings or type 'start' to begin a game with the current settings:");
     while (game->state != GAME_STATE_QUIT) {
         switch (game->state) {
             case GAME_STATE_SETTINGS:
