@@ -48,7 +48,7 @@ void GUI_main_loop(Game *game)
     int yDiff = 0;
 
     // load an image onto an SDL surface
-    SDL_Surface* surf = SDL_LoadBMP("braid.bmp");
+    SDL_Surface* surf = SDL_LoadBMP("C:\\Users\\Tamir\\Dropbox\\courses\\project\\Chess\\Uni_Chess_Project\\braid.bmp");
     if (surf == NULL) {
         printf("ERROR: unable to load image: %s\n", SDL_GetError());
         SDL_DestroyRenderer(rend);
