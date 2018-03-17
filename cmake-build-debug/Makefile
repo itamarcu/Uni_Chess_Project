@@ -149,6 +149,33 @@ Auxiliary.c.s:
 	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/Auxiliary.c.s
 .PHONY : Auxiliary.c.s
 
+Button.obj: Button.c.obj
+
+.PHONY : Button.obj
+
+# target to build an object file
+Button.c.obj:
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/Button.c.obj
+.PHONY : Button.c.obj
+
+Button.i: Button.c.i
+
+.PHONY : Button.i
+
+# target to preprocess a source file
+Button.c.i:
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/Button.c.i
+.PHONY : Button.c.i
+
+Button.s: Button.c.s
+
+.PHONY : Button.s
+
+# target to generate assembly for a file
+Button.c.s:
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/Button.c.s
+.PHONY : Button.c.s
+
 ChessBoard.obj: ChessBoard.c.obj
 
 .PHONY : ChessBoard.obj
@@ -257,6 +284,33 @@ ChessGameLogic.c.s:
 	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.s
 .PHONY : ChessGameLogic.c.s
 
+ChessGameModeWindow.obj: ChessGameModeWindow.c.obj
+
+.PHONY : ChessGameModeWindow.obj
+
+# target to build an object file
+ChessGameModeWindow.c.obj:
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj
+.PHONY : ChessGameModeWindow.c.obj
+
+ChessGameModeWindow.i: ChessGameModeWindow.c.i
+
+.PHONY : ChessGameModeWindow.i
+
+# target to preprocess a source file
+ChessGameModeWindow.c.i:
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.i
+.PHONY : ChessGameModeWindow.c.i
+
+ChessGameModeWindow.s: ChessGameModeWindow.c.s
+
+.PHONY : ChessGameModeWindow.s
+
+# target to generate assembly for a file
+ChessGameModeWindow.c.s:
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.s
+.PHONY : ChessGameModeWindow.c.s
+
 ChessGameSettings.obj: ChessGameSettings.c.obj
 
 .PHONY : ChessGameSettings.obj
@@ -283,6 +337,33 @@ ChessGameSettings.s: ChessGameSettings.c.s
 ChessGameSettings.c.s:
 	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.s
 .PHONY : ChessGameSettings.c.s
+
+ChessMainMenuWindow.obj: ChessMainMenuWindow.c.obj
+
+.PHONY : ChessMainMenuWindow.obj
+
+# target to build an object file
+ChessMainMenuWindow.c.obj:
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj
+.PHONY : ChessMainMenuWindow.c.obj
+
+ChessMainMenuWindow.i: ChessMainMenuWindow.c.i
+
+.PHONY : ChessMainMenuWindow.i
+
+# target to preprocess a source file
+ChessMainMenuWindow.c.i:
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.i
+.PHONY : ChessMainMenuWindow.c.i
+
+ChessMainMenuWindow.s: ChessMainMenuWindow.c.s
+
+.PHONY : ChessMainMenuWindow.s
+
+# target to generate assembly for a file
+ChessMainMenuWindow.c.s:
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.s
+.PHONY : ChessMainMenuWindow.c.s
 
 ChessParser.obj: ChessParser.c.obj
 
@@ -365,6 +446,60 @@ PossibleMoveLogic.c.s:
 	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.s
 .PHONY : PossibleMoveLogic.c.s
 
+Widget.obj: Widget.c.obj
+
+.PHONY : Widget.obj
+
+# target to build an object file
+Widget.c.obj:
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj
+.PHONY : Widget.c.obj
+
+Widget.i: Widget.c.i
+
+.PHONY : Widget.i
+
+# target to preprocess a source file
+Widget.c.i:
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/Widget.c.i
+.PHONY : Widget.c.i
+
+Widget.s: Widget.c.s
+
+.PHONY : Widget.s
+
+# target to generate assembly for a file
+Widget.c.s:
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/Widget.c.s
+.PHONY : Widget.c.s
+
+Window.obj: Window.c.obj
+
+.PHONY : Window.obj
+
+# target to build an object file
+Window.c.obj:
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/Window.c.obj
+.PHONY : Window.c.obj
+
+Window.i: Window.c.i
+
+.PHONY : Window.i
+
+# target to preprocess a source file
+Window.c.i:
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/Window.c.i
+.PHONY : Window.c.i
+
+Window.s: Window.c.s
+
+.PHONY : Window.s
+
+# target to generate assembly for a file
+Window.c.s:
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/Window.c.s
+.PHONY : Window.c.s
+
 main.obj: main.c.obj
 
 .PHONY : main.obj
@@ -404,6 +539,9 @@ help:
 	@echo ... Auxiliary.obj
 	@echo ... Auxiliary.i
 	@echo ... Auxiliary.s
+	@echo ... Button.obj
+	@echo ... Button.i
+	@echo ... Button.s
 	@echo ... ChessBoard.obj
 	@echo ... ChessBoard.i
 	@echo ... ChessBoard.s
@@ -416,9 +554,15 @@ help:
 	@echo ... ChessGameLogic.obj
 	@echo ... ChessGameLogic.i
 	@echo ... ChessGameLogic.s
+	@echo ... ChessGameModeWindow.obj
+	@echo ... ChessGameModeWindow.i
+	@echo ... ChessGameModeWindow.s
 	@echo ... ChessGameSettings.obj
 	@echo ... ChessGameSettings.i
 	@echo ... ChessGameSettings.s
+	@echo ... ChessMainMenuWindow.obj
+	@echo ... ChessMainMenuWindow.i
+	@echo ... ChessMainMenuWindow.s
 	@echo ... ChessParser.obj
 	@echo ... ChessParser.i
 	@echo ... ChessParser.s
@@ -428,6 +572,12 @@ help:
 	@echo ... PossibleMoveLogic.obj
 	@echo ... PossibleMoveLogic.i
 	@echo ... PossibleMoveLogic.s
+	@echo ... Widget.obj
+	@echo ... Widget.i
+	@echo ... Widget.s
+	@echo ... Window.obj
+	@echo ... Window.i
+	@echo ... Window.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

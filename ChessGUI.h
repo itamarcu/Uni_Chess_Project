@@ -3,8 +3,10 @@
 #define SDL_MAIN_NEEDED
 
 #include "ChessGameLogic.h"
-#include <SDL2/SDL.h>
-//#include <SDL_video.h>
+#include "ChessMainMenuWindow.h"
+#include "ChessGameModeWindow.h"
+#include <SDL.h>
+#include <SDL_video.h>
 #include <minmax.h>
 #include <strings.h>
 #include <ctype.h>
