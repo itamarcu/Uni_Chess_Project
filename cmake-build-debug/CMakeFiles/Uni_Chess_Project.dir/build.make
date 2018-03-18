@@ -33,19 +33,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = "D:\Program Files\JetBrains\CLion 2017.3.3\bin\cmake\bin\cmake.exe"
+CMAKE_COMMAND = "C:\Program Files\JetBrains\CLion 2017.3.1\bin\cmake\bin\cmake.exe"
 
 # The command to remove a file.
-RM = "D:\Program Files\JetBrains\CLion 2017.3.3\bin\cmake\bin\cmake.exe" -E remove -f
+RM = "C:\Program Files\JetBrains\CLion 2017.3.1\bin\cmake\bin\cmake.exe" -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project
+CMAKE_SOURCE_DIR = C:\Itamar\Workspace\C\Uni_Chess_Project
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Uni_Chess_Project.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/Uni_Chess_Project.dir/flags.make
 CMakeFiles/Uni_Chess_Project.dir/main.c.obj: CMakeFiles/Uni_Chess_Project.dir/flags.make
 CMakeFiles/Uni_Chess_Project.dir/main.c.obj: CMakeFiles/Uni_Chess_Project.dir/includes_C.rsp
 CMakeFiles/Uni_Chess_Project.dir/main.c.obj: ../main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/Uni_Chess_Project.dir/main.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\main.c.obj   -c C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/Uni_Chess_Project.dir/main.c.obj"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\main.c.obj   -c C:\Itamar\Workspace\C\Uni_Chess_Project\main.c
 
 CMakeFiles/Uni_Chess_Project.dir/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Uni_Chess_Project.dir/main.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\main.c > CMakeFiles\Uni_Chess_Project.dir\main.c.i
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Itamar\Workspace\C\Uni_Chess_Project\main.c > CMakeFiles\Uni_Chess_Project.dir\main.c.i
 
 CMakeFiles/Uni_Chess_Project.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Uni_Chess_Project.dir/main.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\main.c -o CMakeFiles\Uni_Chess_Project.dir\main.c.s
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Itamar\Workspace\C\Uni_Chess_Project\main.c -o CMakeFiles\Uni_Chess_Project.dir\main.c.s
 
 CMakeFiles/Uni_Chess_Project.dir/main.c.obj.requires:
 
@@ -84,16 +84,16 @@ CMakeFiles/Uni_Chess_Project.dir/main.c.obj.provides.build: CMakeFiles/Uni_Chess
 CMakeFiles/Uni_Chess_Project.dir/Auxiliary.c.obj: CMakeFiles/Uni_Chess_Project.dir/flags.make
 CMakeFiles/Uni_Chess_Project.dir/Auxiliary.c.obj: CMakeFiles/Uni_Chess_Project.dir/includes_C.rsp
 CMakeFiles/Uni_Chess_Project.dir/Auxiliary.c.obj: ../Auxiliary.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/Uni_Chess_Project.dir/Auxiliary.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\Auxiliary.c.obj   -c C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\Auxiliary.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/Uni_Chess_Project.dir/Auxiliary.c.obj"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\Auxiliary.c.obj   -c C:\Itamar\Workspace\C\Uni_Chess_Project\Auxiliary.c
 
 CMakeFiles/Uni_Chess_Project.dir/Auxiliary.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Uni_Chess_Project.dir/Auxiliary.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\Auxiliary.c > CMakeFiles\Uni_Chess_Project.dir\Auxiliary.c.i
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Itamar\Workspace\C\Uni_Chess_Project\Auxiliary.c > CMakeFiles\Uni_Chess_Project.dir\Auxiliary.c.i
 
 CMakeFiles/Uni_Chess_Project.dir/Auxiliary.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Uni_Chess_Project.dir/Auxiliary.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\Auxiliary.c -o CMakeFiles\Uni_Chess_Project.dir\Auxiliary.c.s
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Itamar\Workspace\C\Uni_Chess_Project\Auxiliary.c -o CMakeFiles\Uni_Chess_Project.dir\Auxiliary.c.s
 
 CMakeFiles/Uni_Chess_Project.dir/Auxiliary.c.obj.requires:
 
@@ -109,16 +109,16 @@ CMakeFiles/Uni_Chess_Project.dir/Auxiliary.c.obj.provides.build: CMakeFiles/Uni_
 CMakeFiles/Uni_Chess_Project.dir/ChessBoard.c.obj: CMakeFiles/Uni_Chess_Project.dir/flags.make
 CMakeFiles/Uni_Chess_Project.dir/ChessBoard.c.obj: CMakeFiles/Uni_Chess_Project.dir/includes_C.rsp
 CMakeFiles/Uni_Chess_Project.dir/ChessBoard.c.obj: ../ChessBoard.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Uni_Chess_Project.dir/ChessBoard.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\ChessBoard.c.obj   -c C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessBoard.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Uni_Chess_Project.dir/ChessBoard.c.obj"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\ChessBoard.c.obj   -c C:\Itamar\Workspace\C\Uni_Chess_Project\ChessBoard.c
 
 CMakeFiles/Uni_Chess_Project.dir/ChessBoard.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Uni_Chess_Project.dir/ChessBoard.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessBoard.c > CMakeFiles\Uni_Chess_Project.dir\ChessBoard.c.i
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Itamar\Workspace\C\Uni_Chess_Project\ChessBoard.c > CMakeFiles\Uni_Chess_Project.dir\ChessBoard.c.i
 
 CMakeFiles/Uni_Chess_Project.dir/ChessBoard.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Uni_Chess_Project.dir/ChessBoard.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessBoard.c -o CMakeFiles\Uni_Chess_Project.dir\ChessBoard.c.s
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Itamar\Workspace\C\Uni_Chess_Project\ChessBoard.c -o CMakeFiles\Uni_Chess_Project.dir\ChessBoard.c.s
 
 CMakeFiles/Uni_Chess_Project.dir/ChessBoard.c.obj.requires:
 
@@ -134,16 +134,16 @@ CMakeFiles/Uni_Chess_Project.dir/ChessBoard.c.obj.provides.build: CMakeFiles/Uni
 CMakeFiles/Uni_Chess_Project.dir/ChessParser.c.obj: CMakeFiles/Uni_Chess_Project.dir/flags.make
 CMakeFiles/Uni_Chess_Project.dir/ChessParser.c.obj: CMakeFiles/Uni_Chess_Project.dir/includes_C.rsp
 CMakeFiles/Uni_Chess_Project.dir/ChessParser.c.obj: ../ChessParser.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/Uni_Chess_Project.dir/ChessParser.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\ChessParser.c.obj   -c C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessParser.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/Uni_Chess_Project.dir/ChessParser.c.obj"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\ChessParser.c.obj   -c C:\Itamar\Workspace\C\Uni_Chess_Project\ChessParser.c
 
 CMakeFiles/Uni_Chess_Project.dir/ChessParser.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Uni_Chess_Project.dir/ChessParser.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessParser.c > CMakeFiles\Uni_Chess_Project.dir\ChessParser.c.i
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Itamar\Workspace\C\Uni_Chess_Project\ChessParser.c > CMakeFiles\Uni_Chess_Project.dir\ChessParser.c.i
 
 CMakeFiles/Uni_Chess_Project.dir/ChessParser.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Uni_Chess_Project.dir/ChessParser.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessParser.c -o CMakeFiles\Uni_Chess_Project.dir\ChessParser.c.s
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Itamar\Workspace\C\Uni_Chess_Project\ChessParser.c -o CMakeFiles\Uni_Chess_Project.dir\ChessParser.c.s
 
 CMakeFiles/Uni_Chess_Project.dir/ChessParser.c.obj.requires:
 
@@ -159,16 +159,16 @@ CMakeFiles/Uni_Chess_Project.dir/ChessParser.c.obj.provides.build: CMakeFiles/Un
 CMakeFiles/Uni_Chess_Project.dir/Minimax.c.obj: CMakeFiles/Uni_Chess_Project.dir/flags.make
 CMakeFiles/Uni_Chess_Project.dir/Minimax.c.obj: CMakeFiles/Uni_Chess_Project.dir/includes_C.rsp
 CMakeFiles/Uni_Chess_Project.dir/Minimax.c.obj: ../Minimax.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/Uni_Chess_Project.dir/Minimax.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\Minimax.c.obj   -c C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\Minimax.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/Uni_Chess_Project.dir/Minimax.c.obj"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\Minimax.c.obj   -c C:\Itamar\Workspace\C\Uni_Chess_Project\Minimax.c
 
 CMakeFiles/Uni_Chess_Project.dir/Minimax.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Uni_Chess_Project.dir/Minimax.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\Minimax.c > CMakeFiles\Uni_Chess_Project.dir\Minimax.c.i
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Itamar\Workspace\C\Uni_Chess_Project\Minimax.c > CMakeFiles\Uni_Chess_Project.dir\Minimax.c.i
 
 CMakeFiles/Uni_Chess_Project.dir/Minimax.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Uni_Chess_Project.dir/Minimax.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\Minimax.c -o CMakeFiles\Uni_Chess_Project.dir\Minimax.c.s
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Itamar\Workspace\C\Uni_Chess_Project\Minimax.c -o CMakeFiles\Uni_Chess_Project.dir\Minimax.c.s
 
 CMakeFiles/Uni_Chess_Project.dir/Minimax.c.obj.requires:
 
@@ -184,16 +184,16 @@ CMakeFiles/Uni_Chess_Project.dir/Minimax.c.obj.provides.build: CMakeFiles/Uni_Ch
 CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.obj: CMakeFiles/Uni_Chess_Project.dir/flags.make
 CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.obj: CMakeFiles/Uni_Chess_Project.dir/includes_C.rsp
 CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.obj: ../ChessGUI.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\ChessGUI.c.obj   -c C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessGUI.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.obj"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\ChessGUI.c.obj   -c C:\Itamar\Workspace\C\Uni_Chess_Project\ChessGUI.c
 
 CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessGUI.c > CMakeFiles\Uni_Chess_Project.dir\ChessGUI.c.i
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Itamar\Workspace\C\Uni_Chess_Project\ChessGUI.c > CMakeFiles\Uni_Chess_Project.dir\ChessGUI.c.i
 
 CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessGUI.c -o CMakeFiles\Uni_Chess_Project.dir\ChessGUI.c.s
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Itamar\Workspace\C\Uni_Chess_Project\ChessGUI.c -o CMakeFiles\Uni_Chess_Project.dir\ChessGUI.c.s
 
 CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.obj.requires:
 
@@ -209,16 +209,16 @@ CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.obj.provides.build: CMakeFiles/Uni_C
 CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj: CMakeFiles/Uni_Chess_Project.dir/flags.make
 CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj: CMakeFiles/Uni_Chess_Project.dir/includes_C.rsp
 CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj: ../ChessGameLogic.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\ChessGameLogic.c.obj   -c C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessGameLogic.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\ChessGameLogic.c.obj   -c C:\Itamar\Workspace\C\Uni_Chess_Project\ChessGameLogic.c
 
 CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessGameLogic.c > CMakeFiles\Uni_Chess_Project.dir\ChessGameLogic.c.i
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Itamar\Workspace\C\Uni_Chess_Project\ChessGameLogic.c > CMakeFiles\Uni_Chess_Project.dir\ChessGameLogic.c.i
 
 CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessGameLogic.c -o CMakeFiles\Uni_Chess_Project.dir\ChessGameLogic.c.s
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Itamar\Workspace\C\Uni_Chess_Project\ChessGameLogic.c -o CMakeFiles\Uni_Chess_Project.dir\ChessGameLogic.c.s
 
 CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj.requires:
 
@@ -234,16 +234,16 @@ CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj.provides.build: CMakeFiles
 CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.obj: CMakeFiles/Uni_Chess_Project.dir/flags.make
 CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.obj: CMakeFiles/Uni_Chess_Project.dir/includes_C.rsp
 CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.obj: ../ChessGameSettings.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\ChessGameSettings.c.obj   -c C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessGameSettings.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.obj"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\ChessGameSettings.c.obj   -c C:\Itamar\Workspace\C\Uni_Chess_Project\ChessGameSettings.c
 
 CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessGameSettings.c > CMakeFiles\Uni_Chess_Project.dir\ChessGameSettings.c.i
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Itamar\Workspace\C\Uni_Chess_Project\ChessGameSettings.c > CMakeFiles\Uni_Chess_Project.dir\ChessGameSettings.c.i
 
 CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessGameSettings.c -o CMakeFiles\Uni_Chess_Project.dir\ChessGameSettings.c.s
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Itamar\Workspace\C\Uni_Chess_Project\ChessGameSettings.c -o CMakeFiles\Uni_Chess_Project.dir\ChessGameSettings.c.s
 
 CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.obj.requires:
 
@@ -259,16 +259,16 @@ CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.obj.provides.build: CMakeFi
 CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj: CMakeFiles/Uni_Chess_Project.dir/flags.make
 CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj: CMakeFiles/Uni_Chess_Project.dir/includes_C.rsp
 CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj: ../ChessConsoleUI.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\ChessConsoleUI.c.obj   -c C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessConsoleUI.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\ChessConsoleUI.c.obj   -c C:\Itamar\Workspace\C\Uni_Chess_Project\ChessConsoleUI.c
 
 CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessConsoleUI.c > CMakeFiles\Uni_Chess_Project.dir\ChessConsoleUI.c.i
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Itamar\Workspace\C\Uni_Chess_Project\ChessConsoleUI.c > CMakeFiles\Uni_Chess_Project.dir\ChessConsoleUI.c.i
 
 CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\ChessConsoleUI.c -o CMakeFiles\Uni_Chess_Project.dir\ChessConsoleUI.c.s
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Itamar\Workspace\C\Uni_Chess_Project\ChessConsoleUI.c -o CMakeFiles\Uni_Chess_Project.dir\ChessConsoleUI.c.s
 
 CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj.requires:
 
@@ -284,16 +284,16 @@ CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj.provides.build: CMakeFiles
 CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj: CMakeFiles/Uni_Chess_Project.dir/flags.make
 CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj: CMakeFiles/Uni_Chess_Project.dir/includes_C.rsp
 CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj: ../PossibleMoveLogic.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\PossibleMoveLogic.c.obj   -c C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\PossibleMoveLogic.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\PossibleMoveLogic.c.obj   -c C:\Itamar\Workspace\C\Uni_Chess_Project\PossibleMoveLogic.c
 
 CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\PossibleMoveLogic.c > CMakeFiles\Uni_Chess_Project.dir\PossibleMoveLogic.c.i
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Itamar\Workspace\C\Uni_Chess_Project\PossibleMoveLogic.c > CMakeFiles\Uni_Chess_Project.dir\PossibleMoveLogic.c.i
 
 CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\PossibleMoveLogic.c -o CMakeFiles\Uni_Chess_Project.dir\PossibleMoveLogic.c.s
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Itamar\Workspace\C\Uni_Chess_Project\PossibleMoveLogic.c -o CMakeFiles\Uni_Chess_Project.dir\PossibleMoveLogic.c.s
 
 CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj.requires:
 
@@ -336,7 +336,7 @@ Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/build.make
 Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/linklibs.rsp
 Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/objects1.rsp
 Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking C executable Uni_Chess_Project.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking C executable Uni_Chess_Project.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Uni_Chess_Project.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -362,6 +362,6 @@ CMakeFiles/Uni_Chess_Project.dir/clean:
 .PHONY : CMakeFiles/Uni_Chess_Project.dir/clean
 
 CMakeFiles/Uni_Chess_Project.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\cmake-build-debug C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\cmake-build-debug C:\Users\Tamir\Dropbox\courses\project\Chess\Uni_Chess_Project\cmake-build-debug\CMakeFiles\Uni_Chess_Project.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Itamar\Workspace\C\Uni_Chess_Project C:\Itamar\Workspace\C\Uni_Chess_Project C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles\Uni_Chess_Project.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Uni_Chess_Project.dir/depend
 

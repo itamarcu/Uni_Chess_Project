@@ -10,7 +10,7 @@ Board *make_starting_board() {
     }
     for (int i = 2; i <= 5; i++)
         for (int j = 0; j < 8; j++)
-            board -> grid[i][j] = EMPTY_ENTRY;
+            board->grid[i][j] = EMPTY_SPACE;
 
     for (int k = 0; k < 8; k++) {
         board->grid[0][k] = whiteFirstRow[k];
@@ -27,14 +27,9 @@ void free_board(Board *board) {
 
 
 bool is_empty_space(char piece) {
-    return piece == EMPTY_ENTRY;
+    return piece == EMPTY_SPACE;
 }
 
 bool is_white_piece(char piece) {
     return tolower(piece) == piece;
-}
-
-bool are_same_color(char piece1, char piece2) {
-    return !is_empty_space(piece1) && !is_empty_space(piece2)
-           && (is_white_piece(piece1) == is_white_piece(piece2));
 }

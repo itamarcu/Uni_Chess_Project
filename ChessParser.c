@@ -15,16 +15,15 @@ Command *cmd_move(Command *command) {
         command->isValidCommand = false;
         return command;
     }
-
     command->args[0] = arg0[0] - '1';
     command->args[1] = arg0[2] - 'A';
-    command->args[2] = arg1[0] - '1';
-    command->args[3] = arg1[2] - 'A';
+    command->args[2] = arg2[0] - '1';
+    command->args[3] = arg2[2] - 'A';
     if (DEBUG_MODE) //While debugging, lowercase is allowed :)
     {
         if (arg0[2] >= 'a' && arg0[2] < 'z')
             command->args[1] += 'A' - 'a';
-        if (arg1[2] >= 'a' && arg1[2] < 'z')
+        if (arg2[2] >= 'a' && arg2[2] < 'z')
             command->args[3] += 'A' - 'a';
     }
 

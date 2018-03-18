@@ -8,7 +8,7 @@ void GUI_main_loop(Game *game)
 {
 
     // initialize SDL2 for video
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         printf("ERROR: unable to init SDL: %s\n", SDL_GetError());
         return ;
     }
@@ -48,7 +48,7 @@ void GUI_main_loop(Game *game)
     int yDiff = 0;
 
     // load an image onto an SDL surface
-    SDL_Surface* surf = SDL_LoadBMP("C:\\Users\\Tamir\\Dropbox\\courses\\project\\Chess\\Uni_Chess_Project\\braid.bmp");
+    SDL_Surface *surf = SDL_LoadBMP("C:\\Itamar\\Workspace\\C\\Uni_Chess_Project\\braid.bmp");
     if (surf == NULL) {
         printf("ERROR: unable to load image: %s\n", SDL_GetError());
         SDL_DestroyRenderer(rend);
@@ -155,6 +155,5 @@ void GUI_main_loop(Game *game)
     SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(window);
     SDL_Quit();
-    return ;
 
 }

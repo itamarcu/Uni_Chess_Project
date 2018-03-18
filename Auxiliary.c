@@ -53,3 +53,15 @@ bool cast_str_to_int(const char *str, int *int_ptr) {
 int sign(int x) {
     return (x > 0) - (x < 0);
 }
+
+int min(int n1, int n2) {
+    if (n1 < n2)
+        return n1;
+    return n2;
+}
+
+int max(int n1, int n2) {
+    if (n1 > n2)
+        return n1;
+    return n2;
+}

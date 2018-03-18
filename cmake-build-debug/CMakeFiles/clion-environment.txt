@@ -1,4 +1,4 @@
-ToolSet: w64 4.0@C:\MinGW
+ToolSet: 3.20@C:\TDM-GCC-32
 Options: 
 
 Options:

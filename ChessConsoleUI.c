@@ -108,17 +108,18 @@ void CUI_settings_case(Game *game) {
 }
 
 
-//TO-DO: make it a switch-case over the different types of Commands, and check valid Game_command first. also, add console respond prints according to the relavent function GAME_RESPONSE.
 void CUI_game_case(Game *game) {
     if (game->game_mode == GAME_MODE_MULTIPLAYER || game->current_user == game->user_color) {
         print_board(game->board);
-        println_output("Enter your move (%s player):", color_string(game->user_color));
+        println_output("Enter your move (%s player):", color_string(game->current_user));
 
         Command *command = get_user_input_as_command();
         if (command == NULL) {
             println_error("Real error - malloc failed for command.");
             return;
         }
+
+        PossibleMove moves[MOVES_ARRAY_SIZE];
 
         if (!command->isValidCommand) {
             println_error("ERROR: invalid command");
@@ -128,27 +129,59 @@ void CUI_game_case(Game *game) {
                     switch (console_cmd_move(game, command->args[0], command->args[1], command->args[2],
                                              command->args[3])) {
                         case SUCCESS:
+                            move_was_made(game);
                             break;
                         case INVALID_POS:
+                            println_output("Invalid position on the board");
                             break;
                         case NO_PIECE_IN_LOCATION:
+                            println_output("The specified position does not contain your piece");
                             break;
                         case ILLEGAL_MOVE:
+                            println_output("Illegal move");
                             break;
                         case KING_STILL_THREATENED:
+                            println_output("Illegal move: king is still threatened");
                             break;
                         case KING_WILL_BE_THREATENED:
+                            println_output("Illegal move: king will be threatened");
                             break;
                         case CANT_SAVE_FILE:
-                            break;
                         case EMPTY_HISTORY:
+                            println_error("BUG 4698723154");
                             break;
                     }
                     break;
                 case CMD_GET_MOVES:
-                    //TODO get_moves command
-                    //use console_cmd_get_moves()
-                    println_debug("---The get_moves command is not yet developed---");
+                    switch (get_possible_moves(game, command->args[0], command->args[1], moves)) {
+                        case SUCCESS:
+                            for (int i = 0; i < MOVES_ARRAY_SIZE; i++) {
+                                if (!moves[i].is_possible)
+                                    break; //all moves from now on are guaranteed to be not possible
+                                printf(("<%c,%c>"), moves[i].row + '1', moves[i].col + 'A');
+                                if (moves[i].is_threatened_by_opponent)
+                                    printf("*");
+                                if (moves[i].is_capturing)
+                                    printf("^");
+                                printf("\n");
+                            }
+
+                            //free the moves array? //TODO check if needed
+                            break;
+                        case INVALID_POS:
+                            println_output("Invalid position on the board");
+                            break;
+                        case NO_PIECE_IN_LOCATION:
+                            println_output("The specified position does not contain a player piece");
+                            break;
+                        case ILLEGAL_MOVE:
+                        case KING_STILL_THREATENED:
+                        case KING_WILL_BE_THREATENED:
+                        case CANT_SAVE_FILE:
+                        case EMPTY_HISTORY:
+                            println_error("BUG 897213857");
+                            break;
+                    }
                     break;
                 case CMD_SAVE:
                     //TODO save command
@@ -159,13 +192,13 @@ void CUI_game_case(Game *game) {
                     println_debug("---The undo command is not yet developed---");
                     break;
                 case CMD_RESET:
+                    game->state = GAME_STATE_SETTINGS;
                     println_output("Restarting...");
                     println_output("Specify game settings or type 'start' to begin a game with the current settings:");
-                    game->state = GAME_STATE_SETTINGS;
                     break;
                 case CMD_QUIT_GAME:
-                    println_output("Exiting...");
                     game->state = GAME_STATE_QUIT;
+                    println_output("Exiting...");
                     break;
                 case CMD_NONE_GAME:
                     println_error("ERROR: invalid command");
@@ -179,6 +212,7 @@ void CUI_game_case(Game *game) {
     } else //computer's turn
     {
         //TODO computer turn
+        println_debug("---The computer turn is not yet developed---");
         move_was_made(game);
     }
 }
@@ -199,7 +233,7 @@ void CUI_main_loop(Game *game) {
             case GAME_STATE_QUIT:
                 return; //unnecessary but I want this
             default:
-                println_debug("Weird state...fix this");
+                println_error("Weird state...fix this");
                 break;
         }
     }

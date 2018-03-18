@@ -15,6 +15,7 @@ CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj: ../ChessConsoleUI.h
 CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj: ../ChessGameLogic.h
 CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj: ../ChessGameSettings.h
 CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj: ../ChessParser.h
+CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj: ../Minimax.h
 CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj: ../PossibleMoveLogic.h
 
 CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.obj: ../include/SDL2/SDL.h
@@ -66,6 +67,7 @@ CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.obj: ../ChessGUI.c
 CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.obj: ../ChessGUI.h
 CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.obj: ../ChessGameLogic.h
 CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.obj: ../ChessGameSettings.h
+CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.obj: ../Minimax.h
 CMakeFiles/Uni_Chess_Project.dir/ChessGUI.c.obj: ../PossibleMoveLogic.h
 
 CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj: ../Auxiliary.h
@@ -73,6 +75,7 @@ CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj: ../ChessBoard.h
 CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj: ../ChessGameLogic.c
 CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj: ../ChessGameLogic.h
 CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj: ../ChessGameSettings.h
+CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj: ../Minimax.h
 CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj: ../PossibleMoveLogic.h
 
 CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.obj: ../Auxiliary.h
@@ -88,7 +91,9 @@ CMakeFiles/Uni_Chess_Project.dir/Minimax.c.obj: ../Minimax.c
 
 CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj: ../Auxiliary.h
 CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj: ../ChessBoard.h
+CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj: ../ChessGameLogic.h
 CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj: ../ChessGameSettings.h
+CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj: ../Minimax.h
 CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj: ../PossibleMoveLogic.c
 CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj: ../PossibleMoveLogic.h
 
@@ -142,6 +147,7 @@ CMakeFiles/Uni_Chess_Project.dir/main.c.obj: ../ChessGUI.h
 CMakeFiles/Uni_Chess_Project.dir/main.c.obj: ../ChessGameLogic.h
 CMakeFiles/Uni_Chess_Project.dir/main.c.obj: ../ChessGameSettings.h
 CMakeFiles/Uni_Chess_Project.dir/main.c.obj: ../ChessParser.h
+CMakeFiles/Uni_Chess_Project.dir/main.c.obj: ../Minimax.h
 CMakeFiles/Uni_Chess_Project.dir/main.c.obj: ../PossibleMoveLogic.h
 CMakeFiles/Uni_Chess_Project.dir/main.c.obj: ../main.c
 

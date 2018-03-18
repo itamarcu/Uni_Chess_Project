@@ -5,138 +5,145 @@
 		<Option title="Uni_Chess_Project"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\cmake\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug"/>
+				<Option working_dir="C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Uni_Chess_Project">
-				<Option output="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Uni_Chess_Project.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug"/>
+				<Option output="C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Uni_Chess_Project.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/include"/>
-					<Add directory="C:/MinGW/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/include"/>
-					<Add directory="C:/MinGW/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/../../../../include"/>
-					<Add directory="C:/MinGW/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/include-fixed"/>
-					<Add directory="C:/MinGW/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="C:/Itamar/Workspace/C/Uni_Chess_Project/include"/>
+					<Add directory="C:/TDM-GCC-32/bin/../lib/gcc/mingw32/5.1.0/include"/>
+					<Add directory="C:/TDM-GCC-32/bin/../lib/gcc/mingw32/5.1.0/../../../../include"/>
+					<Add directory="C:/TDM-GCC-32/bin/../lib/gcc/mingw32/5.1.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 Uni_Chess_Project"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 Uni_Chess_Project"/>
+					<CompileFile command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Uni_Chess_Project/fast">
-				<Option output="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Uni_Chess_Project.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug"/>
+				<Option output="C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Uni_Chess_Project.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/include"/>
-					<Add directory="C:/MinGW/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/include"/>
-					<Add directory="C:/MinGW/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/../../../../include"/>
-					<Add directory="C:/MinGW/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/include-fixed"/>
-					<Add directory="C:/MinGW/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="C:/Itamar/Workspace/C/Uni_Chess_Project/include"/>
+					<Add directory="C:/TDM-GCC-32/bin/../lib/gcc/mingw32/5.1.0/include"/>
+					<Add directory="C:/TDM-GCC-32/bin/../lib/gcc/mingw32/5.1.0/../../../../include"/>
+					<Add directory="C:/TDM-GCC-32/bin/../lib/gcc/mingw32/5.1.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 Uni_Chess_Project/fast"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 Uni_Chess_Project/fast"/>
+					<CompileFile command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug"/>
+				<Option working_dir="C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug"/>
+				<Option working_dir="C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/TDM-GCC-32/bin/mingw32-make.exe -f &quot;C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/Auxiliary.c">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/Auxiliary.c">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/Auxiliary.h">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/Auxiliary.h">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/ChessBoard.c">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/ChessBoard.c">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/ChessBoard.h">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/ChessBoard.h">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/ChessConsoleUI.c">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/ChessConsoleUI.c">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/ChessConsoleUI.h">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/ChessConsoleUI.h">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/ChessGUI.c">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/ChessGUI.c">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/ChessGUI.h">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/ChessGUI.h">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/ChessGameLogic.c">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/ChessGameLogic.c">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/ChessGameLogic.h">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/ChessGameLogic.h">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/ChessGameSettings.c">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/ChessGameSettings.c">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/ChessGameSettings.h">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/ChessGameSettings.h">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/ChessParser.c">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/ChessParser.c">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/ChessParser.h">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/ChessParser.h">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/Minimax.c">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/Minimax.c">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/Minimax.h">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/Minimax.h">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/PossibleMoveLogic.c">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/PossibleMoveLogic.c">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/PossibleMoveLogic.h">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/PossibleMoveLogic.h">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/main.c">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/main.c">
 			<Option target="Uni_Chess_Project"/>
 		</Unit>
-		<Unit filename="C:/Users/Tamir/Dropbox/courses/project/Chess/Uni_Chess_Project/CMakeLists.txt">
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/cmake/FindSDL2.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/cmake/FindSDL2_image.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Itamar/Workspace/C/Uni_Chess_Project/cmake/FindSDL2_ttf.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

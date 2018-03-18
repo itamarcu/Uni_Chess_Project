@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "Auxiliary.h"
 #include "ChessConsoleUI.h"
 #include "ChessGUI.h"
 
@@ -15,7 +14,6 @@ int main(int argc, char *argv[]) {
 
     } else if (strcmp(argv[1], "-g") == 0) //graphic mode
     {
-        println_debug("%s", "Graphic mode???");
         game->program_mode = PROGRAM_MODE_GRAPHICAL;
     }
 

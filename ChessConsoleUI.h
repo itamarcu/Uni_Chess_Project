@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "ChessParser.h"
 #include "ChessGameLogic.h"
-#include <minmax.h>
+#include "Minimax.h"
 #include <strings.h>
 #include <ctype.h>
 
