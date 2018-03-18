@@ -1,6 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2017.3.1\bin\cmake\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Itamar\Workspace\C\Uni_Chess_Project
--- Could NOT find SDL2_IMAGE (missing: SDL2_IMAGE_LIBRARY SDL2_IMAGE_INCLUDE_DIR) 
--- Could NOT find SDL2_TTF (missing: SDL2_TTF_LIBRARY SDL2_TTF_INCLUDE_DIR) 
--- Configuring done
--- Generating done
--- Build files have been written to: C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug

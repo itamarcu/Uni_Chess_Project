@@ -1,3 +1,0 @@
-C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/CMakeFiles/Uni_Chess_Project.dir
-C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
