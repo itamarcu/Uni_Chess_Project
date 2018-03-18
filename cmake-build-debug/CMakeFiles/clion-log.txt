@@ -1,16 +1,6 @@
 "C:\Program Files\JetBrains\CLion 2017.3.1\bin\cmake\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Itamar\Workspace\C\Uni_Chess_Project
--- Looking for pthread.h
--- Looking for pthread.h - found
--- Looking for pthread_create
--- Looking for pthread_create - found
--- Found Threads: TRUE  
-CMake Error at C:/Program Files/JetBrains/CLion 2017.3.1/bin/cmake/share/cmake-3.9/Modules/FindPackageHandleStandardArgs.cmake:137 (message):
-  Could NOT find SDL2 (missing: SDL2_LIBRARY SDL2_INCLUDE_DIR)
-Call Stack (most recent call first):
-  C:/Program Files/JetBrains/CLion 2017.3.1/bin/cmake/share/cmake-3.9/Modules/FindPackageHandleStandardArgs.cmake:377 (_FPHSA_FAILURE_MESSAGE)
-  cmake/FindSDL2.cmake:163 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)
-  CMakeLists.txt:7 (find_package)
-
-
--- Configuring incomplete, errors occurred!
-See also "C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+-- Could NOT find SDL2_IMAGE (missing: SDL2_IMAGE_LIBRARY SDL2_IMAGE_INCLUDE_DIR) 
+-- Could NOT find SDL2_TTF (missing: SDL2_TTF_LIBRARY SDL2_TTF_INCLUDE_DIR) 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Itamar/Workspace/C/Uni_Chess_Project/cmake-build-debug

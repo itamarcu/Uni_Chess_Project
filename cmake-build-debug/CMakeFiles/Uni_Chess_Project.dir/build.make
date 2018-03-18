@@ -306,6 +306,131 @@ CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj.provides: CMakeFiles/Un
 CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj.provides.build: CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj
 
 
+CMakeFiles/Uni_Chess_Project.dir/Button.c.obj: CMakeFiles/Uni_Chess_Project.dir/flags.make
+CMakeFiles/Uni_Chess_Project.dir/Button.c.obj: CMakeFiles/Uni_Chess_Project.dir/includes_C.rsp
+CMakeFiles/Uni_Chess_Project.dir/Button.c.obj: ../Button.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/Uni_Chess_Project.dir/Button.c.obj"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\Button.c.obj   -c C:\Itamar\Workspace\C\Uni_Chess_Project\Button.c
+
+CMakeFiles/Uni_Chess_Project.dir/Button.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Uni_Chess_Project.dir/Button.c.i"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Itamar\Workspace\C\Uni_Chess_Project\Button.c > CMakeFiles\Uni_Chess_Project.dir\Button.c.i
+
+CMakeFiles/Uni_Chess_Project.dir/Button.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Uni_Chess_Project.dir/Button.c.s"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Itamar\Workspace\C\Uni_Chess_Project\Button.c -o CMakeFiles\Uni_Chess_Project.dir\Button.c.s
+
+CMakeFiles/Uni_Chess_Project.dir/Button.c.obj.requires:
+
+.PHONY : CMakeFiles/Uni_Chess_Project.dir/Button.c.obj.requires
+
+CMakeFiles/Uni_Chess_Project.dir/Button.c.obj.provides: CMakeFiles/Uni_Chess_Project.dir/Button.c.obj.requires
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/Button.c.obj.provides.build
+.PHONY : CMakeFiles/Uni_Chess_Project.dir/Button.c.obj.provides
+
+CMakeFiles/Uni_Chess_Project.dir/Button.c.obj.provides.build: CMakeFiles/Uni_Chess_Project.dir/Button.c.obj
+
+
+CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj: CMakeFiles/Uni_Chess_Project.dir/flags.make
+CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj: CMakeFiles/Uni_Chess_Project.dir/includes_C.rsp
+CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj: ../Widget.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\Widget.c.obj   -c C:\Itamar\Workspace\C\Uni_Chess_Project\Widget.c
+
+CMakeFiles/Uni_Chess_Project.dir/Widget.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Uni_Chess_Project.dir/Widget.c.i"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Itamar\Workspace\C\Uni_Chess_Project\Widget.c > CMakeFiles\Uni_Chess_Project.dir\Widget.c.i
+
+CMakeFiles/Uni_Chess_Project.dir/Widget.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Uni_Chess_Project.dir/Widget.c.s"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Itamar\Workspace\C\Uni_Chess_Project\Widget.c -o CMakeFiles\Uni_Chess_Project.dir\Widget.c.s
+
+CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj.requires:
+
+.PHONY : CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj.requires
+
+CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj.provides: CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj.requires
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj.provides.build
+.PHONY : CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj.provides
+
+CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj.provides.build: CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj
+
+
+CMakeFiles/Uni_Chess_Project.dir/Window.c.obj: CMakeFiles/Uni_Chess_Project.dir/flags.make
+CMakeFiles/Uni_Chess_Project.dir/Window.c.obj: CMakeFiles/Uni_Chess_Project.dir/includes_C.rsp
+CMakeFiles/Uni_Chess_Project.dir/Window.c.obj: ../Window.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/Uni_Chess_Project.dir/Window.c.obj"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\Window.c.obj   -c C:\Itamar\Workspace\C\Uni_Chess_Project\Window.c
+
+CMakeFiles/Uni_Chess_Project.dir/Window.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Uni_Chess_Project.dir/Window.c.i"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Itamar\Workspace\C\Uni_Chess_Project\Window.c > CMakeFiles\Uni_Chess_Project.dir\Window.c.i
+
+CMakeFiles/Uni_Chess_Project.dir/Window.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Uni_Chess_Project.dir/Window.c.s"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Itamar\Workspace\C\Uni_Chess_Project\Window.c -o CMakeFiles\Uni_Chess_Project.dir\Window.c.s
+
+CMakeFiles/Uni_Chess_Project.dir/Window.c.obj.requires:
+
+.PHONY : CMakeFiles/Uni_Chess_Project.dir/Window.c.obj.requires
+
+CMakeFiles/Uni_Chess_Project.dir/Window.c.obj.provides: CMakeFiles/Uni_Chess_Project.dir/Window.c.obj.requires
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/Window.c.obj.provides.build
+.PHONY : CMakeFiles/Uni_Chess_Project.dir/Window.c.obj.provides
+
+CMakeFiles/Uni_Chess_Project.dir/Window.c.obj.provides.build: CMakeFiles/Uni_Chess_Project.dir/Window.c.obj
+
+
+CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj: CMakeFiles/Uni_Chess_Project.dir/flags.make
+CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj: CMakeFiles/Uni_Chess_Project.dir/includes_C.rsp
+CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj: ../ChessMainMenuWindow.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\ChessMainMenuWindow.c.obj   -c C:\Itamar\Workspace\C\Uni_Chess_Project\ChessMainMenuWindow.c
+
+CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.i"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Itamar\Workspace\C\Uni_Chess_Project\ChessMainMenuWindow.c > CMakeFiles\Uni_Chess_Project.dir\ChessMainMenuWindow.c.i
+
+CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.s"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Itamar\Workspace\C\Uni_Chess_Project\ChessMainMenuWindow.c -o CMakeFiles\Uni_Chess_Project.dir\ChessMainMenuWindow.c.s
+
+CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj.requires:
+
+.PHONY : CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj.requires
+
+CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj.provides: CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj.requires
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj.provides.build
+.PHONY : CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj.provides
+
+CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj.provides.build: CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj
+
+
+CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj: CMakeFiles/Uni_Chess_Project.dir/flags.make
+CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj: CMakeFiles/Uni_Chess_Project.dir/includes_C.rsp
+CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj: ../ChessGameModeWindow.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Uni_Chess_Project.dir\ChessGameModeWindow.c.obj   -c C:\Itamar\Workspace\C\Uni_Chess_Project\ChessGameModeWindow.c
+
+CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.i"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Itamar\Workspace\C\Uni_Chess_Project\ChessGameModeWindow.c > CMakeFiles\Uni_Chess_Project.dir\ChessGameModeWindow.c.i
+
+CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.s"
+	C:\TDM-GCC-32\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Itamar\Workspace\C\Uni_Chess_Project\ChessGameModeWindow.c -o CMakeFiles\Uni_Chess_Project.dir\ChessGameModeWindow.c.s
+
+CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj.requires:
+
+.PHONY : CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj.requires
+
+CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj.provides: CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj.requires
+	$(MAKE) -f CMakeFiles\Uni_Chess_Project.dir\build.make CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj.provides.build
+.PHONY : CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj.provides
+
+CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj.provides.build: CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj
+
+
 # Object files for target Uni_Chess_Project
 Uni_Chess_Project_OBJECTS = \
 "CMakeFiles/Uni_Chess_Project.dir/main.c.obj" \
@@ -317,7 +442,12 @@ Uni_Chess_Project_OBJECTS = \
 "CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj" \
 "CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.obj" \
 "CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj" \
-"CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj"
+"CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj" \
+"CMakeFiles/Uni_Chess_Project.dir/Button.c.obj" \
+"CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj" \
+"CMakeFiles/Uni_Chess_Project.dir/Window.c.obj" \
+"CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj" \
+"CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj"
 
 # External object files for target Uni_Chess_Project
 Uni_Chess_Project_EXTERNAL_OBJECTS =
@@ -332,11 +462,16 @@ Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/ChessGameLogic.c.obj
 Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.obj
 Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj
 Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj
+Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/Button.c.obj
+Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj
+Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/Window.c.obj
+Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj
+Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj
 Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/build.make
 Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/linklibs.rsp
 Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/objects1.rsp
 Uni_Chess_Project.exe: CMakeFiles/Uni_Chess_Project.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking C executable Uni_Chess_Project.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Itamar\Workspace\C\Uni_Chess_Project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking C executable Uni_Chess_Project.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Uni_Chess_Project.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -354,6 +489,11 @@ CMakeFiles/Uni_Chess_Project.dir/requires: CMakeFiles/Uni_Chess_Project.dir/Ches
 CMakeFiles/Uni_Chess_Project.dir/requires: CMakeFiles/Uni_Chess_Project.dir/ChessGameSettings.c.obj.requires
 CMakeFiles/Uni_Chess_Project.dir/requires: CMakeFiles/Uni_Chess_Project.dir/ChessConsoleUI.c.obj.requires
 CMakeFiles/Uni_Chess_Project.dir/requires: CMakeFiles/Uni_Chess_Project.dir/PossibleMoveLogic.c.obj.requires
+CMakeFiles/Uni_Chess_Project.dir/requires: CMakeFiles/Uni_Chess_Project.dir/Button.c.obj.requires
+CMakeFiles/Uni_Chess_Project.dir/requires: CMakeFiles/Uni_Chess_Project.dir/Widget.c.obj.requires
+CMakeFiles/Uni_Chess_Project.dir/requires: CMakeFiles/Uni_Chess_Project.dir/Window.c.obj.requires
+CMakeFiles/Uni_Chess_Project.dir/requires: CMakeFiles/Uni_Chess_Project.dir/ChessMainMenuWindow.c.obj.requires
+CMakeFiles/Uni_Chess_Project.dir/requires: CMakeFiles/Uni_Chess_Project.dir/ChessGameModeWindow.c.obj.requires
 
 .PHONY : CMakeFiles/Uni_Chess_Project.dir/requires
 

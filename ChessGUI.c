@@ -1,5 +1,4 @@
 #include "ChessGUI.h"
-#include "Auxiliary.h"
 
 
 #define SPRT_W 7
@@ -12,8 +11,8 @@ void GUI_main_loop(Game *game)
         printf("ERROR: unable to init SDL: %s\n", SDL_GetError());
         return ;
     }
-    Window* main_menu = createMainMenu();
-    Window* game_mode_window = createGameModeWindow();
+    Window *main_menu = createMainMenu();
+    Window *game_mode_window = createGameModeWindow();
     GAME_WINDOW curr_window = MAIN_MENU;
     // drawing,event handling, and switching windows loop
     SDL_Event e;

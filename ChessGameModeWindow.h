@@ -16,6 +16,6 @@
 #define GAME_MODE_BUTTONS_HEIGHT 40
 #define GAME_MODE_WIDGETS 3
 
-Window* createGameModeWindow();
+Window *createGameModeWindow();
 
 #endif /* ChessGameModeWindow_H_ */

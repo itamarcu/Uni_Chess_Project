@@ -17,6 +17,6 @@
 #define MAIN_MENU_BUTTONS_HEIGHT 40
 #define MAIN_MENU_WIDGETS 3
 
-Window* createMainMenu();
+Window *createMainMenu();
 
 #endif /* ChessMainMenuWindow_H_ */
