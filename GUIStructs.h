@@ -52,4 +52,11 @@ struct window_t {
     GAME_WINDOW nextWindow;
 };
 
+typedef struct windows {
+    Window *main_menu;
+    Window *game_mode;
+    Window *one_player_options;
+    Window *load_game;
+    Window *game_window;
+} Windows;
 #endif /* GUI_STRUCTS_H_ */

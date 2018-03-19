@@ -1,9 +1,5 @@
 #include "ChessGUI.h"
 
-
-#define SPRT_W 7
-#define SPRT_LEN 27
-
 void GUI_main_loop(Game *game)
 {
     // initialize SDL2 for video
@@ -16,42 +12,16 @@ void GUI_main_loop(Game *game)
     GAME_WINDOW curr_window = MAIN_MENU;
     SDL_ShowWindow(main_menu->window);
     // drawing,event handling, and switching windows loop
-
-    int curr_window_posX;
-    int curr_window_posY;
+    Windows *windows = (Windows *) malloc(sizeof(Windows));
+    windows->main_menu = main_menu;
+    windows->game_mode = game_mode_window;
     while (curr_window != QUIT) {
         switch (curr_window) {
             case MAIN_MENU:
-                drawWindow(main_menu);
-                while (SDL_PollEvent(&e)) {
-                    curr_window = handleWindowEvent(main_menu, &e);
-                }
-                if (curr_window != MAIN_MENU) {
-                    main_menu->nextWindow = MAIN_MENU;
-                    SDL_GetWindowPosition(main_menu->window, &curr_window_posX, &curr_window_posY);
-                    switch (curr_window) {
-                        case GAME_MODE:
-                            SDL_SetWindowPosition(game_mode_window->window, curr_window_posX, curr_window_posY);
-                            SDL_ShowWindow(game_mode_window->window);
-                            break;
-                        default:
-                            break;
-                    }
-                    SDL_HideWindow(main_menu->window);
-                }
+                handleEventsAndDraw(main_menu, &curr_window, windows);
                 break;
             case GAME_MODE:
-                SDL_ShowWindow(game_mode_window->window);
-                drawWindow(game_mode_window);
-                while (SDL_PollEvent(&e)) {
-                    curr_window = handleWindowEvent(game_mode_window, &e);
-                }
-
-                if (curr_window != GAME_MODE) {
-                    game_mode_window->nextWindow = GAME_MODE;
-                    SDL_HideWindow(game_mode_window->window);
-                }
-                break;
+                handleEventsAndDraw(game_mode_window, &curr_window, windows);
             default:
                 break;
         }
@@ -63,23 +33,30 @@ void GUI_main_loop(Game *game)
     SDL_Quit();
 }
 
-void handleEventsAndDraw(Window *current_window, GAME_WINDOW game_window, GAME_WINDOW *curr_window) {
+void handleEventsAndDraw(Window *current_window, GAME_WINDOW *curr_window, Windows *windows) {
     SDL_Event e;
-    drawWindow(window);
+    GAME_WINDOW prev_window = *curr_window;
+    int curr_window_posX;
+    int curr_window_posY;
+    drawWindow(current_window);
     while (SDL_PollEvent(&e)) {
-        *curr_window = handleWindowEvent(window, &e);
+        *curr_window = handleWindowEvent(current_window, &e);
     }
-    if (*curr_window != game_window) {
-        window->nextWindow = game_window;
-        SDL_GetWindowPosition(window->window, &curr_window_posX, &curr_window_posY);
-        switch (curr_window) {
+    if (*curr_window != prev_window) {
+        current_window->nextWindow = prev_window;
+        SDL_GetWindowPosition(current_window->window, &curr_window_posX, &curr_window_posY);
+        switch (*curr_window) {
             case GAME_MODE:
-                SDL_SetWindowPosition(game_mode_window->window, curr_window_posX, curr_window_posY);
-                SDL_ShowWindow(game_mode_window->window);
+                SDL_SetWindowPosition(windows->game_mode->window, curr_window_posX, curr_window_posY);
+                SDL_ShowWindow(windows->game_mode->window);
+                break;
+            case MAIN_MENU:
+                SDL_SetWindowPosition(windows->main_menu->window, curr_window_posX, curr_window_posY);
+                SDL_ShowWindow(windows->main_menu->window);
                 break;
             default:
                 break;
         }
-        SDL_HideWindow(window->window);
+        SDL_HideWindow(current_window->window);
     }
 }

@@ -1,6 +1,5 @@
 #ifndef UNI_CHESS_PROJECT_GUI_H
 #define UNI_CHESS_PROJECT_GUI_H
-#define SDL_MAIN_NEEDED
 
 #include "ChessGameLogic.h"
 #include "ChessMainMenuWindow.h"
@@ -12,6 +11,7 @@
 
 void GUI_main_loop(Game *game);
 
+void handleEventsAndDraw(Window *current_window, GAME_WINDOW *curr_window, Windows *windows);
 
 
 #endif //UNI_CHESS_PROJECT_GUI_H

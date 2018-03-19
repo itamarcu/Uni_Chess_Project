@@ -1,6 +1,5 @@
 #include "Window.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 void destroyWindow(Window *src) {
     int i;
@@ -32,9 +31,9 @@ GAME_WINDOW handleWindowEvent(Window *src, SDL_Event *e) {
         case SDL_QUIT:
             src->nextWindow = QUIT;
             break;
-        case SDL_KEYDOWN:
-            switch (e->key.keysym.sym) {
-                case SDLK_ESCAPE:
+        case SDL_WINDOWEVENT:
+            switch (e->window.event) {
+                case SDL_WINDOWEVENT_CLOSE:
                     src->nextWindow = QUIT;
                     break;
                 default:
