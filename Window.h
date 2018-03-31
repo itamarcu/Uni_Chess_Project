@@ -7,6 +7,7 @@
 #include "GUIStructs.h"
 #include "Widget.h"
 #include "Button.h"
+#include "Auxiliary.h"
 
 
 #define DEFAULT_BG_PATH "..\\pictures\\chessboard.bmp"
@@ -31,6 +32,8 @@ void addChessBGAndTitle(Window *src, char *title_path);
 Window *createEmptyCenteredWindow(int window_width, int window_height, int num_of_textures, int num_of_widgets,
                                   GAME_WINDOW game_window);
 
-void addBackButtonToWindow(Window *window, GAME_WINDOW back_window);
+void addBackButtonToWindow(Window *window, Game *game, GAME_WINDOW back_window);
+
+void switchToWindowAtPos(Window *next_window, int window_posX, int window_posY);
 
 #endif /* WINDOW_H_ */

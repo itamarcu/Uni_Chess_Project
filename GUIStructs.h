@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <SDL.h>
 #include <SDL_video.h>
+#include "ChessGameSettings.h"
 
 typedef struct widget_t Widget;
 typedef struct button_t Button;
@@ -19,14 +20,11 @@ typedef enum _GAME_WINDOW {
 } GAME_WINDOW;
 
 struct widget_t {
-    struct window_t *window;
-
+    Window *window;
+    Game *game;
     void (*draw)(struct widget_t *);
-
     void (*handleEvent)(struct widget_t *, SDL_Event *);
-
     void (*destroy)(struct widget_t *);
-
     void *data;
 };
 

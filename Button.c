@@ -1,8 +1,8 @@
 #include "Button.h"
-#include <stdlib.h>
 
 Widget *createButton(
         Window *window,
+        Game *game,
         const char *image,
         SDL_Rect location,
         GAME_WINDOW next_window,
@@ -43,6 +43,7 @@ Widget *createButton(
     data->next_window = next_window;
     data->action = action;
     res->window = window;
+    res->game = game;
     res->destroy = destroyButton;
     res->draw = drawButton;
     res->handleEvent = handleButtonEvent;
@@ -88,10 +89,11 @@ void switchWindowAction(Widget *widget) {
 
 Widget *createButtonSwitchBetweenWindows(
         Window *window,
+        Game *game,
         const char *image,
         SDL_Rect location,
         GAME_WINDOW next_window) {
 
-    return createButton(window, image, location, next_window, switchWindowAction);
+    return createButton(window, game, image, location, next_window, switchWindowAction);
 }
 

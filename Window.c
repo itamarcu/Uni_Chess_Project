@@ -1,5 +1,4 @@
 #include "Window.h"
-#include <stdio.h>
 
 void destroyWindow(Window *src) {
     int i;
@@ -119,8 +118,8 @@ void addChessBGAndTitle(Window *src, char *title_path) {
     SDL_QueryTexture(title_texture, NULL, NULL, &title_width, &title_height);
     title_rect->x = (src->width - title_width) / 2;
     title_rect->y = (src->height - title_height) / 10;
-    title_rect->w = DEFAULT_TITLE_WIDTH;
-    title_rect->h = DEFAULT_TITLE_HEIGHT;
+    title_rect->w = title_width;
+    title_rect->h = title_height;
 
     addTextureToWindow(src, background_texture, NULL);
     addTextureToWindow(src, title_texture, title_rect);
@@ -130,7 +129,7 @@ Window *createEmptyCenteredWindow(int window_width, int window_height, int num_o
                                   GAME_WINDOW game_window) {
     Window *window = (Window *) malloc(sizeof(Window));
     window->window = SDL_CreateWindow(
-            "Main_Menu",
+            "Chess Game",
             SDL_WINDOWPOS_CENTERED,
             SDL_WINDOWPOS_CENTERED,
             window_width,
@@ -162,13 +161,20 @@ Window *createEmptyCenteredWindow(int window_width, int window_height, int num_o
     return window;
 }
 
-void addBackButtonToWindow(Window *window, GAME_WINDOW back_window) {
+void addBackButtonToWindow(Window *window, Game *game, GAME_WINDOW back_window) {
     SDL_Rect new_game_button_rect;
     new_game_button_rect.x = 0;
     new_game_button_rect.y = window->height - DEFAULT_BACK_BUTTON_HEIGHT;
     new_game_button_rect.w = DEFAULT_BACK_BUTTON_WIDTH;
     new_game_button_rect.h = DEFAULT_BACK_BUTTON_HEIGHT;
-    Widget *back_button = createButtonSwitchBetweenWindows(window, DEFAULT_BACK_BUTTON_PATH, new_game_button_rect,
+    Widget *back_button = createButtonSwitchBetweenWindows(window, game, DEFAULT_BACK_BUTTON_PATH, new_game_button_rect,
                                                            back_window);
     addWidgetToWindow(window, back_button);
+}
+
+void switchToWindowAtPos(Window *next_window, int window_posX, int window_posY) {
+    SDL_SetWindowPosition(next_window->window, window_posX, window_posY);
+    drawWindow(next_window);
+    SDL_ShowWindow(next_window->window);
+    SDL_RaiseWindow(next_window->window);
 }

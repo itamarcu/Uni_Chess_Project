@@ -10,6 +10,7 @@
 
 Widget *createButton(
         Window *window,
+        Game *game,
         const char *image,
         SDL_Rect location,
         GAME_WINDOW next_window,
@@ -25,6 +26,7 @@ void switchWindowAction(Widget *widget);
 
 Widget *createButtonSwitchBetweenWindows(
         Window *window,
+        Game *game,
         const char *image,
         SDL_Rect location,
         GAME_WINDOW next_window);
