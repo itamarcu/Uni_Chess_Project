@@ -17,23 +17,23 @@
 #define DEFAULT_BACK_BUTTON_WIDTH 116
 #define DEFAULT_BACK_BUTTON_HEIGHT 40
 
-void destroyWindow(Window *src);
+void destroy_window(window_t *src);
 
-GAME_WINDOW handleWindowEvent(Window *src, SDL_Event *event);
+GAME_WINDOW handle_window_event(window_t *src, SDL_Event *event);
 
-void drawWindow(Window *src);
+void draw_window(window_t *src);
 
-void addTextureToWindow(Window *src, SDL_Texture *texture, SDL_Rect *rect);
+void add_texture_to_window(window_t *src, SDL_Texture *texture, SDL_Rect *rect);
 
-void addWidgetToWindow(Window *src, struct widget_t *widget);
+void add_widget_to_window(window_t *src, struct widget_t *widget);
 
-void addChessBGAndTitle(Window *src, char *title_path);
+void add_chess_BG_and_title(window_t *src, char *title_path);
 
-Window *createEmptyCenteredWindow(int window_width, int window_height, int num_of_textures, int num_of_widgets,
-                                  GAME_WINDOW game_window);
+window_t *create_empty_centered_window(int window_width, int window_height, int num_of_textures, int num_of_widgets,
+                                     GAME_WINDOW game_window);
 
-void addBackButtonToWindow(Window *window, Game *game, GAME_WINDOW back_window);
+void add_back_button_to_window(window_t *window, game_t *game, GAME_WINDOW back_window);
 
-void switchToWindowAtPos(Window *next_window, int window_posX, int window_posY);
+void switch_to_window_at_pos(window_t *next_window, int window_posX, int window_posY);
 
 #endif /* WINDOW_H_ */

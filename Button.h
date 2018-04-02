@@ -4,29 +4,29 @@
 #include <SDL.h>
 #include <SDL_video.h>
 #include "GUIStructs.h"
-//#include "Widget.h"
+//#include "widget_t.h"
 
 #define ALPHA_FACTOR_MOUSE_OVER 200
 
-Widget *createButton(
-        Window *window,
-        Game *game,
+widget_t *create_button(
+        window_t *window,
+        game_t *game,
         const char *image,
         SDL_Rect location,
         GAME_WINDOW next_window,
-        void (*action)(Widget *src));
+        void (*action)(widget_t *src));
 
-void destroyButton(Widget *src);
+void destroy_button(widget_t *src);
 
-void handleButtonEvent(Widget *src, SDL_Event *event);
+void handle_button_event(widget_t *src, SDL_Event *event);
 
-void drawButton(Widget *widget);
+void draw_button(widget_t *widget);
 
-void switchWindowAction(Widget *widget);
+void switch_window_action(widget_t *widget);
 
-Widget *createButtonSwitchBetweenWindows(
-        Window *window,
-        Game *game,
+widget_t *create_button_switch_between_windows(
+        window_t *window,
+        game_t *game,
         const char *image,
         SDL_Rect location,
         GAME_WINDOW next_window);

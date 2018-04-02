@@ -25,13 +25,6 @@ typedef enum {
 
 } GAME_ACTION_RESULT;
 
-typedef struct possible_move_type {
-    int row, col;
-    bool is_capturing;
-    bool is_threatened_by_opponent;
-    bool is_possible;  // if this is false, ignore all others
-} PossibleMove;
-
 void println_error(const char *format, ...);
 
 void println_output(const char *format, ...);

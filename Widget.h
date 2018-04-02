@@ -7,6 +7,6 @@
 #include "GUIStructs.h"
 
 // useful function for NULL-safe destroy
-void destroyWidget(Widget *src);
+void destroy_widget(widget_t *src);
 
 #endif /* WIDGET_H_ */

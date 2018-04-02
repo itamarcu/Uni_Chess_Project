@@ -9,7 +9,7 @@ bool is_partially_legal_move(char grid[8][8], int r1, int c1, int r2, int c2);
 bool is_partially_legal_move_without_start(char grid[8][8], int r1, int c1, int r2, int c2, char moving_piece,
                                            char target_piece);
 
-void start_game(Game *game) {
+void start_game(game_t *game) {
     game->state = GAME_STATE_GAME;
     game->current_user = WHITE;
     game->winner = GAME_WINNER_NONE;
@@ -17,7 +17,7 @@ void start_game(Game *game) {
     game->board = make_starting_board();
 }
 
-bool is_current_checked(Game *game) {
+bool is_current_checked(game_t *game) {
     bool is_white_king = game->current_user == WHITE;
     int rk, ck;
     for (int row = 0; row < 8; row++)
@@ -48,7 +48,7 @@ bool is_current_checked(Game *game) {
     return false;
 }
 
-GAME_ACTION_RESULT move_was_made(Game *game) {
+GAME_ACTION_RESULT move_was_made(game_t *game) {
     //Check if next player is checkmated
     bool game_ended = check_checkmate(game, game->current_user != WHITE);
 
@@ -59,7 +59,7 @@ GAME_ACTION_RESULT move_was_made(Game *game) {
     }
 }
 
-bool check_checkmate(Game *game, bool checking_for_white) {
+bool check_checkmate(game_t *game, bool checking_for_white) {
     for (int row = 0; row < 8; row++)
         for (int col = 0; col < 8; col++) {
             char piece = game->board->grid[row][col];
@@ -67,7 +67,7 @@ bool check_checkmate(Game *game, bool checking_for_white) {
                 continue;
             if (is_white_piece(piece) == checking_for_white)
                 continue;
-            PossibleMove moves[MOVES_ARRAY_SIZE];
+            possible_move_t moves[MOVES_ARRAY_SIZE];
             if (get_possible_moves(game, row, col, moves) != SUCCESS)
                 println_error("BUG 15907624");
 
@@ -77,7 +77,7 @@ bool check_checkmate(Game *game, bool checking_for_white) {
     return true;
 }
 
-void change_current_player(Game *game) {
+void change_current_player(game_t *game) {
     if (game->current_user == WHITE) {
         game->current_user = BLACK;
     } else {
@@ -221,7 +221,7 @@ bool is_partially_legal_move_without_start(char grid[8][8], int r1, int c1, int 
 /**
  * This uses zero-based indexing for rows and columns, please remember
  */
-GAME_ACTION_RESULT console_cmd_move(Game *game, int r1, int c1, int r2, int c2) {
+GAME_ACTION_RESULT console_cmd_move(game_t *game, int r1, int c1, int r2, int c2) {
     if (0 > r1 || r1 >= 8 || 0 > c1 || c1 >= 8 || 0 > r2 || r2 >= 8 || 0 > c2 || c2 >= 8) {
         return INVALID_POS;
     }

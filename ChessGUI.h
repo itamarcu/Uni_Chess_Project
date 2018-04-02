@@ -27,16 +27,18 @@
 #define GAME_MODE_WIDGETS 3
 
 
-void GUI_main_loop(Game *game);
+void GUI_main_loop(game_t *game);
 
-void handleEventsAndDraw(Window *current_window, GAME_WINDOW *curr_window, Windows *windows);
+void handle_events_and_draw(window_t *current_window, GAME_WINDOW *curr_window, Windows *windows);
 
-Window *createMainMenu(Game *game);
+window_t *create_main_menu(game_t *game);
 
-Window *createGameModeWindow(Game *game);
+window_t *create_game_mode_window(game_t *game);
 
-void onePlayerButtonAction(Widget *widget);
+void one_player_button_action(widget_t *widget);
 
-void twoPlayersButtonAction(Widget *widget);
+void two_players_button_action(widget_t *widget);
+
+window_t *create_one_player_options_window(game_t *game);
 
 #endif //UNI_CHESS_PROJECT_GUI_H

@@ -1,6 +1,6 @@
 #include "Widget.h"
 
-void destroyWidget(Widget *src) {
+void destroy_widget(widget_t *src) {
     if (src != NULL)
         src->destroy(src);
 }

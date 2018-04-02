@@ -1,8 +1,8 @@
 #include "ChessBoard.h"
 
 
-Board *make_starting_board() {
-    Board *board = (Board *) malloc(sizeof(*board));
+board_t *make_starting_board() {
+    board_t *board = (board_t *) malloc(sizeof(*board));
     char whiteFirstRow[8] = {WHITE_ROOK, WHITE_KNIGHT, WHITE_BISHOP, WHITE_QUEEN, WHITE_KING, WHITE_BISHOP, WHITE_KNIGHT, WHITE_ROOK};
     char blackFirstRow[8] = {BLACK_ROOK, BLACK_KNIGHT, BLACK_BISHOP, BLACK_QUEEN, BLACK_KING, BLACK_BISHOP, BLACK_KNIGHT, BLACK_ROOK};
     if (board == NULL) {
@@ -21,7 +21,7 @@ Board *make_starting_board() {
     return board;
 }
 
-void free_board(Board *board) {
+void free_board(board_t *board) {
     free(board);
 }
 

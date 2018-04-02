@@ -32,13 +32,13 @@
  * for example: a white knight would be 'n'.
  */
 
-typedef struct board_type {
+typedef struct board_t {
     char grid[8][8]; //first row then column. grid[0] is the first row (Row 1).
-} Board;
+} board_t;
 
-Board* make_starting_board();
+board_t* make_starting_board();
 
-void free_board(Board *board);
+void free_board(board_t *board);
 
 bool is_empty_space(char piece);
 bool is_white_piece(char piece);

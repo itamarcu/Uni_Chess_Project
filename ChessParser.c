@@ -1,10 +1,10 @@
 #include "ChessParser.h"
 
 
-Command *cmd_move(Command *command) {
+command_t *cmd_move(command_t *command) {
     // format should be: "move r1,c1 to r2,c2"
     // for example, "move 1,A to 8,H"
-    command->gameCommand = CMD_MOVE;
+    command->game_command = CMD_MOVE;
 
     char *arg0 = strtok(NULL, " \r\t\n");
     char *arg1 = strtok(NULL, " \r\t\n");
@@ -12,7 +12,7 @@ Command *cmd_move(Command *command) {
     if (arg2 == NULL || strcmp(arg1, "to") != 0
         || strlen(arg0) != 3 || strlen(arg2) != 3
         || arg0[1] != ',' || arg2[1] != ',') {
-        command->isValidCommand = false;
+        command->valid_command = false;
         return command;
     }
     command->args[0] = arg0[0] - '1';
@@ -30,12 +30,12 @@ Command *cmd_move(Command *command) {
     return command;
 }
 
-Command *cmd_get_moves(Command *command) {
-    command->gameCommand = CMD_GET_MOVES;
+command_t *cmd_get_moves(command_t *command) {
+    command->game_command = CMD_GET_MOVES;
 
     char *arg0 = strtok(NULL, " \r\t\n");
     if (arg0 == NULL || strlen(arg0) != 3 || arg0[1] != ',') {
-        command->isValidCommand = false;
+        command->valid_command = false;
         return command;
     }
 
@@ -50,27 +50,27 @@ Command *cmd_get_moves(Command *command) {
     return command;
 }
 
-Command *cmd_load(Command *command) {
-    command->settingsCommand = CMD_LOAD;
+command_t *cmd_load(command_t *command) {
+    command->settings_command = CMD_LOAD;
     char *arg_string = strtok(NULL, " \r\t\n");
     if (arg_string != NULL) {
         command->path = strdup(arg_string);
-        command->isValidPath = is_valid_path(command->path);
-    } else command->isValidCommand = false;
+        command->valid_path = is_valid_path(command->path);
+    } else command->valid_command = false;
     return command;
 }
 
-Command *cmd_save(Command *command) {
-    command->gameCommand = CMD_SAVE;
+command_t *cmd_save(command_t *command) {
+    command->game_command = CMD_SAVE;
     char *arg_string = strtok(NULL, " \r\t\n");
     if (arg_string != NULL) {
         command->path = strdup(arg_string);
-        command->isValidPath = is_valid_path(command->path);
-    } else command->isValidCommand = false;
+        command->valid_path = is_valid_path(command->path);
+    } else command->valid_command = false;
     return command;
 }
 
-Command *get_user_input_as_command() {
+command_t *get_user_input_as_command() {
 
     char input[1024 + 1];
     fgets(input, 1024 + 1, stdin);
@@ -81,7 +81,7 @@ Command *get_user_input_as_command() {
     }
 
     //getting the words from the string
-    Command *command = (Command *) malloc(sizeof(*command));
+    command_t *command = (command_t *) malloc(sizeof(*command));
     if (command == NULL) {
         println_error("ERROR: malloc resulted in NULL pointer!");
         return NULL;
@@ -91,12 +91,12 @@ Command *get_user_input_as_command() {
     if (command_string != NULL) {
         command_string = strdup(command_string);
     } else {
-        command->isValidCommand = false;
+        command->valid_command = false;
         return command;
     }
 
     bool arg_valids[4];
-    command->isValidCommand = true;
+    command->valid_command = true;
 
     //Special cases for these - need to parse non-integers
     if (strcmp(command_string, "move") == 0) {
@@ -122,33 +122,33 @@ Command *get_user_input_as_command() {
         }
     }
 
-    command->settingsCommand = CMD_NONE_SETTINGS;
-    command->gameCommand = CMD_NONE_GAME;
+    command->settings_command = CMD_NONE_SETTINGS;
+    command->game_command = CMD_NONE_GAME;
 
     if (strcmp(command_string, "game_mode") == 0) {
-        command->settingsCommand = CMD_GAME_MODE;
-        command->isValidCommand = arg_valids[0];
+        command->settings_command = CMD_GAME_MODE;
+        command->valid_command = arg_valids[0];
     } else if (strcmp(command_string, "difficulty") == 0) {
-        command->settingsCommand = CMD_DIFFICULTY;
-        command->isValidCommand = arg_valids[0];
+        command->settings_command = CMD_DIFFICULTY;
+        command->valid_command = arg_valids[0];
     } else if (strcmp(command_string, "user_color") == 0) {
-        command->settingsCommand = CMD_USER_COLOR;
-        command->isValidCommand = arg_valids[0];
+        command->settings_command = CMD_USER_COLOR;
+        command->valid_command = arg_valids[0];
     } else if (strcmp(command_string, "default") == 0) {
-        command->settingsCommand = CMD_DEFAULT;
+        command->settings_command = CMD_DEFAULT;
     } else if (strcmp(command_string, "print_settings") == 0) {
-        command->settingsCommand = CMD_PRINT_SETTINGS;
+        command->settings_command = CMD_PRINT_SETTINGS;
     } else if (strcmp(command_string, "start") == 0) {
-        command->settingsCommand = CMD_START;
+        command->settings_command = CMD_START;
     } else if (strcmp(command_string, "quit") == 0) {
-        command->settingsCommand = CMD_QUIT_SETTINGS;
-        command->gameCommand = CMD_QUIT_GAME;
+        command->settings_command = CMD_QUIT_SETTINGS;
+        command->game_command = CMD_QUIT_GAME;
     } else if (strcmp(command_string, "undo") == 0) {
-        command->gameCommand = CMD_UNDO;
+        command->game_command = CMD_UNDO;
     } else if (strcmp(command_string, "reset") == 0) {
-        command->gameCommand = CMD_RESET;
+        command->game_command = CMD_RESET;
     } else {
-        command->isValidCommand = false;
+        command->valid_command = false;
     }
 
     return command;
@@ -158,7 +158,7 @@ bool is_valid_path(char *path) {
     //TODO is_valid_path()
 }
 
-void free_command(Command *command) {
+void free_command(command_t *command) {
     free(command->path);
     free(command);
 }

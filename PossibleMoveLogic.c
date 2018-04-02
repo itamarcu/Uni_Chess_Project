@@ -8,7 +8,7 @@
 /**
  * This function is faster than checking for each piece if it threatens this spot
  */
-bool has_enemy_in_that_direction(Game *game, bool is_white, int row, int col, int row_delta, int col_delta) {
+bool has_enemy_in_that_direction(game_t *game, bool is_white, int row, int col, int row_delta, int col_delta) {
     int original_row = row;
     int original_col = col;
     row += row_delta;
@@ -51,7 +51,7 @@ bool has_enemy_in_that_direction(Game *game, bool is_white, int row, int col, in
     return false;
 }
 
-void update_move_by_potential_threats(Game *game, PossibleMove *move, int r1, int c1) {
+void update_move_by_potential_threats(game_t *game, possible_move_t *move, int r1, int c1) {
     int r2 = move->row;
     int c2 = move->col;
 
@@ -138,7 +138,7 @@ void update_move_by_potential_threats(Game *game, PossibleMove *move, int r1, in
     move->is_threatened_by_opponent = piece_will_be_threatened;
 }
 
-void add_move_to_possibilities(Game *game, PossibleMove *moves, int index, int r1, int c1, int r2, int c2) {
+void add_move_to_possibilities(game_t *game, possible_move_t *moves, int index, int r1, int c1, int r2, int c2) {
     moves[index].row = r2;
     moves[index].col = c2;
     if (r2 < 0 || r2 >= 8 || c2 < 0 || c2 >= 8)
@@ -148,11 +148,11 @@ void add_move_to_possibilities(Game *game, PossibleMove *moves, int index, int r
 }
 
 /**
- * @param moves empty array of PossibleMove objects, to be filled. The array is guaranteed to
+ * @param possible_moves empty array of PossibleMove objects, to be filled. The array is guaranteed to
  * have only possible moves up to a certain index, and then only impossible moves afterwards.
  * @return result of action. Will not fill moves if action is invalid.
  */
-GAME_ACTION_RESULT get_possible_moves(Game *game, int row, int col, PossibleMove *moves) {
+GAME_ACTION_RESULT get_possible_moves(game_t *game, int row, int col, possible_move_t *possible_moves) {
     if (row < 0 || row >= 8 || col < 0 || col >= 8) {
         return INVALID_POS;
     }
@@ -162,53 +162,53 @@ GAME_ACTION_RESULT get_possible_moves(Game *game, int row, int col, PossibleMove
         return NO_PIECE_IN_LOCATION;
     }
 
-    //PossibleMove *moves = (PossibleMove *) malloc(sizeof(PossibleMove) * MOVES_ARRAY_SIZE);
+    //possible_move_t *possible_moves = (possible_move_t *) malloc(sizeof(possible_move_t) * MOVES_ARRAY_SIZE);
 
 
     for (int i = 0; i < MOVES_ARRAY_SIZE; i++) {
-        moves[i].is_possible = false;
+        possible_moves[i].is_possible = false;
     }
 
     int next_move_index = 0;
 
     switch (piece) {
         case WHITE_PAWN:
-            add_move_to_possibilities(game, moves, next_move_index, row, col, row + 1, col);
-            moves[next_move_index].is_possible &= !moves[next_move_index].is_capturing;
-            if (moves[next_move_index].is_possible)
+            add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row + 1, col);
+            possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_possible)
                 next_move_index += 1;
-            add_move_to_possibilities(game, moves, next_move_index, row, col, row + 1, col - 1);
-            moves[next_move_index].is_possible &= moves[next_move_index].is_capturing;
-            if (moves[next_move_index].is_possible)
+            add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row + 1, col - 1);
+            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_possible)
                 next_move_index += 1;
-            add_move_to_possibilities(game, moves, next_move_index, row, col, row + 1, col + 1);
-            moves[next_move_index].is_possible &= moves[next_move_index].is_capturing;
-            if (moves[next_move_index].is_possible)
+            add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row + 1, col + 1);
+            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_possible)
                 next_move_index += 1;
             if (row == 1) //starting move
             {
-                add_move_to_possibilities(game, moves, next_move_index, row, col, row + 2, col);
-                moves[next_move_index].is_possible &= !moves[next_move_index].is_capturing;
+                add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row + 2, col);
+                possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
             }
             break;
         case BLACK_PAWN:
-            add_move_to_possibilities(game, moves, next_move_index, row, col, row - 1, col);
-            moves[next_move_index].is_possible &= !moves[next_move_index].is_capturing;
-            if (moves[next_move_index].is_possible)
+            add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row - 1, col);
+            possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_possible)
                 next_move_index += 1;
 
-            add_move_to_possibilities(game, moves, next_move_index, row, col, row - 1, col - 1);
-            moves[next_move_index].is_possible &= moves[next_move_index].is_capturing;
-            if (moves[next_move_index].is_possible)
+            add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row - 1, col - 1);
+            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_possible)
                 next_move_index += 1;
-            add_move_to_possibilities(game, moves, next_move_index, row, col, row - 1, col + 1);
-            moves[next_move_index].is_possible &= moves[next_move_index].is_capturing;
-            if (moves[next_move_index].is_possible)
+            add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row - 1, col + 1);
+            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_possible)
                 next_move_index += 1;
             if (row == 6) //starting move
             {
-                add_move_to_possibilities(game, moves, next_move_index, row, col, row - 2, col);
-                moves[next_move_index].is_possible &= !moves[next_move_index].is_capturing;
+                add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row - 2, col);
+                possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
             }
             break;
         case WHITE_BISHOP:
@@ -222,8 +222,8 @@ GAME_ACTION_RESULT get_possible_moves(Game *game, int row, int col, PossibleMove
                     int r = row + row_delta;
                     int c = col + col_delta;
                     for (; 0 <= r && r < 8 && 0 <= c && c < 8; r += row_delta, c += col_delta) {
-                        add_move_to_possibilities(game, moves, next_move_index, row, col, r, c);
-                        if (!moves[next_move_index].is_possible) //if blocked, no need to check more in this direction
+                        add_move_to_possibilities(game, possible_moves, next_move_index, row, col, r, c);
+                        if (!possible_moves[next_move_index].is_possible) //if blocked, no need to check more in this direction
                             break;
                         next_move_index += 1;
                     }
@@ -241,8 +241,8 @@ GAME_ACTION_RESULT get_possible_moves(Game *game, int row, int col, PossibleMove
                     int r = row + row_delta;
                     int c = col + col_delta;
                     for (; 0 <= r && r < 8 && 0 <= c && c < 8; r += row_delta, c += col_delta) {
-                        add_move_to_possibilities(game, moves, next_move_index, row, col, r, c);
-                        if (!moves[next_move_index].is_possible) //if blocked, no need to check more in this direction
+                        add_move_to_possibilities(game, possible_moves, next_move_index, row, col, r, c);
+                        if (!possible_moves[next_move_index].is_possible) //if blocked, no need to check more in this direction
                             break;
                         next_move_index += 1;
                     }
@@ -258,8 +258,8 @@ GAME_ACTION_RESULT get_possible_moves(Game *game, int row, int col, PossibleMove
             for (int i = 0; i < 8; i++) {
                 int r = row + knight_x_deltas[i];
                 int c = col + knight_y_deltas[i];
-                add_move_to_possibilities(game, moves, next_move_index, row, col, r, c);
-                if (moves[next_move_index].is_possible)
+                add_move_to_possibilities(game, possible_moves, next_move_index, row, col, r, c);
+                if (possible_moves[next_move_index].is_possible)
                     next_move_index += 1;
             }
         }
@@ -273,8 +273,8 @@ GAME_ACTION_RESULT get_possible_moves(Game *game, int row, int col, PossibleMove
                     int r = row + row_delta;
                     int c = col + col_delta;
                     for (; 0 <= r && r < 8 && 0 <= c && c < 8; r += row_delta, c += col_delta) {
-                        add_move_to_possibilities(game, moves, next_move_index, row, col, r, c);
-                        if (!moves[next_move_index].is_possible) //if blocked, no need to check more in this direction
+                        add_move_to_possibilities(game, possible_moves, next_move_index, row, col, r, c);
+                        if (!possible_moves[next_move_index].is_possible) //if blocked, no need to check more in this direction
                             break;
                         next_move_index += 1;
                     }
@@ -290,8 +290,8 @@ GAME_ACTION_RESULT get_possible_moves(Game *game, int row, int col, PossibleMove
                     int r = row + row_delta;
                     int c = col + col_delta;
                     if (0 <= r && r < 8 && 0 <= c && c < 8) {
-                        add_move_to_possibilities(game, moves, next_move_index, row, col, r, c);
-                        if (moves[next_move_index].is_possible)
+                        add_move_to_possibilities(game, possible_moves, next_move_index, row, col, r, c);
+                        if (possible_moves[next_move_index].is_possible)
                             next_move_index += 1;
                     }
                 }

@@ -32,19 +32,19 @@ typedef enum {
 } SETTINGS_COMMAND;
 
 //args gets maximum 4 numbers in move command - r1,c1,r2,c2 (c1 = 0 for Column A for example)
-typedef struct command_type {
-    bool isValidCommand;
-    bool isValidPath;
-    GAME_COMMAND gameCommand;
-    SETTINGS_COMMAND settingsCommand;
+typedef struct command_t {
+    bool valid_command;
+    bool valid_path;
+    GAME_COMMAND game_command;
+    SETTINGS_COMMAND settings_command;
     int args[4];
     char *path; // will be allocated and point to a valid string path only if its load or save command. otherwise points to NULL.
-} Command;
+} command_t;
 
-Command *get_user_input_as_command();
+command_t *get_user_input_as_command();
 
 bool is_valid_path(char* path);
 
-void free_command(Command *command);
+void free_command(command_t *command);
 
 #endif //UNI_CHESS_PROJECT_PARSER_H

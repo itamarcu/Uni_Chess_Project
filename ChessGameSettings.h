@@ -26,25 +26,25 @@
 #define EXPERT_DIFFICULTY 5
 
 
-typedef struct game_type {
+typedef struct game_t {
     char program_mode; // PROGRAM_MODE_*
     int state; // GAME_STATE_*
     int game_mode; // GAME_MODE_*
     int difficulty; // 1 .. 5
     int user_color; // USER_COLOR_*
     int current_user; // ^ ditto ^
-    Board *board;
+    board_t *board;
     int winner; // GAME_CURRENT_WINNER_*
-} Game;
+} game_t;
 
 /*
  * returns true if the game loaded successfully and false otherwise.
  */
-bool cmd_load(Game *game, char* path);
+bool cmd_load(game_t *game, char* path);
 
-void reset_default_settings(Game *game);
+void reset_default_settings(game_t *game);
 
-void free_game(Game *game);
+void free_game(game_t *game);
 
 char *difficulty_string(int difficulty_int);
 

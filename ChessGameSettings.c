@@ -1,14 +1,14 @@
 #include "ChessGameSettings.h"
 
 
-void reset_default_settings(Game *game) {
+void reset_default_settings(game_t *game) {
     game->difficulty = 2;
     game->game_mode = GAME_MODE_SINGLEPLAYER;
     game->user_color = WHITE;
     game->state = GAME_STATE_SETTINGS;
 }
 
-void free_game(Game *game) {
+void free_game(game_t *game) {
     free_board(game->board);
     free(game);
 }
