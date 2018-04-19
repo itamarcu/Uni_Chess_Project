@@ -28,12 +28,12 @@ GAME_WINDOW handle_window_event(window_t *src, SDL_Event *e) {
     }
     switch (e->type) {
         case SDL_QUIT:
-            src->next_window = QUIT;
+            src->next_window_frame = QUIT;
             break;
         case SDL_WINDOWEVENT:
             switch (e->window.event) {
                 case SDL_WINDOWEVENT_CLOSE:
-                    src->next_window = QUIT;
+                    src->next_window_frame = QUIT;
                     break;
                 default:
                     break;
@@ -41,7 +41,7 @@ GAME_WINDOW handle_window_event(window_t *src, SDL_Event *e) {
         default:
             break;
     }
-    return src->next_window;
+    return src->next_window_frame;
 }
 
 void draw_window(window_t *src) {
@@ -62,6 +62,22 @@ void draw_window(window_t *src) {
     }
     SDL_RenderPresent(renderer);
     SDL_Delay(10);
+}
+
+SDL_Texture *create_texture_from_path(char *tex_path, SDL_Renderer *rend) {
+    SDL_Surface *surface = SDL_LoadBMP(tex_path);
+    if (surface == NULL) {
+//        printf("ERROR: unable to load image: %s\n", SDL_GetError());
+        return NULL;
+    }
+    SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 255, 255, 255));
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(rend, surface);
+    if (texture == NULL) {
+        SDL_FreeSurface(surface);
+        return NULL;
+    }
+    SDL_FreeSurface(surface);
+    return texture;
 }
 
 void add_texture_to_window(window_t *src, SDL_Texture *texture, SDL_Rect *rect) {
@@ -93,25 +109,13 @@ void add_chess_BG_and_title(window_t *src, char *title_path) {
         return;
     }
     SDL_FreeSurface(background_surface);
-
-
-    SDL_Surface *title_surface = SDL_LoadBMP(title_path);
-    if (title_surface == NULL) {
-        printf("ERROR: unable to load image: %s\n", SDL_GetError());
-        SDL_DestroyTexture(background_texture);
-        destroy_window(src);
-        return;
-    }
-    SDL_SetColorKey(title_surface, SDL_TRUE, SDL_MapRGB(title_surface->format, 255, 255, 255));
-    SDL_Texture *title_texture = SDL_CreateTextureFromSurface(rend, title_surface);
-    if (title_texture == NULL) {
+    SDL_Texture *title_texture;
+    if ((title_texture = create_texture_from_path(title_path, rend)) == NULL) {
         printf("ERROR: unable to create texture: %s\n", SDL_GetError());
         SDL_DestroyTexture(background_texture);
-        SDL_FreeSurface(title_surface);
         destroy_window(src);
         return;
     }
-    SDL_FreeSurface(title_surface);
 
     SDL_Rect *title_rect = (SDL_Rect *) malloc(sizeof(SDL_Rect));
     int title_width, title_height = 0;
@@ -129,7 +133,7 @@ window_t *create_empty_centered_window(int window_width, int window_height, int 
                                      GAME_WINDOW game_window) {
     window_t *window = (window_t *) malloc(sizeof(window_t));
     window->window = SDL_CreateWindow(
-            "Chess game_t",
+            "Chess Game",
             SDL_WINDOWPOS_CENTERED,
             SDL_WINDOWPOS_CENTERED,
             window_width,
@@ -143,7 +147,8 @@ window_t *create_empty_centered_window(int window_width, int window_height, int 
     SDL_HideWindow(window->window);
     window->height = window_height;
     window->width = window_width;
-    window->renderer = SDL_CreateRenderer(window->window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    window->renderer = SDL_CreateRenderer(window->window, -1,
+                                          SDL_RENDERER_PRESENTVSYNC); // need to check if should add SDL_RENDERER_ACCELERATED or SDL_RENDERER_SOFTWARE (should match settings in the VM)
     if (window->renderer == NULL) {
         printf("ERROR: unable to create renderer: %s\n", SDL_GetError());
         SDL_DestroyWindow(window->window);
@@ -156,20 +161,18 @@ window_t *create_empty_centered_window(int window_width, int window_height, int 
 
     window->num_of_tex = 0;
     window->num_of_widgets = 0;
-    window->is_shown = true;
-    window->next_window = game_window;
+    window->next_window_frame = game_window;
     return window;
 }
 
-void add_back_button_to_window(window_t *window, game_t *game, GAME_WINDOW back_window) {
+void add_back_button_to_window(window_t *window, game_t *game) {
     SDL_Rect new_game_button_rect;
     new_game_button_rect.x = 0;
     new_game_button_rect.y = window->height - DEFAULT_BACK_BUTTON_HEIGHT;
     new_game_button_rect.w = DEFAULT_BACK_BUTTON_WIDTH;
     new_game_button_rect.h = DEFAULT_BACK_BUTTON_HEIGHT;
-    widget_t *back_button = create_button_switch_between_windows(window, game, DEFAULT_BACK_BUTTON_PATH,
-                                                               new_game_button_rect,
-                                                               back_window);
+    widget_t *back_button = create_button_switch_to_prev_window(window, game, DEFAULT_BACK_BUTTON_PATH,
+                                                                new_game_button_rect);
     add_widget_to_window(window, back_button);
 }
 

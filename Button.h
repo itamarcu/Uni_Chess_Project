@@ -18,11 +18,15 @@ widget_t *create_button(
 
 void destroy_button(widget_t *src);
 
-void handle_button_event(widget_t *src, SDL_Event *event);
+void handle_button_event(widget_t *src, SDL_Event *e);
 
-void draw_button(widget_t *widget);
+void draw_button(widget_t *src);
 
 void switch_window_action(widget_t *widget);
+
+void switch_to_next_window_action(widget_t *widget);
+
+void switch_to_prev_window_action(widget_t *widget);
 
 widget_t *create_button_switch_between_windows(
         window_t *window,
@@ -31,4 +35,17 @@ widget_t *create_button_switch_between_windows(
         SDL_Rect location,
         GAME_WINDOW next_window);
 
+widget_t *create_button_switch_to_next_window(
+        window_t *window,
+        game_t *game,
+        const char *image,
+        SDL_Rect location);
+
+widget_t *create_button_switch_to_prev_window(
+        window_t *window,
+        game_t *game,
+        const char *image,
+        SDL_Rect location);
+
 #endif /* BUTTON_H_ */
+

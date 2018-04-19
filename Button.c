@@ -7,7 +7,6 @@ widget_t *create_button(
         SDL_Rect location,
         GAME_WINDOW next_window,
         void (*action)(widget_t *src)) {
-    // allocate data
     widget_t *res = (widget_t *) malloc(sizeof(widget_t));
     if (res == NULL)
         return NULL;
@@ -18,7 +17,6 @@ widget_t *create_button(
         return NULL;
     }
 
-    // we use the surface as a temp var
     SDL_Surface *surface = SDL_LoadBMP(image);
     if (surface == NULL) {
         free(res);
@@ -42,6 +40,7 @@ widget_t *create_button(
     data->location = location;
     data->next_window = next_window;
     data->action = action;
+    data->current_alpha_factor = 255;
     res->window = window;
     res->game = game;
     res->destroy = destroy_button;
@@ -65,26 +64,35 @@ void handle_button_event(widget_t *src, SDL_Event *e) {
         case SDL_MOUSEBUTTONUP:
             if (SDL_PointInRect(&mouse_pos, &button->location)) {
                 button->action(src);
+                button->current_alpha_factor = ALPHA_FACTOR_MOUSE_OVER;
             }
             break;
-        case SDL_MOUSEMOTION:
-            if (SDL_PointInRect(&mouse_pos, &button->location)) {
-                SDL_SetTextureAlphaMod(button->texture, ALPHA_FACTOR_MOUSE_OVER);
-            } else
-                SDL_SetTextureAlphaMod(button->texture, 255);
-            break;
         default:
+            if (SDL_PointInRect(&mouse_pos, &button->location)) {
+                button->current_alpha_factor = ALPHA_FACTOR_MOUSE_OVER;
+            } else
+                button->current_alpha_factor = 255;
+
             break;
     }
 }
 
 void draw_button(widget_t *src) {
     button_t *button = (button_t *) src->data;
+    SDL_SetTextureAlphaMod(button->texture, button->current_alpha_factor);
     SDL_RenderCopy(src->window->renderer, button->texture, NULL, &button->location);
 }
 
 void switch_window_action(widget_t *widget) {
-    widget->window->next_window = ((button_t *) widget->data)->next_window;
+    widget->window->next_window_frame = ((button_t *) widget->data)->next_window;
+}
+
+void switch_to_next_window_action(widget_t *widget) {
+    widget->window->next_window_frame = widget->window->next_window;
+}
+
+void switch_to_prev_window_action(widget_t *widget) {
+    widget->window->next_window_frame = widget->window->prev_window;
 }
 
 widget_t *create_button_switch_between_windows(
@@ -97,3 +105,20 @@ widget_t *create_button_switch_between_windows(
     return create_button(window, game, image, location, next_window, switch_window_action);
 }
 
+widget_t *create_button_switch_to_next_window(
+        window_t *window,
+        game_t *game,
+        const char *image,
+        SDL_Rect location) {
+
+    return create_button(window, game, image, location, window->next_window, switch_to_next_window_action);
+}
+
+widget_t *create_button_switch_to_prev_window(
+        window_t *window,
+        game_t *game,
+        const char *image,
+        SDL_Rect location) {
+
+    return create_button(window, game, image, location, window->prev_window, switch_to_prev_window_action);
+}
