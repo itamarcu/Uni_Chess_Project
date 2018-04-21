@@ -132,19 +132,19 @@ void CUI_game_case(game_t *game) {
                             move_was_made(game);
                             break;
                         case INVALID_POS:
-                            println_output("Invalid position on the board");
+                            println_error("Invalid position on the board");
                             break;
                         case NO_PIECE_IN_LOCATION:
-                            println_output("The specified position does not contain your piece");
+                            println_error("The specified position does not contain your piece");
                             break;
                         case ILLEGAL_MOVE:
-                            println_output("Illegal move");
+                            println_error("Illegal move");
                             break;
                         case KING_STILL_THREATENED:
-                            println_output("Illegal move: king is still threatened");
+                            println_error("Illegal move: king is still threatened");
                             break;
                         case KING_WILL_BE_THREATENED:
-                            println_output("Illegal move: king will be threatened");
+                            println_error("Illegal move: king will be threatened");
                             break;
                         case CANT_SAVE_FILE:
                         case EMPTY_HISTORY:
@@ -169,10 +169,10 @@ void CUI_game_case(game_t *game) {
                             //free the moves array? //TODO check if needed
                             break;
                         case INVALID_POS:
-                            println_output("Invalid position on the board");
+                            println_error("Invalid position on the board");
                             break;
                         case NO_PIECE_IN_LOCATION:
-                            println_output("The specified position does not contain a player piece");
+                            println_error("The specified position does not contain a player piece");
                             break;
                         case ILLEGAL_MOVE:
                         case KING_STILL_THREATENED:
@@ -231,10 +231,22 @@ void CUI_main_loop(game_t *game) {
                 CUI_game_case(game);
                 break;
             case GAME_STATE_QUIT:
-                return; //unnecessary but I want this
+                break; // will exit the while loop
             default:
                 println_error("Weird state...fix this");
                 break;
         }
     }
+
+    if (game->winner == GAME_WINNER_WHITE || game->winner == GAME_WINNER_BLACK) {
+        println_output("Checkmate! %s player wins the game", game->winner == GAME_WINNER_WHITE ? "white" : "black");
+    } else if (game->winner == GAME_WINNER_DRAW) {
+        println_output("The game ends in a draw");
+    } else {
+        println_error("Winner is _NONE while game state is quit. This is a bug.");
+    }
+
+
+    // The project instructions were unclear about printing at endgame - I'm doing it anyways
+    print_board(game->board);
 }

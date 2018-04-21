@@ -11,15 +11,22 @@
 /**
  * @return true when the king of the current turn color is checked
  */
-bool is_current_checked(game_t *game);
-
-GAME_ACTION_RESULT move_was_made(game_t *game);
+bool check_if_king_is_threatened(game_t *game, bool checking_for_white);
 
 /**
- * Check if colored player has any available moves. Returns true if not (= checkmate).
+ * Is called after a move is made. This function checks if the game has ended, and
+ * if not, it simply switches to the next player (and the game progresses).
  */
-bool check_checkmate(game_t *game, bool checking_for_white);
+void move_was_made(game_t *game);
 
+/**
+ * Check if colored player has any available moves. Returns false if not (= checkmate).
+ */
+bool check_if_player_can_move(game_t *game, bool checking_for_white);
+
+/**
+ * Switches current player (BLACK ↔ WHITE)
+ */
 void change_current_player(game_t *game);
 
 void start_game(game_t *game);
