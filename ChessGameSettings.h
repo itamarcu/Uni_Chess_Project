@@ -1,5 +1,5 @@
-#ifndef UNI_CHESS_PROJECT_GAMESETTINGS_H
-#define UNI_CHESS_PROJECT_GAMESETTINGS_H
+#ifndef UNI_CHESS_PROJECT_GAMESETTINGS_H_
+#define UNI_CHESS_PROJECT_GAMESETTINGS_H_
 
 #include <stdbool.h>
 #include "ChessBoard.h"
@@ -35,12 +35,18 @@ typedef struct game_t {
     int current_user; // ^ ditto ^
     board_t *board;
     int winner; // GAME_CURRENT_WINNER_*
+    bool is_saved;
 } game_t;
+
+/*
+ * returns true if the game saved successfully and false otherwise.
+ */
+bool save_game_to_slot(game_t *game, char *path);
 
 /*
  * returns true if the game loaded successfully and false otherwise.
  */
-bool cmd_load(game_t *game, char* path);
+bool load_game_from_slot(game_t *game, char *path);
 
 void reset_default_settings(game_t *game);
 

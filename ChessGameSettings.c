@@ -1,5 +1,13 @@
 #include "ChessGameSettings.h"
 
+bool save_game_to_slot(game_t *game, char *path) {
+    return false;
+}
+
+
+bool load_game_from_slot(game_t *game, char *path) {
+    return false;
+};
 
 void reset_default_settings(game_t *game) {
     game->difficulty = 2;
