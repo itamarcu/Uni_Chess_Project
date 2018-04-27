@@ -8,8 +8,19 @@ void reset_default_settings(game_t *game) {
     game->state = GAME_STATE_SETTINGS;
 }
 
+void free_history(History *history) {
+    if (history == NULL)
+        return;
+    for (int i = 0; i < history->count; i++) {
+        free_board(history->prev_boards[i]);
+    }
+    free(history->prev_boards);
+    free(history);
+}
+
 void free_game(game_t *game) {
     free_board(game->board);
+    free_history(game->history);
     free(game);
 }
 
