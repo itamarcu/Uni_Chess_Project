@@ -212,21 +212,20 @@ int show_message_box(window_t *window, SDL_MessageBoxButtonData buttons[], int n
 
     int buttonid;
     if (SDL_ShowMessageBox(&messageboxdata, &buttonid) < 0) {
-        SDL_Log("error displaying message box");
+        println_error("error displaying message box");
         return -1;
     }
     if (buttonid == -1) {
-        SDL_Log("no selection");
         return 0;
     } else {
-        SDL_Log("selection was %s", buttons[buttonid].text);
         return buttonid;
     }
 }
 
 int show_error_message_box(window_t *window, const char *message) {
+    println_error(message);
     SDL_MessageBoxButtonData buttons[] = {
-            {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 0, "Ok"}
+            {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "OK"}
     };
     return show_message_box(window, buttons, 1, "ERROR", message);
 }

@@ -6,6 +6,7 @@
 #include "Button.h"
 #include "OptionsButtons.h"
 #include "SlotOptions.h"
+#include "Undo.h"
 #include <SDL.h>
 #include <SDL_video.h>
 #include <strings.h>
@@ -101,5 +102,17 @@ void *build_pick_slot_window(game_t *game, windows_t *windows);
 void save_load_game_slots_action(widget_t *src, int clicked_index);
 
 void *build_game_window(game_t *game, windows_t *windows);
+
+void undo_button_action(widget_t *widget);
+
+void save_button_action(widget_t *widget);
+
+void load_button_action(widget_t *widget);
+
+void restart_button_action(widget_t *widget);
+
+void quit_game_button_action(widget_t *widget);
+
+void main_menu_button_action(widget_t *widget);
 
 #endif //UNI_CHESS_PROJECT_GUI_H

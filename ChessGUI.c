@@ -352,7 +352,7 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
         return; // fatal error to handle.
     }
     if (slot_options->is_loading_mode && slot_options->is_saved_slots[clicked_index]) {
-        if (load_game_from_slot(src->game, full_path) == false) {
+        if (load_game_from_path(src->game, full_path) == false) {
             if (show_error_message_box(src->window,
                                        "There was an error trying to load the game, please try again") <
                 0) {
@@ -364,7 +364,7 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
         }
     } else { // saving a game
         // check if the slot is not disables because there is not saved game in the slot
-        if (save_game_to_slot(src->game, full_path) == false) {
+        if (save_game_to_path(src->game, full_path) == false) {
             if (show_error_message_box(src->window,
                                        "There was an error trying to save the game, please try again") <
                 0) {
@@ -388,17 +388,53 @@ void *build_game_window(game_t *game, windows_t *windows) {
     undo_move_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
     undo_move_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
 
-    SDL_Rect save_button;
-    save_button.x = (DEFAULT_WINDOW_WIDTH - 2.5 * DEFAULT_GAME_BUTTON_WIDTH);
-    save_button.y = centered_button_height + 1 * DEFAULT_BUTTONS_HEIGHT;
-    save_button.w = DEFAULT_BUTTONS_WIDTH;
-    save_button.h = DEFAULT_BUTTONS_HEIGHT;
+    SDL_Rect save_button_rec;
+    save_button_rec.x = (DEFAULT_WINDOW_WIDTH - (int) (2.5 * DEFAULT_GAME_BUTTON_WIDTH));
+    save_button_rec.y = GAME_BOARD_HEIGHT;
+    save_button_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
+    save_button_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
+
+    SDL_Rect load_button_rec;
+    load_button_rec.x = (DEFAULT_WINDOW_WIDTH - (int) (2.5 * DEFAULT_GAME_BUTTON_WIDTH));
+    load_button_rec.y = GAME_BOARD_HEIGHT;
+    load_button_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
+    load_button_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
+
+    SDL_Rect restart_button_rec;
+    restart_button_rec.x = (DEFAULT_WINDOW_WIDTH - (int) (2.5 * DEFAULT_GAME_BUTTON_WIDTH));
+    restart_button_rec.y = GAME_BOARD_HEIGHT;
+    restart_button_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
+    restart_button_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
+
+    SDL_Rect main_menu_button_rec;
+    main_menu_button_rec.x = (DEFAULT_WINDOW_WIDTH - (int) (2.5 * DEFAULT_GAME_BUTTON_WIDTH));
+    main_menu_button_rec.y = GAME_BOARD_HEIGHT;
+    main_menu_button_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
+    main_menu_button_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
+
+    SDL_Rect quit_button_rec;
+    quit_button_rec.x = (DEFAULT_WINDOW_WIDTH - (int) (2.5 * DEFAULT_GAME_BUTTON_WIDTH));
+    quit_button_rec.y = GAME_BOARD_HEIGHT;
+    quit_button_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
+    quit_button_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
 
     widget_t *undo_move_button = create_button(game_window, game, UNDO_MOVE_BUTTON_PATH, undo_move_rec,
-                                               NULL,);
-    widget_t *two_players_button = create_button(game_mode_window, game, TWO_PLAYERS_BUTTON_PATH,
-                                                 save_button,
-                                                 windows->game_window, two_players_button_action);
+                                               NULL, undo_button_action);
+    widget_t *save_button = create_button(game_window, game, SAVE_GAME_BUTTON_PATH,
+                                          save_button_rec,
+                                          windows->pick_slot_window, save_button_action);
+    widget_t *load_button = create_button(game_window, game, LOAD_GAME2_BUTTON_PATH,
+                                          load_button_rec,
+                                          windows->pick_slot_window, load_button_action);
+    widget_t *restart_button = create_button(game_window, game, RESTART_BUTTON_PATH,
+                                             restart_button_rec,
+                                             NULL, restart_button_action);
+    widget_t *main_menu_button = create_button(game_window, game, MAIN_MENU_BUTTON_PATH,
+                                               main_menu_button_rec,
+                                               windows->main_menu, main_menu_button_action);
+    widget_t *quit_button = create_button(game_window, game, QUIT2_BUTTON_PATH,
+                                          quit_button_rec,
+                                          NULL, quit_game_button_action);
 
 //    SDL_Rect *user_color_tex_rect = (SDL_Rect *) malloc(sizeof(SDL_Rect));
 //    user_color_tex_rect->x = diff_level_tex_rect->x;
@@ -415,3 +451,37 @@ void *build_game_window(game_t *game, windows_t *windows) {
 
 }
 
+void undo_button_action(widget_t *widget) {
+    switch (undo_move(widget->game)) {
+        case SUCCESS:
+            break;
+        case EMPTY_HISTORY:
+            show_error_message_box(widget->window, "ERROR: Empty history, no move to undo");
+            break;
+        default:
+            println_error("Unexpected enum value after using cmd_undo");
+            break;
+    }
+}
+
+void save_button_action(widget_t *widget) {
+    slot_options_t *slot_options = (slot_options_t *) widget->next_window->widgets[0]->data;
+    slot_options->is_loading_mode = false;
+    switch_window_and_change_prev_window_action(widget);
+}
+
+void load_button_action(widget_t *widget) {
+    slot_options_t *slot_options = (slot_options_t *) widget->next_window->widgets[0]->data;
+    slot_options->is_loading_mode = true;
+    switch_window_and_change_prev_window_action(widget);
+}
+
+void restart_button_action(widget_t *widget) {
+    start_game(widget->game);
+}
+
+void quit_game_button_action(widget_t *widget) {
+
+}
+
+void main_menu_button_action(widget_t *widget);

@@ -1,11 +1,11 @@
 #include "ChessGameSettings.h"
 
-bool save_game_to_slot(game_t *game, char *path) {
+bool save_game_to_path(game_t *game, char *path) {
     return false;
 }
 
 
-bool load_game_from_slot(game_t *game, char *path) {
+bool load_game_from_path(game_t *game, char *path) {
     return false;
 };
 
