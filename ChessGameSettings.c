@@ -14,6 +14,7 @@ void reset_default_settings(game_t *game) {
     game->game_mode = GAME_MODE_SINGLEPLAYER;
     game->user_color = WHITE;
     game->state = GAME_STATE_SETTINGS;
+    game->is_saved = false;
 }
 
 void free_game(game_t *game) {
