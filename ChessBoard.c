@@ -51,3 +51,31 @@ bool is_empty_space(char piece) {
 bool is_white_piece(char piece) {
     return tolower(piece) == piece;
 }
+
+const char *name_of_piece(char piece) {
+    switch (piece) {
+        case EMPTY_SPACE:
+            return "BUG";
+        case WHITE_PAWN:
+        case BLACK_PAWN:
+            return "pawn";
+        case WHITE_BISHOP:
+        case BLACK_BISHOP:
+            return "bishop";
+        case WHITE_ROOK:
+        case BLACK_ROOK:
+            return "rook";
+        case WHITE_KNIGHT:
+        case BLACK_KNIGHT:
+            return "knight";
+        case WHITE_QUEEN:
+        case BLACK_QUEEN:
+            return "queen";
+        case WHITE_KING:
+        case BLACK_KING:
+            return "king";
+        default:
+            println_error("Bug 1659189572037, piece is %c", piece);
+            return "BUG";
+    }
+}

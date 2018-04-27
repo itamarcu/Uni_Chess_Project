@@ -12,7 +12,7 @@ bool is_partially_legal_move_without_start(char grid[8][8], int r1, int c1, int 
 
 void start_game(game_t *game) {
     game->state = GAME_STATE_GAME;
-    game->current_user = WHITE;
+    game->current_player = WHITE;
     game->winner = GAME_WINNER_NONE;
     free_board(game->board);
     game->board = make_starting_board();
@@ -59,7 +59,7 @@ void move_was_made(game_t *game, int r1, int c1, int r2, int c2) {
     push_move_to_history(game, r1, c1, r2, c2);
 
     //Check if next player is checkmated
-    bool game_ended = !check_if_player_can_move(game, game->current_user != WHITE);
+    bool game_ended = !check_if_player_can_move(game, game->current_player != WHITE);
 
     if (game_ended) {
         game->state = GAME_STATE_QUIT;
@@ -99,10 +99,10 @@ bool check_if_player_can_move(game_t *game, bool checking_for_white) {
 }
 
 void change_current_player(game_t *game) {
-    if (game->current_user == WHITE) {
-        game->current_user = BLACK;
+    if (game->current_player == WHITE) {
+        game->current_player = BLACK;
     } else {
-        game->current_user = WHITE;
+        game->current_player = WHITE;
     }
 }
 
@@ -253,7 +253,7 @@ GAME_ACTION_RESULT console_cmd_move(game_t *game, int r1, int c1, int r2, int c2
     char target_piece = game->board->grid[r2][c2];
 
     //If moving from empty, or moving enemy unit
-    if (is_empty_space(moving_piece) || (is_white_piece(moving_piece) != (game->current_user == WHITE))) {
+    if (is_empty_space(moving_piece) || (is_white_piece(moving_piece) != (game->current_player == WHITE))) {
         return NO_PIECE_IN_LOCATION;
     }
     //If moving into ally unit
@@ -268,11 +268,11 @@ GAME_ACTION_RESULT console_cmd_move(game_t *game, int r1, int c1, int r2, int c2
     }
 
     //Now we must test for king danger
-    bool king_already_checked = check_if_king_is_threatened(game, game->current_user == WHITE);
+    bool king_already_checked = check_if_king_is_threatened(game, game->current_player == WHITE);
     //Make move attempt
     game->board->grid[r2][c2] = moving_piece;
     game->board->grid[r1][c1] = EMPTY_SPACE;
-    int king_will_be_checked = check_if_king_is_threatened(game, game->current_user == WHITE);
+    int king_will_be_checked = check_if_king_is_threatened(game, game->current_player == WHITE);
     if (king_will_be_checked) {
         //undo move attempt
         game->board->grid[r2][c2] = target_piece;
