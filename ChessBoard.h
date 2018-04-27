@@ -38,6 +38,8 @@ typedef struct board_t {
 
 board_t* make_starting_board();
 
+board_t *copy_board(board_t *board);
+
 void free_board(board_t *board);
 
 bool is_empty_space(char piece);

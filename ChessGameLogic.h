@@ -15,9 +15,10 @@ bool check_if_king_is_threatened(game_t *game, bool checking_for_white);
 
 /**
  * Is called after a move is made. This function checks if the game has ended, and
- * if not, it simply switches to the next player (and the game progresses).
+ * if not, it simply switches to the next player (and the game progresses). This
+ * also updates the game undo history.
  */
-void move_was_made(game_t *game);
+void move_was_made(game_t *game, int r1, int c1, int r2, int c2);
 
 /**
  * Check if colored player has any available moves. Returns false if not (= checkmate).

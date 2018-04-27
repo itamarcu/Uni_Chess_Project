@@ -20,10 +20,14 @@ void reset_default_settings(game_t *game) {
 void free_history(History *history) {
     if (history == NULL)
         return;
+
     for (int i = 0; i < history->count; i++) {
         free_board(history->prev_boards[i]);
     }
     free(history->prev_boards);
+
+    free(history->prev_moves);
+
     free(history);
 }
 

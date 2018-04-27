@@ -12,28 +12,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46e0cdd0-4027-412d-8c5b-a07baecdc01b" name="Default" comment="up">
-      <change beforePath="" afterPath="$PROJECT_DIR$/SlotOptions.c" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/SlotOptions.h" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/Auxiliary.c" afterPath="$PROJECT_DIR$/Auxiliary.c" />
-      <change beforePath="$PROJECT_DIR$/Button.c" afterPath="$PROJECT_DIR$/Button.c" />
-      <change beforePath="$PROJECT_DIR$/Button.h" afterPath="$PROJECT_DIR$/Button.h" />
       <change beforePath="$PROJECT_DIR$/ChessBoard.c" afterPath="$PROJECT_DIR$/ChessBoard.c" />
       <change beforePath="$PROJECT_DIR$/ChessBoard.h" afterPath="$PROJECT_DIR$/ChessBoard.h" />
       <change beforePath="$PROJECT_DIR$/ChessConsoleUI.c" afterPath="$PROJECT_DIR$/ChessConsoleUI.c" />
-      <change beforePath="$PROJECT_DIR$/ChessGUI.c" afterPath="$PROJECT_DIR$/ChessGUI.c" />
-      <change beforePath="$PROJECT_DIR$/ChessGUI.h" afterPath="$PROJECT_DIR$/ChessGUI.h" />
       <change beforePath="$PROJECT_DIR$/ChessGameLogic.c" afterPath="$PROJECT_DIR$/ChessGameLogic.c" />
       <change beforePath="$PROJECT_DIR$/ChessGameLogic.h" afterPath="$PROJECT_DIR$/ChessGameLogic.h" />
       <change beforePath="$PROJECT_DIR$/ChessGameSettings.c" afterPath="$PROJECT_DIR$/ChessGameSettings.c" />
       <change beforePath="$PROJECT_DIR$/ChessGameSettings.h" afterPath="$PROJECT_DIR$/ChessGameSettings.h" />
       <change beforePath="$PROJECT_DIR$/ChessParser.h" afterPath="$PROJECT_DIR$/ChessParser.h" />
-      <change beforePath="$PROJECT_DIR$/GUIStructs.h" afterPath="$PROJECT_DIR$/GUIStructs.h" />
       <change beforePath="$PROJECT_DIR$/PossibleMoveLogic.c" afterPath="$PROJECT_DIR$/PossibleMoveLogic.c" />
       <change beforePath="$PROJECT_DIR$/UndoLoadSave.c" afterPath="$PROJECT_DIR$/UndoLoadSave.c" />
       <change beforePath="$PROJECT_DIR$/UndoLoadSave.h" afterPath="$PROJECT_DIR$/UndoLoadSave.h" />
-      <change beforePath="$PROJECT_DIR$/Window.c" afterPath="$PROJECT_DIR$/Window.c" />
-      <change beforePath="$PROJECT_DIR$/Window.h" afterPath="$PROJECT_DIR$/Window.h" />
       <change beforePath="$PROJECT_DIR$/main.c" afterPath="$PROJECT_DIR$/main.c" />
     </list>
     <ignored path="cmake-build-debug/" />
@@ -51,8 +42,8 @@
       <file leaf-file-name="ChessConsoleUI.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ChessConsoleUI.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="18" column="20" lean-forward="true" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
+            <state relative-caret-position="678">
+              <caret line="257" column="5" lean-forward="true" selection-start-line="257" selection-start-column="5" selection-end-line="257" selection-end-column="5" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
               </folding>
@@ -60,11 +51,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Auxiliary.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Auxiliary.c">
+      <file leaf-file-name="ChessGameSettings.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ChessGameSettings.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="448">
-              <caret line="28" column="22" lean-forward="false" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
+            <state relative-caret-position="678">
+              <caret line="58" column="11" lean-forward="false" selection-start-line="58" selection-start-column="11" selection-end-line="58" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChessGameSettings.c" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ChessGameSettings.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="400">
+              <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Minimax.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Minimax.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Minimax.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Minimax.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="64">
+              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -102,11 +123,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UndoLoadSave.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UndoLoadSave.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/UndoLoadSave.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="18" column="42" lean-forward="true" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
+            <state relative-caret-position="464">
+              <caret line="29" column="30" lean-forward="false" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -141,9 +162,11 @@
       <find>undo</find>
       <find>undo_move</find>
       <find>undo_m</find>
-      <find>6</find>
       <find>123978134</find>
       <find>7984324764</find>
+      <find>winner is</find>
+      <find>free_</find>
+      <find>6</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -181,10 +204,10 @@
         <option value="$PROJECT_DIR$/ChessGameSettings.h" />
         <option value="$PROJECT_DIR$/ChessGameSettings.c" />
         <option value="$PROJECT_DIR$/UndoLoadSave.h" />
-        <option value="$PROJECT_DIR$/ChessConsoleUI.c" />
         <option value="$PROJECT_DIR$/ChessGameLogic.c" />
         <option value="$PROJECT_DIR$/PossibleMoveLogic.c" />
         <option value="$PROJECT_DIR$/UndoLoadSave.c" />
+        <option value="$PROJECT_DIR$/ChessConsoleUI.c" />
       </list>
     </option>
   </component>
@@ -344,7 +367,14 @@
       <option name="project" value="LOCAL" />
       <updated>1524841071244</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Added undo, pretty sure it 100% works">
+      <created>1524846609311</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1524846609311</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -390,7 +420,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="Added get_moves and completely fixed it and move as well (hopefully)" />
@@ -400,7 +429,8 @@
     <MESSAGE value="Added Game End checks and console prints, fixed up some things, added a bit of documentation" />
     <MESSAGE value="about to merge" />
     <MESSAGE value="merging..." />
-    <option name="LAST_COMMIT_MESSAGE" value="merging..." />
+    <MESSAGE value="Added undo, pretty sure it 100% works" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added undo, pretty sure it 100% works" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -420,7 +450,6 @@
     <select />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Structs.h" />
     <entry file="file://$PROJECT_DIR$/test.out">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-870">
@@ -430,13 +459,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Game.h" />
     <entry file="file://$PROJECT_DIR$/Game.c" />
-    <entry file="file://$PROJECT_DIR$/Minimax.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/braid.bmp" />
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt">
       <provider selected="true" editor-type-id="text-editor">
@@ -650,14 +672,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ChessGameSettings.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="24" column="44" lean-forward="true" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Auxiliary.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="320">
@@ -674,29 +688,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ChessGameSettings.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="678">
-          <caret line="58" column="10" lean-forward="false" selection-start-line="58" selection-start-column="10" selection-end-line="58" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ChessBoard.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="496">
           <caret line="35" column="22" lean-forward="true" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ChessConsoleUI.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="18" column="20" lean-forward="true" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -728,11 +724,53 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/UndoLoadSave.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="18" column="42" lean-forward="true" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
+        <state relative-caret-position="464">
+          <caret line="29" column="30" lean-forward="false" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Minimax.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Minimax.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChessConsoleUI.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="678">
+          <caret line="257" column="5" lean-forward="true" selection-start-line="257" selection-start-column="5" selection-end-line="257" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChessGameSettings.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="678">
+          <caret line="58" column="11" lean-forward="false" selection-start-line="58" selection-start-column="11" selection-end-line="58" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChessGameSettings.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>

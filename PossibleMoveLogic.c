@@ -41,7 +41,7 @@ bool has_enemy_in_that_direction(game_t *game, bool is_white, int row, int col, 
                 case BLACK_KING:
                     return abs(row - original_row) <= 1 && abs(col - original_col) <= 1;
                 default:
-                    println_error("BUG 7984324764");
+                    println_error("BUG 7984324764 with piece %c", piece);
                     return false;
             }
         }
@@ -300,7 +300,7 @@ GAME_ACTION_RESULT get_possible_moves(game_t *game, int row, int col, possible_m
             }
             break;
         default:
-            println_error("BUG 123978134");
+            println_error("BUG 123978134 with piece %c", piece);
             break;
     }
 

@@ -1,4 +1,5 @@
 #include "ChessConsoleUI.h"
+#include "UndoLoadSave.h"
 
 
 /**
@@ -129,7 +130,8 @@ void CUI_game_case(game_t *game) {
                     switch (console_cmd_move(game, command->args[0], command->args[1], command->args[2],
                                              command->args[3])) {
                         case SUCCESS:
-                            move_was_made(game);
+                            move_was_made(game, command->args[0], command->args[1], command->args[2],
+                                          command->args[3]);
                             break;
                         case INVALID_POS:
                             println_error("Invalid position on the board");
@@ -188,8 +190,22 @@ void CUI_game_case(game_t *game) {
                     println_debug("---The save command is not yet developed---");
                     break;
                 case CMD_UNDO:
-                    //TODO undo command
-                    println_debug("---The undo command is not yet developed---");
+                    switch (undo_move(game)) {
+                        case SUCCESS:
+                            // Print happens inside the function, if game mode is console :/
+                            break;
+                        case EMPTY_HISTORY:
+                            println_error("Empty history, no move to undo");
+                            break;
+                        case INVALID_POS:
+                        case NO_PIECE_IN_LOCATION:
+                        case ILLEGAL_MOVE:
+                        case KING_STILL_THREATENED:
+                        case KING_WILL_BE_THREATENED:
+                        case CANT_SAVE_FILE:
+                            println_error("Unexpected enum value after using cmd_undo");
+                            break;
+                    }
                     break;
                 case CMD_RESET:
                     game->state = GAME_STATE_SETTINGS;
@@ -207,13 +223,12 @@ void CUI_game_case(game_t *game) {
                     println_error("ERROR: unhandled game command in switch-case:    %d", command->game_command);
                     break;
             }
-
         free_command(command);
     } else //computer's turn
     {
         //TODO computer turn
         println_debug("---The computer turn is not yet developed---");
-        move_was_made(game);
+        move_was_made(game, 0, 0, 0, 0);
     }
 }
 
@@ -231,11 +246,15 @@ void CUI_main_loop(game_t *game) {
                 CUI_game_case(game);
                 break;
             case GAME_STATE_QUIT:
-                break; // will exit the while loop
+                return;
             default:
                 println_error("Weird state...fix this");
                 break;
         }
+    }
+    if (game->state == GAME_STATE_QUIT) {
+        //No text, just immediately terminate
+        return;
     }
 
     if (game->winner == GAME_WINNER_WHITE || game->winner == GAME_WINNER_BLACK) {

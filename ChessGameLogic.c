@@ -1,4 +1,5 @@
 #include "ChessGameLogic.h"
+#include "UndoLoadSave.h"
 
 bool is_partially_legal_move(char grid[8][8], int r1, int c1, int r2, int c2);
 
@@ -15,6 +16,12 @@ void start_game(game_t *game) {
     game->winner = GAME_WINNER_NONE;
     free_board(game->board);
     game->board = make_starting_board();
+    free_history(game->history);
+    game->history = (History *) malloc(sizeof(game->history));
+    game->history->prev_boards = (board_t **) malloc(sizeof(game->board) * HISTORY_SIZE);
+    game->history->prev_moves = (unsigned int *) malloc(sizeof(unsigned int) * HISTORY_SIZE);
+    game->history->count = 0;
+    push_move_to_history(game, 1, 2, 3, 4); // arbitrary values - not important
 }
 
 bool check_if_king_is_threatened(game_t *game, bool checking_for_white) {
@@ -47,7 +54,10 @@ bool check_if_king_is_threatened(game_t *game, bool checking_for_white) {
     return false;
 }
 
-void move_was_made(game_t *game) {
+void move_was_made(game_t *game, int r1, int c1, int r2, int c2) {
+    //Push board to undo history
+    push_move_to_history(game, r1, c1, r2, c2);
+
     //Check if next player is checkmated
     bool game_ended = !check_if_player_can_move(game, game->current_user != WHITE);
 
