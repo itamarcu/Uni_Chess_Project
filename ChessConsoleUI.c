@@ -167,8 +167,6 @@ void CUI_game_case(game_t *game) {
                                     printf("^");
                                 printf("\n");
                             }
-
-                            //free the moves array? //TODO check if needed
                             break;
                         case INVALID_POS:
                             println_error("Invalid position on the board");
