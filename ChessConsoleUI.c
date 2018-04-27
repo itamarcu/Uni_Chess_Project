@@ -110,9 +110,9 @@ void CUI_settings_case(game_t *game) {
 
 
 void CUI_game_case(game_t *game) {
-    if (game->game_mode == GAME_MODE_MULTIPLAYER || game->current_user == game->user_color) {
+    if (game->game_mode == GAME_MODE_MULTIPLAYER || game->current_player == game->user_color) {
         print_board(game->board);
-        println_output("Enter your move (%s player):", color_string(game->current_user));
+        println_output("Enter your move (%s player):", color_string(game->current_player));
 
         command_t *command = get_user_input_as_command();
         if (command == NULL) {
@@ -167,8 +167,6 @@ void CUI_game_case(game_t *game) {
                                     printf("^");
                                 printf("\n");
                             }
-
-                            //free the moves array? //TODO check if needed
                             break;
                         case INVALID_POS:
                             println_error("Invalid position on the board");
@@ -226,9 +224,10 @@ void CUI_game_case(game_t *game) {
         free_command(command);
     } else //computer's turn
     {
-        //TODO computer turn
-        println_debug("---The computer turn is not yet developed---");
-        move_was_made(game, 0, 0, 0, 0);
+        ComputerMove move = computer_move(game);
+        println_output("Computer: move %s at <%d,%d> to <%d,%d>", name_of_piece(move.moving_piece), move.r1, move.c1,
+                       move.r2, move.c2);
+        move_was_made(game, move.r1, move.c1, move.r2, move.c2);
     }
 }
 

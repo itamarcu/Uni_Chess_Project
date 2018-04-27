@@ -44,4 +44,6 @@ void free_board(board_t *board);
 
 bool is_empty_space(char piece);
 bool is_white_piece(char piece);
+
+const char *name_of_piece(char piece);
 #endif //UNI_CHESS_PROJECT_BOARD_H

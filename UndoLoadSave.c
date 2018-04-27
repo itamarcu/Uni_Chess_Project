@@ -17,7 +17,7 @@ void undo_one_move(game_t *game) {
         char c1 = (char) ((m >> 16) + 'A');
         char r2 = (char) ((m >> 8) + '1');
         char c2 = (char) ((m >> 0) + 'A');
-        char *player = game->current_user == WHITE ? "white" : "black";
+        char *player = color_string(game->current_player);
         println_output("Undo move for %s player: <%c,%c> -> <%c,%c>", player, r2, c2, r1, c1); // (CORRECT ORDER!)
     }
 

@@ -37,7 +37,7 @@ typedef struct game_t {
     int game_mode; // GAME_MODE_*
     int difficulty; // 1 .. 5
     int user_color; // USER_COLOR_*
-    int current_user; // ^ ditto ^
+    int current_player; // ^ ditto ^
     board_t *board;
     int winner; // GAME_CURRENT_WINNER_*
     History *history;

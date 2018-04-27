@@ -75,6 +75,6 @@ char *color_string(int color_int) {
     } else if (color_int == BLACK) {
         return "black";
     }
-    println_error("wrong color int was input into color_string(), should be USER_COLOR_xxxxx");
+    println_error("wrong color int was input into color_string(), should be WHITE or BLACK");
     return "asian";
 }
