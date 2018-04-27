@@ -39,7 +39,7 @@ widget_t *create_slot_options(
         int number_of_slots,
         int x_pos,
         int y_pos,
-        void (*action)(widget_t *src));
+        void (*action)(widget_t *src, int clicked_index));
 
 void destroy_slot_options(widget_t *src);
 

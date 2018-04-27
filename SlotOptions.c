@@ -6,7 +6,7 @@ widget_t *create_slot_options(
         int number_of_slots,
         int x_pos,
         int y_pos,
-        void (*action)(widget_t *src)) {
+        void (*action)(widget_t *src, int clicked_index)) {
     widget_t *res = 0;
     slot_options_t *data = 0;
     SDL_Surface *blank_slot_surface = 0;
@@ -202,37 +202,7 @@ void handle_slot_options_event(widget_t *src, SDL_Event *e) {
             slot_i_rect = slot_options->first_slot_location;
             for (int i = 0; i < NUMBER_OF_DROWN_SLOTS; ++i) {
                 if (SDL_PointInRect(&mouse_pos, &slot_i_rect)) {
-                    char slot_num_str[10];
-                    char full_path[30];
-                    itoa(slot_options->current_top_slot + i, slot_num_str, 10);
-                    if (sprintf(full_path, "%s%s", GAME_SLOTS_PATH, slot_num_str) < 0) {
-                        return; // fatal error to handle.
-                    }
-                    if (slot_options->is_loading_mode && slot_options->is_saved_slots[i]) {
-                        if (load_game_from_slot(src->game, full_path) == false) {
-                            if (show_error_message_box(src->window,
-                                                       "There was an error trying to load the game, please try again") <
-                                0) {
-                                return; // fatal error to handle.
-                            };
-                        } else {
-                            src->game->is_saved = true;
-                            switch_to_next_window_action(src);
-                        }
-                    } else { // saving a game
-                        // check if the slot is not disables because there is not saved game in the slot
-                        if (save_game_to_slot(src->game, full_path) == false) {
-                            if (show_error_message_box(src->window,
-                                                       "There was an error trying to save the game, please try again") <
-                                0) {
-                                return; // fatal error to handle.
-                            };
-                        } else {
-                            src->game->is_saved = true;
-                            slot_options->is_saved_slots[i] = true;
-                            switch_to_next_window_action(src);
-                        }
-                    }
+                    slot_options->action(src, i);
                 }
                 slot_i_rect.y += SLOT_HEIGHT;
             }

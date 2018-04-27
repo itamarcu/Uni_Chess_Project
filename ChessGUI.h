@@ -53,6 +53,7 @@
 
 
 #define GAME_WINDOW_HEIGHT 800
+#define GAME_BOARD_HEIGHT 700
 #define GAME_WINDOW_TEXTURES 1
 #define GAME_WINDOW_WIDGETS 8
 #define DEFAULT_GAME_BUTTON_WIDTH 180
@@ -75,6 +76,10 @@ void quit_button_action(widget_t *widget);
 
 void *build_game_mode_window(game_t *game, windows_t *windows);
 
+void one_player_button_action(widget_t *widget);
+
+void two_players_button_action(widget_t *widget);
+
 void *build_one_player_options_window(game_t *game, windows_t *windows);
 
 void amateur_button_action(widget_t *widget);
@@ -92,6 +97,8 @@ void white_button_action(widget_t *widget);
 void black_button_action(widget_t *widget);
 
 void *build_pick_slot_window(game_t *game, windows_t *windows);
+
+void save_load_game_slots_action(widget_t *src, int clicked_index);
 
 void *build_game_window(game_t *game, windows_t *windows);
 

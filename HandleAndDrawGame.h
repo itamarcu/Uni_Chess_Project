@@ -33,7 +33,7 @@
 #define NUMBERS_Y_ON_SLOT 14
 #define NUMBER_OF_DROWN_SLOTS 5
 
-widget_t *create_slot_options(
+widget_t *create_game_gui(
         window_t *window,
         game_t *game,
         int number_of_slots,

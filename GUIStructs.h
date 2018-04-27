@@ -12,6 +12,7 @@ typedef struct widget_t widget_t;
 typedef struct button_t button_t;
 typedef struct options_buttons_t options_buttons_t;
 typedef struct slot_options_t slot_options_t;
+typedef struct game_gui_t game_gui_t;
 typedef struct window_t window_t;
 typedef struct windows_t windows_t;
 
@@ -64,10 +65,12 @@ struct slot_options_t {
     int num_of_slots;
     int current_top_slot;
     bool is_loading_mode;
-    void (*action)(widget_t *src);
+
+    void (*action)(widget_t *src, int clicked_index);
 };
 
 struct game_gui_t {
+    SDL_Texture *board_BG;
     SDL_Texture *standard_square;
     SDL_Texture *threatened_square;
     SDL_Texture *capture_square;
@@ -75,6 +78,12 @@ struct game_gui_t {
     SDL_Texture *pieces[NUM_COMBINED_PIECES_TYPES];
     SDL_Texture *highlighted_squares[8][8];
     SDL_Rect board_square_rects[8][8];
+    SDL_Rect board_pieces_rects[8][8];
+    bool is_piece_focused;
+    int focused_piece_row;
+    int focused_piece_col;
+    bool is_possible_move[8][8];
+    bool is_currently_saved;
 };
 
 struct window_t {

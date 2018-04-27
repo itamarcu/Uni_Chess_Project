@@ -163,15 +163,26 @@ void *build_game_mode_window(game_t *game, windows_t *windows) {
     two_players_button_rect.h = DEFAULT_BUTTONS_HEIGHT;
 
     widget_t *one_player_button = create_button(game_mode_window, game, ONE_PLAYER_BUTTON_PATH, one_player_button_rect,
-                                                windows->options_window, switch_window_and_change_prev_window_action);
+                                                windows->options_window, one_player_button_action);
     widget_t *two_players_button = create_button(game_mode_window, game, TWO_PLAYERS_BUTTON_PATH,
                                                  two_players_button_rect,
-                                                 windows->game_window, switch_window_and_change_prev_window_action);
+                                                 windows->game_window, two_players_button_action);
 
     add_widget_to_window(game_mode_window, one_player_button);
     add_widget_to_window(game_mode_window, two_players_button);
 
 }
+
+void one_player_button_action(widget_t *widget) {
+    widget->game->game_mode = GAME_MODE_SINGLEPLAYER;
+    switch_window_and_change_prev_window_action(widget);
+}
+
+void two_players_button_action(widget_t *widget) {
+    widget->game->game_mode = GAME_MODE_MULTIPLAYER;
+    switch_window_and_change_prev_window_action(widget);
+}
+
 
 void *build_one_player_options_window(game_t *game, windows_t *windows) {
     window_t *options_window = windows->options_window;
@@ -325,16 +336,69 @@ void *build_pick_slot_window(game_t *game, windows_t *windows) {
     pick_slot_window->next_window = windows->game_window; // will change if picking a slot for saving a game instead of loading a game.
 
     widget_t *slot_options_widget = create_slot_options(pick_slot_window, game, 10,
-                                                        (DEFAULT_WINDOW_WIDTH - SLOT_OPTIONS_WIDTH) / 2, 250, NULL);
+                                                        (DEFAULT_WINDOW_WIDTH - SLOT_OPTIONS_WIDTH) / 2, 250,
+                                                        save_load_game_slots_action);
     add_widget_to_window(pick_slot_window, slot_options_widget);
     slot_options_t *slot_options = (slot_options_t *) (slot_options_widget->data);
     slot_options->is_loading_mode = true;
+}
+
+void save_load_game_slots_action(widget_t *src, int clicked_index) {
+    slot_options_t *slot_options = (slot_options_t *) src->data;
+    char slot_num_str[10];
+    char full_path[30];
+    itoa(slot_options->current_top_slot + clicked_index, slot_num_str, 10);
+    if (sprintf(full_path, "%s%s", GAME_SLOTS_PATH, slot_num_str) < 0) {
+        return; // fatal error to handle.
+    }
+    if (slot_options->is_loading_mode && slot_options->is_saved_slots[clicked_index]) {
+        if (load_game_from_slot(src->game, full_path) == false) {
+            if (show_error_message_box(src->window,
+                                       "There was an error trying to load the game, please try again") <
+                0) {
+                return; // fatal error to handle.
+            };
+        } else {
+            src->game->is_saved = true;
+            switch_to_next_window_action(src);
+        }
+    } else { // saving a game
+        // check if the slot is not disables because there is not saved game in the slot
+        if (save_game_to_slot(src->game, full_path) == false) {
+            if (show_error_message_box(src->window,
+                                       "There was an error trying to save the game, please try again") <
+                0) {
+                return; // fatal error to handle.
+            };
+        } else {
+            src->game->is_saved = true;
+            slot_options->is_saved_slots[clicked_index] = true;
+            switch_to_next_window_action(src);
+        }
+    }
 }
 
 void *build_game_window(game_t *game, windows_t *windows) {
     window_t *game_window = windows->game_window;
     SDL_SetRenderDrawColor(game_window->renderer, 155, 255, 255, 0);
     add_back_button_to_window(game_window, game);
+    SDL_Rect undo_move_rec;
+    undo_move_rec.x = 0;
+    undo_move_rec.y = GAME_BOARD_HEIGHT;
+    undo_move_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
+    undo_move_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
+
+    SDL_Rect save_button;
+    save_button.x = (DEFAULT_WINDOW_WIDTH - 2.5 * DEFAULT_GAME_BUTTON_WIDTH);
+    save_button.y = centered_button_height + 1 * DEFAULT_BUTTONS_HEIGHT;
+    save_button.w = DEFAULT_BUTTONS_WIDTH;
+    save_button.h = DEFAULT_BUTTONS_HEIGHT;
+
+    widget_t *undo_move_button = create_button(game_window, game, UNDO_MOVE_BUTTON_PATH, undo_move_rec,
+                                               NULL,);
+    widget_t *two_players_button = create_button(game_mode_window, game, TWO_PLAYERS_BUTTON_PATH,
+                                                 save_button,
+                                                 windows->game_window, two_players_button_action);
 
 //    SDL_Rect *user_color_tex_rect = (SDL_Rect *) malloc(sizeof(SDL_Rect));
 //    user_color_tex_rect->x = diff_level_tex_rect->x;
