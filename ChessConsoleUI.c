@@ -195,12 +195,7 @@ void CUI_game_case(game_t *game) {
                         case EMPTY_HISTORY:
                             println_error("Empty history, no move to undo");
                             break;
-                        case INVALID_POS:
-                        case NO_PIECE_IN_LOCATION:
-                        case ILLEGAL_MOVE:
-                        case KING_STILL_THREATENED:
-                        case KING_WILL_BE_THREATENED:
-                        case CANT_SAVE_FILE:
+                        default:
                             println_error("Unexpected enum value after using cmd_undo");
                             break;
                     }
