@@ -73,6 +73,8 @@ void handle_events_and_draw(window_t *current_window, GAME_WINDOW *curr_window, 
 
 void *build_main_menu(game_t *game, windows_t *windows);
 
+void load_button_main_menu_action(widget_t *widget);
+
 void quit_button_action(widget_t *widget);
 
 void *build_game_mode_window(game_t *game, windows_t *windows);
@@ -107,12 +109,9 @@ void undo_button_action(widget_t *widget);
 
 void save_button_action(widget_t *widget);
 
-void load_button_action(widget_t *widget);
+void load_button_game_action(widget_t *widget);
 
 void restart_button_action(widget_t *widget);
 
-void quit_game_button_action(widget_t *widget);
-
-void main_menu_button_action(widget_t *widget);
-
+void show_unsaved_game_box_message(widget_t *widget);
 #endif //UNI_CHESS_PROJECT_GUI_H

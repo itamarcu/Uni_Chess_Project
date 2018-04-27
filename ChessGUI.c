@@ -27,6 +27,12 @@ void GUI_main_loop(game_t *game)
     windows->game_window = game_window;
     windows->pick_slot_window = pick_slot_window;
 
+    main_menu->windows = windows;
+    game_mode_window->windows = windows;
+    options_window->windows = windows;
+    game_window->windows = windows;
+    pick_slot_window->windows = windows;
+
     build_main_menu(game, windows);
     build_game_mode_window(game, windows);
     build_one_player_options_window(game, windows);
@@ -131,13 +137,20 @@ void *build_main_menu(game_t *game, windows_t *windows) {
                                               switch_window_and_change_prev_window_action);
     widget_t *load_game_button = create_button(main_menu, game, LOAD_GAME_BUTTON_PATH,
                                                load_game_button_rect, windows->pick_slot_window,
-                                               switch_window_and_change_prev_window_action);
+                                               load_button_main_menu_action);
     widget_t *quit_game_button = create_button(main_menu, game, QUIT_GAME_BUTTON_PATH,
                                                quit_game_button_rect, NULL, quit_button_action);
 
     add_widget_to_window(main_menu, new_game_button);
     add_widget_to_window(main_menu, load_game_button);
     add_widget_to_window(main_menu, quit_game_button);
+}
+
+void load_button_main_menu_action(widget_t *widget) {
+    switch_window_and_change_prev_window_action(widget);
+    widget->next_window->next_window = widget->window->windows->game_window;
+    slot_options_t *slot_options = (slot_options_t *) widget->next_window->widgets[0]->data;
+    slot_options->is_loading_mode = true;
 }
 
 void quit_button_action(widget_t *widget) {
@@ -332,13 +345,13 @@ void black_button_action(widget_t *widget) {
 void *build_pick_slot_window(game_t *game, windows_t *windows) {
     window_t *pick_slot_window = windows->pick_slot_window;
     add_chess_BG_and_title(pick_slot_window, PICK_SLOT_TITLE_PATH);
-    add_back_button_to_window(pick_slot_window, game);
     pick_slot_window->next_window = windows->game_window; // will change if picking a slot for saving a game instead of loading a game.
 
     widget_t *slot_options_widget = create_slot_options(pick_slot_window, game, 10,
                                                         (DEFAULT_WINDOW_WIDTH - SLOT_OPTIONS_WIDTH) / 2, 250,
                                                         save_load_game_slots_action);
     add_widget_to_window(pick_slot_window, slot_options_widget);
+    add_back_button_to_window(pick_slot_window, game);
     slot_options_t *slot_options = (slot_options_t *) (slot_options_widget->data);
     slot_options->is_loading_mode = true;
 }
@@ -351,16 +364,19 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
     if (sprintf(full_path, "%s%s", GAME_SLOTS_PATH, slot_num_str) < 0) {
         return; // fatal error to handle.
     }
-    if (slot_options->is_loading_mode && slot_options->is_saved_slots[clicked_index]) {
-        if (load_game_from_path(src->game, full_path) == false) {
-            if (show_error_message_box(src->window,
-                                       "There was an error trying to load the game, please try again") <
-                0) {
-                return; // fatal error to handle.
-            };
-        } else {
-            src->game->is_saved = true;
-            switch_to_next_window_action(src);
+    println_debug("%d", slot_options->is_loading_mode);
+    if (slot_options->is_loading_mode) {
+        if (slot_options->is_saved_slots[clicked_index]) {
+            if (load_game_from_path(src->game, full_path) == false) {
+                if (show_error_message_box(src->window,
+                                           "There was an error trying to load the game, please try again") <
+                    0) {
+                    return; // fatal error to handle.
+                }
+            } else {
+                src->game->is_saved = true;
+                switch_to_next_window_action(src);
+            }
         }
     } else { // saving a game
         // check if the slot is not disables because there is not saved game in the slot
@@ -379,9 +395,11 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
 }
 
 void *build_game_window(game_t *game, windows_t *windows) {
+    start_game(game);
     window_t *game_window = windows->game_window;
     SDL_SetRenderDrawColor(game_window->renderer, 155, 255, 255, 0);
     add_back_button_to_window(game_window, game);
+
     SDL_Rect undo_move_rec;
     undo_move_rec.x = 0;
     undo_move_rec.y = GAME_BOARD_HEIGHT;
@@ -395,26 +413,26 @@ void *build_game_window(game_t *game, windows_t *windows) {
     save_button_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
 
     SDL_Rect load_button_rec;
-    load_button_rec.x = (DEFAULT_WINDOW_WIDTH - (int) (2.5 * DEFAULT_GAME_BUTTON_WIDTH));
+    load_button_rec.x = (DEFAULT_WINDOW_WIDTH - (int) (1.5 * DEFAULT_GAME_BUTTON_WIDTH));
     load_button_rec.y = GAME_BOARD_HEIGHT;
     load_button_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
     load_button_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
 
     SDL_Rect restart_button_rec;
-    restart_button_rec.x = (DEFAULT_WINDOW_WIDTH - (int) (2.5 * DEFAULT_GAME_BUTTON_WIDTH));
-    restart_button_rec.y = GAME_BOARD_HEIGHT;
+    restart_button_rec.x = (DEFAULT_WINDOW_WIDTH - 3 * DEFAULT_GAME_BUTTON_WIDTH);
+    restart_button_rec.y = GAME_BOARD_HEIGHT + DEFAULT_GAME_BUTTON_HEIGHT;
     restart_button_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
     restart_button_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
 
     SDL_Rect main_menu_button_rec;
-    main_menu_button_rec.x = (DEFAULT_WINDOW_WIDTH - (int) (2.5 * DEFAULT_GAME_BUTTON_WIDTH));
-    main_menu_button_rec.y = GAME_BOARD_HEIGHT;
+    main_menu_button_rec.x = (DEFAULT_WINDOW_WIDTH - 2 * DEFAULT_GAME_BUTTON_WIDTH);
+    main_menu_button_rec.y = GAME_BOARD_HEIGHT + DEFAULT_GAME_BUTTON_HEIGHT;
     main_menu_button_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
     main_menu_button_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
 
     SDL_Rect quit_button_rec;
-    quit_button_rec.x = (DEFAULT_WINDOW_WIDTH - (int) (2.5 * DEFAULT_GAME_BUTTON_WIDTH));
-    quit_button_rec.y = GAME_BOARD_HEIGHT;
+    quit_button_rec.x = (DEFAULT_WINDOW_WIDTH - DEFAULT_GAME_BUTTON_WIDTH);
+    quit_button_rec.y = GAME_BOARD_HEIGHT + DEFAULT_GAME_BUTTON_HEIGHT;
     quit_button_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
     quit_button_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
 
@@ -425,16 +443,24 @@ void *build_game_window(game_t *game, windows_t *windows) {
                                           windows->pick_slot_window, save_button_action);
     widget_t *load_button = create_button(game_window, game, LOAD_GAME2_BUTTON_PATH,
                                           load_button_rec,
-                                          windows->pick_slot_window, load_button_action);
+                                          windows->pick_slot_window, load_button_game_action);
     widget_t *restart_button = create_button(game_window, game, RESTART_BUTTON_PATH,
                                              restart_button_rec,
                                              NULL, restart_button_action);
     widget_t *main_menu_button = create_button(game_window, game, MAIN_MENU_BUTTON_PATH,
                                                main_menu_button_rec,
-                                               windows->main_menu, main_menu_button_action);
+                                               windows->main_menu, show_unsaved_game_box_message);
     widget_t *quit_button = create_button(game_window, game, QUIT2_BUTTON_PATH,
                                           quit_button_rec,
-                                          NULL, quit_game_button_action);
+                                          NULL, show_unsaved_game_box_message);
+
+    add_widget_to_window(game_window, undo_move_button);
+    add_widget_to_window(game_window, save_button);
+    add_widget_to_window(game_window, load_button);
+    add_widget_to_window(game_window, restart_button);
+    add_widget_to_window(game_window, main_menu_button);
+    add_widget_to_window(game_window, quit_button);
+
 
 //    SDL_Rect *user_color_tex_rect = (SDL_Rect *) malloc(sizeof(SDL_Rect));
 //    user_color_tex_rect->x = diff_level_tex_rect->x;
@@ -465,12 +491,14 @@ void undo_button_action(widget_t *widget) {
 }
 
 void save_button_action(widget_t *widget) {
+    widget->next_window->next_window = widget->window;
     slot_options_t *slot_options = (slot_options_t *) widget->next_window->widgets[0]->data;
     slot_options->is_loading_mode = false;
     switch_window_and_change_prev_window_action(widget);
 }
 
-void load_button_action(widget_t *widget) {
+void load_button_game_action(widget_t *widget) {
+    widget->next_window->next_window = widget->window;
     slot_options_t *slot_options = (slot_options_t *) widget->next_window->widgets[0]->data;
     slot_options->is_loading_mode = true;
     switch_window_and_change_prev_window_action(widget);
@@ -480,10 +508,48 @@ void restart_button_action(widget_t *widget) {
     start_game(widget->game);
 }
 
-void quit_game_button_action(widget_t *widget) {
-
-}
-
-void main_menu_button_action(widget_t *widget) {
-
+void show_unsaved_game_box_message(widget_t *widget) {
+    window_t *after_save_window = widget->next_window;
+    window_t *pick_slot_window = widget->window->windows->pick_slot_window;
+    if (!(widget->game->is_saved)) {
+        SDL_MessageBoxButtonData buttons[] = {
+                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "Save first"},
+                {SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 2, "no"},
+                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 3, "yes"}
+        };
+        int button_id = show_message_box(widget->window, buttons, 3, "Continue Without Saving?",
+                                         "Are you sure you want to Continue without saving?");
+        slot_options_t *slot_options;
+        switch (button_id) {
+            case 1:
+                pick_slot_window->next_window = after_save_window;
+                slot_options = (slot_options_t *) pick_slot_window->widgets[0]->data;
+                slot_options->is_loading_mode = false;
+                widget->next_window = widget->window->windows->pick_slot_window;
+                switch_window_and_change_prev_window_action(widget);
+                widget->next_window = after_save_window;
+                break;
+            case 0:
+            case 2:
+                break;
+            case 3:
+                if (after_save_window == NULL) {
+                    widget->window->next_window_frame = QUIT;
+                } else {
+                    // after_save_window should be main menu
+                    switch_window_and_change_prev_window_action(widget);
+                }
+                break;
+            default:
+                //error displaying the box.
+                break;
+        }
+    } else {
+        if (after_save_window == NULL) {
+            widget->window->next_window_frame = QUIT;
+        } else {
+            // after_save_window should be main menu
+            switch_window_and_change_prev_window_action(widget);
+        }
+    }
 }

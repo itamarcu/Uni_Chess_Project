@@ -100,6 +100,7 @@ struct window_t {
     GAME_WINDOW window_enum_val;
     GAME_WINDOW next_window_frame;
     GAME_WINDOW prev_window;
+    windows_t *windows;
 };
 
 struct windows_t {
