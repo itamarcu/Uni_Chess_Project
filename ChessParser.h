@@ -6,9 +6,7 @@
 #include <mem.h>
 #include <stdlib.h>
 #include <stdbool.h>
-/**
 
- */
 typedef enum {
     CMD_NONE_GAME,
     CMD_MOVE,

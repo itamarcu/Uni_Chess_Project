@@ -1,5 +1,5 @@
-#ifndef UNI_CHESS_PROJECT_GAMESETTINGS_H
-#define UNI_CHESS_PROJECT_GAMESETTINGS_H
+#ifndef UNI_CHESS_PROJECT_GAMESETTINGS_H_
+#define UNI_CHESS_PROJECT_GAMESETTINGS_H_
 
 #include <stdbool.h>
 #include "ChessBoard.h"
@@ -27,6 +27,7 @@
 
 typedef struct history_t {
     board_t **prev_boards; // first element is most recent
+    unsigned int *prev_moves; // each one defines the move via a four-char integer (int32). I know, this is ugly!
     int count;  // 0 when empty, HISTORY_SIZE when full
 } History;
 
@@ -44,7 +45,6 @@ typedef struct game_t {
 } game_t;
 
 /**
-/*
  * returns true if the game saved successfully and false otherwise.
  */
 bool save_game_to_slot(game_t *game, char *path);
