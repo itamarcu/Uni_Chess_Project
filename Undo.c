@@ -72,7 +72,3 @@ void push_move_to_history(game_t *game, int r1, int c1, int r2, int c2) {
     unsigned int c2_ = (unsigned int) c2;
     game->history->prev_moves[0] = ((r1_ << 24) + (c1_ << 16) + (r2_ << 8) + (c2_ << 0));
 }
-
-bool is_history_empty(game_t *game) {
-    return game->history->count == 1;
-}
