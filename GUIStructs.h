@@ -6,6 +6,8 @@
 #include <SDL_video.h>
 #include "ChessGameSettings.h"
 
+#define NUM_COMBINED_PIECES_TYPES 12
+
 typedef struct widget_t widget_t;
 typedef struct button_t button_t;
 typedef struct options_buttons_t options_buttons_t;
@@ -63,6 +65,16 @@ struct slot_options_t {
     int current_top_slot;
     bool is_loading_mode;
     void (*action)(widget_t *src);
+};
+
+struct game_gui_t {
+    SDL_Texture *standard_square;
+    SDL_Texture *threatened_square;
+    SDL_Texture *capture_square;
+    SDL_Texture *threatened_capture_square;
+    SDL_Texture *pieces[NUM_COMBINED_PIECES_TYPES];
+    SDL_Texture *highlighted_squares[8][8];
+    SDL_Rect board_square_rects[8][8];
 };
 
 struct window_t {
