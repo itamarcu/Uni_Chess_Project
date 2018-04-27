@@ -484,4 +484,6 @@ void quit_game_button_action(widget_t *widget) {
 
 }
 
-void main_menu_button_action(widget_t *widget);
+void main_menu_button_action(widget_t *widget) {
+
+}
