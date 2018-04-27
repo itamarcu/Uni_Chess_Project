@@ -42,6 +42,7 @@ void free_history(History *history) {
         free_board(history->prev_boards[i]);
     }
     free(history->prev_boards);
+    free(history->prev_moves);
     free(history);
 }
 
