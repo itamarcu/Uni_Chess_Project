@@ -5,6 +5,7 @@
 #include "Window.h"
 #include "Button.h"
 #include "OptionsButtons.h"
+#include "SlotOptions.h"
 #include <SDL.h>
 #include <SDL_video.h>
 #include <strings.h>
@@ -46,23 +47,35 @@
 #define BLACK_BUTTON_PATH "..\\pictures\\button_black.bmp"
 #define WHITE_BUTTON_PATH "..\\pictures\\button_white.bmp"
 
+#define PICK_SLOT_TITLE_PATH "..\\pictures\\title_pick-a-slot.bmp"
+#define PICK_SLOT_WINDOW_TEXTURES 3
+#define PICK_SLOT_WINDOW_WIDGETS 2
+
+
 #define GAME_WINDOW_HEIGHT 800
-#define GAME_WINDOW_TEXTURES
+#define GAME_WINDOW_TEXTURES 1
+#define GAME_WINDOW_WIDGETS 8
+#define DEFAULT_GAME_BUTTON_WIDTH 180
+#define DEFAULT_GAME_BUTTON_HEIGHT 50
+#define UNDO_MOVE_BUTTON_PATH "..\\pictures\\button_undo-move.bmp"
+#define MAIN_MENU_BUTTON_PATH "..\\pictures\\button_main-menu.bmp"
+#define SAVE_GAME_BUTTON_PATH "..\\pictures\\button_save-game.bmp"
+#define LOAD_GAME2_BUTTON_PATH "..\\pictures\\button_load-game2.bmp"
+#define QUIT2_BUTTON_PATH "..\\pictures\\button_quit2.bmp"
+#define RESTART_BUTTON_PATH "..\\pictures\\button_restart.bmp"
 
 
 void GUI_main_loop(game_t *game);
 
-void handle_events_and_draw(window_t *current_window, GAME_WINDOW *curr_window, Windows *windows);
+void handle_events_and_draw(window_t *current_window, GAME_WINDOW *curr_window, windows_t *windows);
 
-window_t *create_main_menu(game_t *game);
+void *build_main_menu(game_t *game, windows_t *windows);
 
-window_t *create_game_mode_window(game_t *game);
+void quit_button_action(widget_t *widget);
 
-void one_player_button_action(widget_t *widget);
+void *build_game_mode_window(game_t *game, windows_t *windows);
 
-void two_players_button_action(widget_t *widget);
-
-window_t *create_one_player_options_window(game_t *game);
+void *build_one_player_options_window(game_t *game, windows_t *windows);
 
 void amateur_button_action(widget_t *widget);
 
@@ -78,6 +91,8 @@ void white_button_action(widget_t *widget);
 
 void black_button_action(widget_t *widget);
 
-window_t *create_game_window(game_t *game);
+void *build_pick_slot_window(game_t *game, windows_t *windows);
+
+void *build_game_window(game_t *game, windows_t *windows);
 
 #endif //UNI_CHESS_PROJECT_GUI_H
