@@ -57,10 +57,11 @@ struct slot_options_t {
     SDL_Rect first_slot_location;
     SDL_Rect arrow_up_location;
     SDL_Rect arrow_down_location;
+    bool *is_saved_slots;
+    int *current_slots_alpha_factor;
     int num_of_slots;
     int current_top_slot;
     bool is_loading_mode;
-
     void (*action)(widget_t *src);
 };
 

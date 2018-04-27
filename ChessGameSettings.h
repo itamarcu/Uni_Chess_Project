@@ -1,5 +1,5 @@
-#ifndef UNI_CHESS_PROJECT_GAMESETTINGS_H_
-#define UNI_CHESS_PROJECT_GAMESETTINGS_H_
+#ifndef UNI_CHESS_PROJECT_GAMESETTINGS_H
+#define UNI_CHESS_PROJECT_GAMESETTINGS_H
 
 #include <stdbool.h>
 #include "ChessBoard.h"
@@ -25,6 +25,10 @@
 #define HARD_DIFFICULTY 4
 #define EXPERT_DIFFICULTY 5
 
+typedef struct history_t {
+    board_t **prev_boards; // first element is most recent
+    int count;  // 0 when empty, HISTORY_SIZE when full
+} History;
 
 typedef struct game_t {
     char program_mode; // PROGRAM_MODE_*
@@ -35,20 +39,32 @@ typedef struct game_t {
     int current_user; // ^ ditto ^
     board_t *board;
     int winner; // GAME_CURRENT_WINNER_*
+    History *history;
     bool is_saved;
 } game_t;
 
+/**
 /*
  * returns true if the game saved successfully and false otherwise.
  */
 bool save_game_to_slot(game_t *game, char *path);
 
 /*
+ * assuming the file exist in path and containing the saved game with the
  * returns true if the game loaded successfully and false otherwise.
  */
 bool load_game_from_slot(game_t *game, char *path);
 
+bool is_file_exists(char *path);
+
+/*
+ * assuming the file exists in path
+ */
+bool is_file_empty(char *path);
+
 void reset_default_settings(game_t *game);
+
+void free_history(History *history);
 
 void free_game(game_t *game);
 
