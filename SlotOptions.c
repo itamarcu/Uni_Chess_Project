@@ -40,17 +40,19 @@ widget_t *create_slot_options(
         }
     }
 
-    data->slots_textures = (SDL_Texture **) malloc((number_of_slots + 1) * sizeof(SDL_Texture *));
+
     numbered_slot_surface = SDL_CreateRGBSurface(0, SLOT_WIDTH, SLOT_HEIGHT, 32, 0, 0, 0, 0);
     if (numbered_slot_surface == NULL) {
         goto FREE_ON_ERROR;
     }
 
+    Uint32 map_rgb = SDL_MapRGB(blank_slot_surface->format, 250, 250, 250); //same format for all surfaces
     SDL_Rect slot_rect_dst;
     slot_rect_dst.x = 0;
     slot_rect_dst.y = 0;
     slot_rect_dst.w = SLOT_WIDTH;
     slot_rect_dst.h = SLOT_HEIGHT;
+    data->slots_textures = (SDL_Texture **) malloc((number_of_slots + 1) * sizeof(SDL_Texture *));
     for (int slot_index = 0; slot_index < number_of_slots; slot_index++) {
         if (SDL_BlitSurface(blank_slot_surface, NULL, numbered_slot_surface, &slot_rect_dst) < 0) {
             goto FREE_ON_ERROR;
@@ -80,6 +82,7 @@ widget_t *create_slot_options(
             num_of_digits--;
             digit = slot_number / (int) pow(10, num_of_digits - 1);
         }
+        SDL_SetColorKey(numbered_slot_surface, SDL_TRUE, map_rgb);
         data->slots_textures[slot_index] = SDL_CreateTextureFromSurface(window->renderer, numbered_slot_surface);
         if (data->slots_textures[slot_index] == NULL) {
             goto FREE_ON_ERROR;
@@ -96,6 +99,7 @@ widget_t *create_slot_options(
     if (arrow_up_surface == NULL) {
         goto FREE_ON_ERROR;
     }
+    SDL_SetColorKey(arrow_up_surface, SDL_TRUE, map_rgb);
     arrow_up_texture = SDL_CreateTextureFromSurface(window->renderer, arrow_up_surface);
     if (arrow_up_texture == NULL) {
         goto FREE_ON_ERROR;
@@ -106,19 +110,28 @@ widget_t *create_slot_options(
     if (arrow_down_surface == NULL) {
         goto FREE_ON_ERROR;
     }
+    SDL_SetColorKey(arrow_down_surface, SDL_TRUE, map_rgb);
     arrow_down_texture = SDL_CreateTextureFromSurface(window->renderer, arrow_down_surface);
     if (arrow_down_texture == NULL) {
         goto FREE_ON_ERROR;
     }
-
-
     SDL_FreeSurface(arrow_down_surface);
 
     data->is_saved_slots = (bool *) calloc((size_t) number_of_slots + 1, sizeof(bool));
     if (data->is_saved_slots == NULL) {
         goto FREE_ON_ERROR;
     }
-    data->current_slots_alpha_factor = (int *) calloc((size_t) number_of_slots + 1, sizeof(int));
+    char slot_num_str[10];
+    char full_path[30];
+    for (int l = 0; l < number_of_slots; ++l) {
+        itoa(l + 1, slot_num_str, 10);
+        if (sprintf(full_path, "%s%s.txt", GAME_SLOTS_PATH, slot_num_str) < 0) {
+            goto FREE_ON_ERROR;
+        }
+        if (is_file_exists(full_path) && !is_file_empty(full_path))
+            data->is_saved_slots[l] = true;
+    }
+    data->current_slots_alpha_factor = (Uint8 *) calloc((size_t) number_of_slots + 1, sizeof(int));
     if (data->current_slots_alpha_factor == NULL) {
         goto FREE_ON_ERROR;
     }
@@ -140,6 +153,9 @@ widget_t *create_slot_options(
     data->arrow_down_location.w = ARROWS_WIDTH;
     data->arrow_down_location.h = ARROWS_HEIGHT;
 
+    //TO-DO: check for saved games
+
+    data->num_of_slots = number_of_slots;
     data->arrow_up_tex = arrow_up_texture;
     data->arrow_down_tex = arrow_down_texture;
     data->action = action;
@@ -206,18 +222,41 @@ void handle_slot_options_event(widget_t *src, SDL_Event *e) {
                 }
                 slot_i_rect.y += SLOT_HEIGHT;
             }
+            if (slot_options->current_top_slot != 0 &&
+                SDL_PointInRect(&mouse_pos, &slot_options->arrow_up_location)) {
+                slot_options->current_top_slot--;
+            } else {
+                if (slot_options->current_top_slot != 0) {
+                    slot_options->arrow_up_alpha_factor = 255; // for active button view
+                }
+            }
+            if (slot_options->current_top_slot != slot_options->num_of_slots - NUMBER_OF_DRAWN_OPTIONS &&
+                SDL_PointInRect(&mouse_pos, &slot_options->arrow_down_location)) {
+                slot_options->current_top_slot++;
+            } else {
+                if (slot_options->current_top_slot != slot_options->num_of_slots - NUMBER_OF_DRAWN_OPTIONS) {
+                    slot_options->arrow_down_alpha_factor = 255; // for active button view
+                }
+            }
             break;
         case SDL_MOUSEMOTION:
             slot_i_rect = slot_options->first_slot_location;
             for (int i = 0; i < NUMBER_OF_DROWN_SLOTS; ++i) {
                 if (SDL_PointInRect(&mouse_pos, &slot_i_rect)) {
-
-                }
+                    slot_options->current_slots_alpha_factor[slot_options->current_top_slot +
+                                                             i] = ALPHA_FACTOR_MOUSE_OVER;
+                } else
+                    slot_options->current_slots_alpha_factor[slot_options->current_top_slot + i] = 255;
+                slot_i_rect.y += SLOT_HEIGHT;
             }
-//            if (SDL_PointInRect(&mouse_pos, &button->location)) {
-//                SDL_SetTextureAlphaMod(button->texture, ALPHA_FACTOR_MOUSE_OVER);
-//            } else
-//                SDL_SetTextureAlphaMod(button->texture, 255);
+            if (SDL_PointInRect(&mouse_pos, &slot_options->arrow_up_location)) {
+                slot_options->arrow_up_alpha_factor = ALPHA_FACTOR_MOUSE_OVER;
+            } else
+                slot_options->arrow_up_alpha_factor = 255;
+            if (SDL_PointInRect(&mouse_pos, &slot_options->arrow_down_location)) {
+                slot_options->arrow_down_alpha_factor = ALPHA_FACTOR_MOUSE_OVER;
+            } else
+                slot_options->arrow_down_alpha_factor = 255;
             break;
         default:
             break;
@@ -227,11 +266,26 @@ void handle_slot_options_event(widget_t *src, SDL_Event *e) {
 void draw_slot_options(widget_t *src) {
     slot_options_t *slot_options = (slot_options_t *) src->data;
     SDL_Rect slot_i_rect = slot_options->first_slot_location;
+    int top_slot = slot_options->current_top_slot;
+    int top_slot_i;
     for (int i = 0; i < NUMBER_OF_DROWN_SLOTS; ++i) {
-        SDL_RenderCopy(src->window->renderer, slot_options->slots_textures[slot_options->current_top_slot + i], NULL,
+        top_slot_i = top_slot + i;
+        if (!slot_options->is_saved_slots[top_slot_i] && slot_options->is_loading_mode)
+            slot_options->current_slots_alpha_factor[top_slot_i] = ALPHA_FACTOR_MOUSE_OVER;
+        SDL_SetTextureAlphaMod(slot_options->slots_textures[top_slot_i],
+                               slot_options->current_slots_alpha_factor[top_slot_i]);
+        SDL_RenderCopy(src->window->renderer, slot_options->slots_textures[top_slot_i], NULL,
                        &slot_i_rect);
         slot_i_rect.y += SLOT_HEIGHT;
     }
+    if (top_slot == 0) {
+        slot_options->arrow_up_alpha_factor = ALPHA_FACTOR_MOUSE_OVER; // for disabled button view.
+    }
+    if (top_slot == slot_options->num_of_slots - NUMBER_OF_DRAWN_OPTIONS) {
+        slot_options->arrow_down_alpha_factor = ALPHA_FACTOR_MOUSE_OVER; // for disabled button view.
+    }
+    SDL_SetTextureAlphaMod(slot_options->arrow_up_tex, slot_options->arrow_up_alpha_factor);
+    SDL_SetTextureAlphaMod(slot_options->arrow_down_tex, slot_options->arrow_down_alpha_factor);
     SDL_RenderCopy(src->window->renderer, slot_options->arrow_up_tex, NULL, &slot_options->arrow_up_location);
     SDL_RenderCopy(src->window->renderer, slot_options->arrow_down_tex, NULL, &slot_options->arrow_down_location);
 }

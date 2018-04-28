@@ -55,17 +55,19 @@ struct options_buttons_t {
 
 struct slot_options_t {
     SDL_Texture **slots_textures;
+    int num_of_slots;
+    int current_top_slot;
     SDL_Texture *arrow_up_tex;
     SDL_Texture *arrow_down_tex;
     SDL_Rect first_slot_location;
     SDL_Rect arrow_up_location;
     SDL_Rect arrow_down_location;
-    bool *is_saved_slots;
-    int *current_slots_alpha_factor;
-    int num_of_slots;
-    int current_top_slot;
     bool is_loading_mode;
+    bool *is_saved_slots;
 
+    Uint8 *current_slots_alpha_factor;
+    Uint8 arrow_up_alpha_factor;
+    Uint8 arrow_down_alpha_factor;
     void (*action)(widget_t *src, int clicked_index);
 };
 

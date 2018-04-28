@@ -350,7 +350,8 @@ void *build_pick_slot_window(game_t *game, windows_t *windows) {
     widget_t *slot_options_widget = create_slot_options(pick_slot_window, game, 10,
                                                         (DEFAULT_WINDOW_WIDTH - SLOT_OPTIONS_WIDTH) / 2, 250,
                                                         save_load_game_slots_action);
-    add_widget_to_window(pick_slot_window, slot_options_widget);
+    add_widget_to_window(pick_slot_window,
+                         slot_options_widget); // here pick_slow_window->widgets[0] == slot_options_widget.
     add_back_button_to_window(pick_slot_window, game);
     slot_options_t *slot_options = (slot_options_t *) (slot_options_widget->data);
     slot_options->is_loading_mode = true;
@@ -364,7 +365,6 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
     if (sprintf(full_path, "%s%s", GAME_SLOTS_PATH, slot_num_str) < 0) {
         return; // fatal error to handle.
     }
-    println_debug("%d", slot_options->is_loading_mode);
     if (slot_options->is_loading_mode) {
         if (slot_options->is_saved_slots[clicked_index]) {
             if (load_game_from_path(src->game, full_path) == false) {

@@ -6,7 +6,7 @@
 #include "GUIStructs.h"
 //#include "widget_t.h"
 
-#define ALPHA_FACTOR_MOUSE_OVER 200
+#define ALPHA_FACTOR_MOUSE_OVER 170
 
 widget_t *create_button(
         window_t *window,
