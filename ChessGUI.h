@@ -1,16 +1,17 @@
 #ifndef UNI_CHESS_PROJECT_GUI_H
 #define UNI_CHESS_PROJECT_GUI_H
 
+#include <SDL.h>
+#include <SDL_video.h>
+#include <strings.h>
+#include <ctype.h>
 #include "ChessGameLogic.h"
 #include "Window.h"
 #include "Button.h"
 #include "OptionsButtons.h"
 #include "SlotOptions.h"
 #include "Undo.h"
-#include <SDL.h>
-#include <SDL_video.h>
-#include <strings.h>
-#include <ctype.h>
+#include "HandleAndDrawGame.h"
 
 #define MAIN_MENU_TITLE_PATH "..\\pictures\\title_main-menu.bmp"
 #define DEFAULT_WINDOW_WIDTH 700

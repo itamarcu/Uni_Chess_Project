@@ -362,7 +362,7 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
     char slot_num_str[10];
     char full_path[30];
     itoa(slot_options->current_top_slot + clicked_index, slot_num_str, 10);
-    if (sprintf(full_path, "%s%s", GAME_SLOTS_PATH, slot_num_str) < 0) {
+    if (sprintf(full_path, "%s%s.save", GAME_SLOTS_PATH, slot_num_str) < 0) {
         return; // fatal error to handle.
     }
     if (slot_options->is_loading_mode) {
@@ -398,6 +398,10 @@ void *build_game_window(game_t *game, windows_t *windows) {
     start_game(game);
     window_t *game_window = windows->game_window;
     SDL_SetRenderDrawColor(game_window->renderer, 155, 255, 255, 0);
+
+    widget_t *game_gui_widget = create_game_gui(game_window, game);
+    add_widget_to_window(game_window, game_gui_widget);
+
     add_back_button_to_window(game_window, game);
 
     SDL_Rect undo_move_rec;

@@ -79,8 +79,10 @@ struct game_gui_t {
     SDL_Texture *threatened_capture_square;
     SDL_Texture *pieces[NUM_COMBINED_PIECES_TYPES];
     SDL_Texture *highlighted_squares[8][8];
+    SDL_Texture *curr_pieces[8][8];
     SDL_Rect board_square_rects[8][8];
     SDL_Rect board_pieces_rects[8][8];
+    SDL_Rect board_dst_rect;
     bool is_piece_focused;
     int focused_piece_row;
     int focused_piece_col;

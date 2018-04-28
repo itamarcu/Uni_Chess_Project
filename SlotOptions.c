@@ -125,7 +125,7 @@ widget_t *create_slot_options(
     char full_path[30];
     for (int l = 0; l < number_of_slots; ++l) {
         itoa(l + 1, slot_num_str, 10);
-        if (sprintf(full_path, "%s%s.txt", GAME_SLOTS_PATH, slot_num_str) < 0) {
+        if (sprintf(full_path, "%s%s.save", GAME_SLOTS_PATH, slot_num_str) < 0) {
             goto FREE_ON_ERROR;
         }
         if (is_file_exists(full_path) && !is_file_empty(full_path))

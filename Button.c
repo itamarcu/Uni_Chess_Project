@@ -26,9 +26,9 @@ widget_t *create_button(
     SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 255, 255, 255));
     SDL_Texture *texture = SDL_CreateTextureFromSurface(window->renderer, surface);
     if (texture == NULL) {
+        SDL_FreeSurface(surface);
         free(data);
         free(res);
-        SDL_FreeSurface(surface);
         return NULL;
     }
 
