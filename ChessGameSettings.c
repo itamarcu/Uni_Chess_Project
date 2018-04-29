@@ -1,6 +1,14 @@
 #include "ChessGameSettings.h"
 
 bool save_game_to_path(game_t *game, char *path) {
+    FILE *f = fopen(path, "w");
+    if (f == NULL) {
+        fclose(f);
+        return false;
+    }
+
+    fclose(f);
+    return true;
     return false;
 }
 
