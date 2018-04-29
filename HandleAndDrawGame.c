@@ -41,6 +41,10 @@ widget_t *create_game_gui(
     if (data->threatened_capture_square == NULL) {
         goto FREE_ON_ERROR;
     }
+    data->focused_square = create_texture_from_path(FOCUSED_SQUARE_PATH, window->renderer);
+    if (data->focused_square == NULL) {
+        goto FREE_ON_ERROR;
+    }
     char *pieces_paths[12] = {BLACK_BISHOP_PATH, BLACK_KING_PATH,
                               BLACK_KNIGHT_PATH, BLACK_PAWN_PATH,
                               BLACK_QUEEN_PATH, BLACK_ROOK_PATH,
@@ -62,11 +66,11 @@ widget_t *create_game_gui(
     square_rect.w = (int) AVERAGE_SQUARE_WIDTH;
     square_rect.h = (int) AVERAGE_SQUARE_HEIGHT;
     for (int r = 0; r < 8; ++r) {
-        square_piece_rect.x = FIRST_PEICE_X_Y + (int) (r * AVERAGE_SQUARE_WIDTH);
-        square_rect.x = FIRST_SQUARE_X_Y + (int) (r * AVERAGE_SQUARE_WIDTH);
+        square_piece_rect.y = FIRST_PEICE_X_Y + (int) ((7 - r) * AVERAGE_SQUARE_WIDTH);
+        square_rect.y = FIRST_SQUARE_X_Y + (int) ((7 - r) * AVERAGE_SQUARE_WIDTH);
         for (int c = 0; c < 8; ++c) {
-            square_piece_rect.y = FIRST_PEICE_X_Y + (int) (c * AVERAGE_SQUARE_HEIGHT);
-            square_rect.y = FIRST_SQUARE_X_Y + (int) (c * AVERAGE_SQUARE_HEIGHT);
+            square_piece_rect.x = FIRST_PEICE_X_Y + (int) (c * AVERAGE_SQUARE_HEIGHT);
+            square_rect.x = FIRST_SQUARE_X_Y + (int) (c * AVERAGE_SQUARE_HEIGHT);
             data->board_square_rects[r][c] = square_rect;
             data->board_pieces_rects[r][c] = square_piece_rect;
         }
@@ -102,6 +106,7 @@ void update_game_gui_board(game_gui_t *game_gui, game_t *game) {
         for (int j = 0; j < 8; ++j) {
             switch (game->board->grid[i][j]) {
                 case EMPTY_SPACE:
+                    game_gui->curr_pieces[i][j] = NULL;
                     break;
                 case BLACK_BISHOP:
                     game_gui->curr_pieces[i][j] = game_gui->pieces[0];
@@ -149,6 +154,8 @@ void update_game_gui_board(game_gui_t *game_gui, game_t *game) {
 void reset_game_gui(game_gui_t *game_gui, game_t *game) {
     update_game_gui_board(game_gui, game);
     game_gui->is_piece_focused = false;
+    game_gui->focused_piece_row = -1;
+    game_gui->focused_piece_col = -1;
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
             game_gui->highlighted_squares[i][j] = NULL;
@@ -172,71 +179,7 @@ void destroy_game_gui(widget_t *src) {
 }
 
 void handle_game_gui_event(widget_t *src, SDL_Event *e) {
-//    slot_options_t *slot_options = (slot_options_t *) src->data;
-//    SDL_Point mouse_pos = {.x = e->button.x, .y = e->button.y};
-//    SDL_Rect slot_i_rect;
-//    switch (e->type) {
-//        case SDL_MOUSEBUTTONUP:
-//            slot_i_rect = slot_options->first_slot_location;
-//            for (int i = 0; i < NUMBER_OF_DROWN_SLOTS; ++i) {
-//                if (SDL_PointInRect(&mouse_pos, &slot_i_rect)) {
-//                    char slot_num_str[10];
-//                    char full_path[30];
-//                    itoa(slot_options->current_top_slot + i, slot_num_str, 10);
-//                    if (sprintf(full_path, "%s%s", GAME_SLOTS_PATH, slot_num_str) < 0) {
-//                        return; // fatal error to handle.
-//                    }
-//                    if (slot_options->is_loading_mode && slot_options->is_saved_slots[i]) {
-//                        if (load_game_from_slot(src->game, full_path) == false) {
-//                            if (show_error_message_box(src->window,
-//                                                       "There was an error trying to load the game, please try again") <
-//                                0) {
-//                                return; // fatal error to handle.
-//                            };
-//                        } else {
-//                            src->game->is_saved = true;
-//                            switch_to_next_window_action(src);
-//                        }
-//                    } else { // saving a game
-//                        // check if the slot is not disables because there is not saved game in the slot
-//                        if (save_game_to_slot(src->game, full_path) == false) {
-//                            if (show_error_message_box(src->window,
-//                                                       "There was an error trying to save the game, please try again") <
-//                                0) {
-//                                return; // fatal error to handle.
-//                            };
-//                        } else {
-//                            src->game->is_saved = true;
-//                            slot_options->is_saved_slots[i] = true;
-//                            switch_to_next_window_action(src);
-//                        }
-//                    }
-//                }
-//                slot_i_rect.y += SLOT_HEIGHT;
-//            }
-//            break;
-//        case SDL_MOUSEMOTION:
-//            slot_i_rect = slot_options->first_slot_location;
-//            for (int i = 0; i < NUMBER_OF_DROWN_SLOTS; ++i) {
-//                if (SDL_PointInRect(&mouse_pos, &slot_i_rect)) {
-//
-//                }
-//            }
-////            if (SDL_PointInRect(&mouse_pos, &button->location)) {
-////                SDL_SetTextureAlphaMod(button->texture, ALPHA_FACTOR_MOUSE_OVER);
-////            } else
-////                SDL_SetTextureAlphaMod(button->texture, 255);
-//            break;
-//        default:
-//            break;
-//    }
-}
-
-void draw_game_gui(widget_t *src) {
-    game_gui_t *game_gui = (game_gui_t *) src->data;
-    SDL_RenderCopy(src->window->renderer, game_gui->board_BG, NULL, &game_gui->board_dst_rect);
-
-//    struct game_gui_t {
+    //    struct game_gui_t {
 //        SDL_Texture *board_BG;
 //        SDL_Texture *standard_square;
 //        SDL_Texture *threatened_square;
@@ -255,8 +198,96 @@ void draw_game_gui(widget_t *src) {
 //        bool is_currently_saved;
 //    };
 
+    game_gui_t *game_gui = (game_gui_t *) src->data;
+    SDL_Point mouse_pos = {.x = e->button.x, .y = e->button.y};
+    switch (e->type) {
+        case SDL_MOUSEBUTTONUP:
+            for (int i = 0; i < 8; ++i) {
+                for (int j = 0; j < 8; ++j) {
+                    if (game_gui->highlighted_squares[i][j] != NULL &&
+                        SDL_PointInRect(&mouse_pos, &game_gui->board_square_rects[i][j])) {
+                        console_cmd_move(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i, j);
+                        move_was_made(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i, j);
+                        if (src->game->game_mode == GAME_MODE_SINGLEPLAYER) {
+                            ComputerMove move = computer_move(src->game);
+                            //move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
+                        }
+                        reset_game_gui(game_gui, src->game);
+                        return;
+                    }
+                    if (game_gui->curr_pieces[i][j] != NULL &&
+                        SDL_PointInRect(&mouse_pos, &game_gui->board_pieces_rects[i][j]) &&
+                        (i != game_gui->focused_piece_row || j !=
+                                                             game_gui->focused_piece_col)) { // if there is a piece and we clicked there and its not focused.
+                        possible_move_t possible_moves[MOVES_ARRAY_SIZE] = {0};
+                        if ((src->game->current_player == WHITE && is_white_piece(src->game->board->grid[i][j])) ||
+                            (src->game->current_player == BLACK && !is_white_piece(src->game->board->grid[i][j]))) {
+                            // if the piece is white and its white turn or black piece and its black turn.
+                            if (get_possible_moves(src->game, i, j, possible_moves) != SUCCESS)
+                                return; // not suppose to ever happan cause there is a piece there and its valid row and col
+                            reset_game_gui(game_gui, src->game);
+                            fill_highlighted_squares_from_possible_moves(game_gui, possible_moves);
+                            game_gui->is_piece_focused = true;
+                            game_gui->focused_piece_row = i;
+                            game_gui->focused_piece_col = j;
+                            return;
+                        }
+                    }
+                }
+            }
+            reset_game_gui(game_gui, src->game);
+            break;
+//        case SDL_MOUSEMOTION:
+//            slot_i_rect = slot_options->first_slot_location;
+//            for (int i = 0; i < NUMBER_OF_DROWN_SLOTS; ++i) {
+//                if (SDL_PointInRect(&mouse_pos, &slot_i_rect)) {
+//
+//                }
+//            }
+////            if (SDL_PointInRect(&mouse_pos, &button->location)) {
+////                SDL_SetTextureAlphaMod(button->texture, ALPHA_FACTOR_MOUSE_OVER);
+////            } else
+////                SDL_SetTextureAlphaMod(button->texture, 255);
+//            break;
+        default:
+            break;
+    }
+}
+
+void
+fill_highlighted_squares_from_possible_moves(game_gui_t *game_gui, possible_move_t possible_moves[MOVES_ARRAY_SIZE]) {
+    for (int k = 0; k < MOVES_ARRAY_SIZE; ++k) {
+        if (possible_moves[k].is_possible) {
+            if (possible_moves[k].is_threatened_by_opponent && possible_moves[k].is_capturing) {
+                game_gui->highlighted_squares[possible_moves[k].row][possible_moves[k].col] = game_gui->threatened_capture_square;
+                continue;
+            }
+            if (possible_moves[k].is_threatened_by_opponent) {
+                game_gui->highlighted_squares[possible_moves[k].row][possible_moves[k].col] = game_gui->threatened_square;
+                continue;
+            }
+            if (possible_moves[k].is_capturing) {
+                game_gui->highlighted_squares[possible_moves[k].row][possible_moves[k].col] = game_gui->capture_square;
+                continue;
+            }
+            game_gui->highlighted_squares[possible_moves[k].row][possible_moves[k].col] = game_gui->standard_square;
+        }
+    }
+}
+
+void draw_game_gui(widget_t *src) {
+    game_gui_t *game_gui = (game_gui_t *) src->data;
+    SDL_RenderCopy(src->window->renderer, game_gui->board_BG, NULL, &game_gui->board_dst_rect);
+    if (game_gui->is_piece_focused) {
+        SDL_RenderCopy(src->window->renderer, game_gui->focused_square, NULL,
+                       &game_gui->board_square_rects[game_gui->focused_piece_row][game_gui->focused_piece_col]);
+    }
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
+            if (game_gui->highlighted_squares[i][j] != NULL) {
+                SDL_RenderCopy(src->window->renderer, game_gui->highlighted_squares[i][j], NULL,
+                               &game_gui->board_square_rects[i][j]);
+            }
             if (game_gui->curr_pieces[i][j] != NULL) {
                 SDL_RenderCopy(src->window->renderer, game_gui->curr_pieces[i][j], NULL,
                                &game_gui->board_pieces_rects[i][j]);

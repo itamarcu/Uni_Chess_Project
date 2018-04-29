@@ -84,6 +84,7 @@ struct game_gui_t {
     SDL_Rect board_pieces_rects[8][8];
     SDL_Rect board_dst_rect;
     bool is_piece_focused;
+    SDL_Texture *focused_square;
     int focused_piece_row;
     int focused_piece_col;
     bool is_possible_move[8][8];

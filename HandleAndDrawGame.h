@@ -7,6 +7,8 @@
 #include "GUIStructs.h"
 #include "ChessGameSettings.h"
 #include "Window.h"
+#include "ChessGameLogic.h"
+#include "Minimax.h"
 
 #define BLACK_BISHOP_PATH "..\\pictures\\black_bishop.bmp"
 #define BLACK_KING_PATH "..\\pictures\\black_king.bmp"
@@ -25,6 +27,7 @@
 #define THREATENED_SQUARE_PATH "..\\pictures\\threatened_square.bmp"
 #define CAPTURE_SQUARE_PATH "..\\pictures\\capture_square.bmp"
 #define THREATENED_CAPTURE_SQUARE_PATH "..\\pictures\\threatened_capture_square.bmp"
+#define FOCUSED_SQUARE_PATH "..\\pictures\\focused_square.bmp"
 
 #define BOARD_W_H 700
 #define AVERAGE_SQUARE_WIDTH 83.125
@@ -44,6 +47,8 @@ void reset_game_gui(game_gui_t *game_gui, game_t *game);
 void destroy_game_gui(widget_t *src);
 
 void handle_game_gui_event(widget_t *src, SDL_Event *event);
+
+void fill_highlighted_squares_from_possible_moves(game_gui_t *game_gui, possible_move_t possible_moves[32]);
 
 void draw_game_gui(widget_t *widget);
 
