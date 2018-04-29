@@ -492,6 +492,7 @@ void undo_button_action(widget_t *widget) {
             println_error("Unexpected enum value after using cmd_undo");
             break;
     }
+    reset_game_gui((game_gui_t *) widget->window->widgets[0]->data, widget->game);
 }
 
 void save_button_action(widget_t *widget) {
