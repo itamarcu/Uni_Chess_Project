@@ -517,12 +517,12 @@ void show_unsaved_game_box_message(widget_t *widget) {
     window_t *pick_slot_window = widget->window->windows->pick_slot_window;
     if (!(widget->game->is_saved)) {
         SDL_MessageBoxButtonData buttons[] = {
-                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "Save first"},
-                {SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 2, "no"},
-                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 3, "yes"}
+                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "Save and quit"},
+                {SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 2, "Cancel"},
+                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 3, "Quit without saving"}
         };
-        int button_id = show_message_box(widget->window, buttons, 3, "Continue Without Saving?",
-                                         "Are you sure you want to Continue without saving?");
+        int button_id = show_message_box(widget->window, buttons, 3, "Quit without saving?",
+                                         "Are you sure you want to quit without saving?");
         slot_options_t *slot_options;
         switch (button_id) {
             case 1:
