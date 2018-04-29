@@ -112,6 +112,7 @@ void CUI_settings_case(game_t *game) {
 void CUI_game_case(game_t *game) {
     if (game->game_mode == GAME_MODE_MULTIPLAYER || game->current_player == game->user_color) {
         print_board(game->board);
+        println_debug("BOARD SCORE: %d", calculate_simple_board_score(game->board));
         println_output("Enter your move (%s player):", color_string(game->current_player));
 
         command_t *command = get_user_input_as_command();
@@ -155,7 +156,7 @@ void CUI_game_case(game_t *game) {
                     }
                     break;
                 case CMD_GET_MOVES:
-                    switch (get_possible_moves(game, command->args[0], command->args[1], moves)) {
+                    switch (get_possible_moves(game->board, command->args[0], command->args[1], moves)) {
                         case SUCCESS:
                             for (int i = 0; i < MOVES_ARRAY_SIZE; i++) {
                                 if (!moves[i].is_possible)
@@ -240,13 +241,13 @@ void CUI_main_loop(game_t *game) {
                 CUI_game_case(game);
                 break;
             case GAME_STATE_QUIT:
-                return;
+                break;
             default:
                 println_error("Weird state...fix this");
                 break;
         }
     }
-    if (game->state == GAME_STATE_QUIT) {
+    if (game->winner == GAME_WINNER_NONE) {
         //No text, just immediately terminate
         return;
     }
@@ -256,7 +257,7 @@ void CUI_main_loop(game_t *game) {
     } else if (game->winner == GAME_WINNER_DRAW) {
         println_output("The game ends in a draw");
     } else {
-        println_error("Winner is _NONE while game state is quit. This is a bug.");
+        println_error("Winner is %d... This is a bug.", game->winner);
     }
 
 

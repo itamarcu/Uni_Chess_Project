@@ -24,12 +24,12 @@ void start_game(game_t *game) {
     push_move_to_history(game, 1, 2, 3, 4); // arbitrary values - not important
 }
 
-bool check_if_king_is_threatened(game_t *game, bool checking_for_white) {
+bool check_if_king_is_threatened(board_t *board, bool checking_for_white) {
     int rk, ck;
     for (int row = 0; row < 8; row++)
         for (int col = 0; col < 8; col++) {
-            if ((game->board->grid[row][col] == BLACK_KING && !checking_for_white)
-                || (game->board->grid[row][col] == WHITE_KING && checking_for_white)) {
+            if ((board->grid[row][col] == BLACK_KING && !checking_for_white)
+                || (board->grid[row][col] == WHITE_KING && checking_for_white)) {
                 rk = row;
                 ck = col;
                 goto FoundKing;
@@ -43,9 +43,9 @@ bool check_if_king_is_threatened(game_t *game, bool checking_for_white) {
     //for each enemy unit, check if it's able to capture the king
     for (int row = 0; row < 8; row++)
         for (int col = 0; col < 8; col++) {
-            if (!is_empty_space(game->board->grid[row][col]) &&
-                is_white_piece(game->board->grid[row][col]) != checking_for_white) {
-                if (is_partially_legal_move(game->board->grid, row, col, rk, ck)) {
+            if (!is_empty_space(board->grid[row][col]) &&
+                is_white_piece(board->grid[row][col]) != checking_for_white) {
+                if (is_partially_legal_move(board->grid, row, col, rk, ck)) {
                     return true;
                 }
             }
@@ -59,13 +59,13 @@ void move_was_made(game_t *game, int r1, int c1, int r2, int c2) {
     push_move_to_history(game, r1, c1, r2, c2);
 
     //Check if next player is checkmated
-    bool game_ended = !check_if_player_can_move(game, game->current_player != WHITE);
+    bool game_ended = !check_if_player_can_move(game->board, game->current_player != WHITE);
 
     if (game_ended) {
         game->state = GAME_STATE_QUIT;
-        if (check_if_king_is_threatened(game, true))  // is white Checked?
+        if (check_if_king_is_threatened(game->board, true))  // is white Checked?
             game->winner = GAME_WINNER_BLACK;
-        else if (check_if_king_is_threatened(game, false))  // is black Checked?
+        else if (check_if_king_is_threatened(game->board, false))  // is black Checked?
             game->winner = GAME_WINNER_WHITE;
         else
             game->winner = GAME_WINNER_DRAW;
@@ -80,16 +80,16 @@ void move_was_made(game_t *game, int r1, int c1, int r2, int c2) {
  * @param checking_for_white true if checking for white player
  * @return false if the "checked" player is checkmated
  */
-bool check_if_player_can_move(game_t *game, bool checking_for_white) {
+bool check_if_player_can_move(board_t *board, bool checking_for_white) {
     for (int row = 0; row < 8; row++)
         for (int col = 0; col < 8; col++) {
-            char piece = game->board->grid[row][col];
+            char piece = board->grid[row][col];
             if (is_empty_space(piece))
                 continue;
             if (is_white_piece(piece) != checking_for_white)
                 continue;
             possible_move_t moves[MOVES_ARRAY_SIZE];
-            if (get_possible_moves(game, row, col, moves) != SUCCESS)
+            if (get_possible_moves(board, row, col, moves) != SUCCESS)
                 println_error("BUG 15907624");
 
             if (moves[0].is_possible)
@@ -268,11 +268,11 @@ GAME_ACTION_RESULT console_cmd_move(game_t *game, int r1, int c1, int r2, int c2
     }
 
     //Now we must test for king danger
-    bool king_already_checked = check_if_king_is_threatened(game, game->current_player == WHITE);
+    bool king_already_checked = check_if_king_is_threatened(game->board, game->current_player == WHITE);
     //Make move attempt
     game->board->grid[r2][c2] = moving_piece;
     game->board->grid[r1][c1] = EMPTY_SPACE;
-    int king_will_be_checked = check_if_king_is_threatened(game, game->current_player == WHITE);
+    int king_will_be_checked = check_if_king_is_threatened(game->board, game->current_player == WHITE);
     if (king_will_be_checked) {
         //undo move attempt
         game->board->grid[r2][c2] = target_piece;

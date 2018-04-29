@@ -14,6 +14,11 @@ typedef struct possible_move_t {
     bool is_possible;  // if this is false, ignore all others
 } possible_move_t;
 
-GAME_ACTION_RESULT get_possible_moves(game_t *game, int r1, int c1, possible_move_t *possible_moves);
+/**
+ * @param possible_moves empty array of PossibleMove objects, to be filled. The array is guaranteed to
+ * have only possible moves up to a certain index, and then only impossible moves afterwards.
+ * @return result of action. Will not fill moves if action is invalid.
+ */
+GAME_ACTION_RESULT get_possible_moves(board_t *board, int r1, int c1, possible_move_t *possible_moves);
 
 #endif //UNI_CHESS_PROJECT_POSSIBLEMOVELOGIC_H

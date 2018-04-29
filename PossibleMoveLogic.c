@@ -8,13 +8,13 @@
 /**
  * This function is faster than checking for each piece if it threatens this spot
  */
-bool has_enemy_in_that_direction(game_t *game, bool is_white, int row, int col, int row_delta, int col_delta) {
+bool has_enemy_in_that_direction(board_t *board, bool is_white, int row, int col, int row_delta, int col_delta) {
     int original_row = row;
     int original_col = col;
     row += row_delta;
     col += col_delta;
     while (row >= 0 && row < 8 && col >= 0 && col < 8) {
-        char piece = game->board->grid[row][col];
+        char piece = board->grid[row][col];
         if (!is_empty_space(piece)) {
             if (is_white_piece(piece) == is_white)
                 return false; //found allied unit blocking that direction of attack
@@ -51,13 +51,13 @@ bool has_enemy_in_that_direction(game_t *game, bool is_white, int row, int col, 
     return false;
 }
 
-void update_move_by_potential_threats(game_t *game, possible_move_t *move, int r1, int c1) {
+void update_move_by_potential_threats(board_t *board, possible_move_t *move, int r1, int c1) {
     int r2 = move->row;
     int c2 = move->col;
 
 
-    char moving_piece = game->board->grid[r1][c1];
-    char target_piece = game->board->grid[r2][c2];
+    char moving_piece = board->grid[r1][c1];
+    char target_piece = board->grid[r2][c2];
     bool is_white = is_white_piece(moving_piece);
     if (!is_empty_space(target_piece)) {
         if (is_white_piece(target_piece) == is_white) {
@@ -70,15 +70,15 @@ void update_move_by_potential_threats(game_t *game, possible_move_t *move, int r
     //---Test for king danger and piece danger---
 
     //Temporarily make move attempt
-    game->board->grid[r2][c2] = moving_piece;
-    game->board->grid[r1][c1] = EMPTY_SPACE;
+    board->grid[r2][c2] = moving_piece;
+    board->grid[r1][c1] = EMPTY_SPACE;
     bool will_piece_be_threatened = false;
 
     int rk, ck;
     for (int row = 0; row < 8; row++)
         for (int col = 0; col < 8; col++) {
-            if ((game->board->grid[row][col] == BLACK_KING && !is_white)
-                || (game->board->grid[row][col] == WHITE_KING && is_white)) {
+            if ((board->grid[row][col] == BLACK_KING && !is_white)
+                || (board->grid[row][col] == WHITE_KING && is_white)) {
                 rk = row;
                 ck = col;
                 goto FoundKing;
@@ -94,16 +94,16 @@ void update_move_by_potential_threats(game_t *game, possible_move_t *move, int r
         for (int col_delta = -1; col_delta <= 1; col_delta++) {
             if (row_delta == 0 && col_delta == 0)
                 continue;
-            if (has_enemy_in_that_direction(game, is_white, rk, ck, row_delta, col_delta)) {
+            if (has_enemy_in_that_direction(board, is_white, rk, ck, row_delta, col_delta)) {
                 //king will be threatened! no need to check anything more.
                 move->is_possible = false;
                 //Undo move
-                game->board->grid[r2][c2] = target_piece;
-                game->board->grid[r1][c1] = moving_piece;
+                board->grid[r2][c2] = target_piece;
+                board->grid[r1][c1] = moving_piece;
                 return;
             }
             if (!will_piece_be_threatened &&
-                has_enemy_in_that_direction(game, is_white, r2, c2, row_delta, col_delta))
+                has_enemy_in_that_direction(board, is_white, r2, c2, row_delta, col_delta))
                 will_piece_be_threatened = true;
         }
 
@@ -111,18 +111,18 @@ void update_move_by_potential_threats(game_t *game, possible_move_t *move, int r
     int knight_x_deltas[8] = {+1, +2, +2, +1, -1, -2, -2, -1}; //start from up-up-right and move clockwise
     int knight_y_deltas[8] = {-2, -1, +1, +2, +2, +1, -1, -2}; //start from up-up-right and move clockwise
     for (int i = 0; i < 8; i++) {
-        char piece_k = game->board->grid[rk + knight_x_deltas[i]][ck + knight_y_deltas[i]];
+        char piece_k = board->grid[rk + knight_x_deltas[i]][ck + knight_y_deltas[i]];
         if (!is_empty_space(piece_k) && (is_white_piece(piece_k) != is_white)) {
             if (piece_k == WHITE_KNIGHT || piece_k == BLACK_KNIGHT) {
                 //king will be threatened! no need to check anything more.
                 move->is_possible = false;
                 //Undo move
-                game->board->grid[r2][c2] = target_piece;
-                game->board->grid[r1][c1] = moving_piece;
+                board->grid[r2][c2] = target_piece;
+                board->grid[r1][c1] = moving_piece;
                 return;
             }
         } else if (!will_piece_be_threatened) {
-            char piece_p = game->board->grid[r2 + knight_x_deltas[i]][c2 + knight_y_deltas[i]];
+            char piece_p = board->grid[r2 + knight_x_deltas[i]][c2 + knight_y_deltas[i]];
             if (!is_empty_space(piece_p) && (is_white_piece(piece_p) != is_white)
                 && (piece_p == WHITE_KNIGHT || piece_p == BLACK_KNIGHT)) {
                 will_piece_be_threatened = true;
@@ -132,40 +132,33 @@ void update_move_by_potential_threats(game_t *game, possible_move_t *move, int r
     }
 
     // Undo the temporary move
-    game->board->grid[r2][c2] = target_piece;
-    game->board->grid[r1][c1] = moving_piece;
+    board->grid[r2][c2] = target_piece;
+    board->grid[r1][c1] = moving_piece;
 
     move->is_possible = true;
     move->is_capturing = target_piece != EMPTY_SPACE;
     move->is_threatened_by_opponent = will_piece_be_threatened;
 }
 
-void add_move_to_possibilities(game_t *game, possible_move_t *moves, int index, int r1, int c1, int r2, int c2) {
+void add_move_to_possibilities(board_t *board, possible_move_t *moves, int index, int r1, int c1, int r2, int c2) {
     moves[index].row = r2;
     moves[index].col = c2;
     if (r2 < 0 || r2 >= 8 || c2 < 0 || c2 >= 8)
         moves[index].is_possible = false;
     else
-        update_move_by_potential_threats(game, moves + index, r1, c1);
+        update_move_by_potential_threats(board, moves + index, r1, c1);
 }
 
-/**
- * @param possible_moves empty array of PossibleMove objects, to be filled. The array is guaranteed to
- * have only possible moves up to a certain index, and then only impossible moves afterwards.
- * @return result of action. Will not fill moves if action is invalid.
- */
-GAME_ACTION_RESULT get_possible_moves(game_t *game, int row, int col, possible_move_t *possible_moves) {
+
+GAME_ACTION_RESULT get_possible_moves(board_t *board, int row, int col, possible_move_t *possible_moves) {
     if (row < 0 || row >= 8 || col < 0 || col >= 8) {
         return INVALID_POS;
     }
 
-    char piece = game->board->grid[row][col];
+    char piece = board->grid[row][col];
     if (piece == EMPTY_SPACE) {
         return NO_PIECE_IN_LOCATION;
     }
-
-    //possible_move_t *possible_moves = (possible_move_t *) malloc(sizeof(possible_move_t) * MOVES_ARRAY_SIZE);
-
 
     for (int i = 0; i < MOVES_ARRAY_SIZE; i++) {
         possible_moves[i].is_possible = false;
@@ -175,41 +168,41 @@ GAME_ACTION_RESULT get_possible_moves(game_t *game, int row, int col, possible_m
 
     switch (piece) {
         case WHITE_PAWN:
-            add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row + 1, col);
+            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 1, col);
             possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
             if (possible_moves[next_move_index].is_possible)
                 next_move_index += 1;
-            add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row + 1, col - 1);
+            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 1, col - 1);
             possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
             if (possible_moves[next_move_index].is_possible)
                 next_move_index += 1;
-            add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row + 1, col + 1);
+            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 1, col + 1);
             possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
             if (possible_moves[next_move_index].is_possible)
                 next_move_index += 1;
             if (row == 1) //starting move
             {
-                add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row + 2, col);
+                add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 2, col);
                 possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
             }
             break;
         case BLACK_PAWN:
-            add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row - 1, col);
+            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 1, col);
             possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
             if (possible_moves[next_move_index].is_possible)
                 next_move_index += 1;
 
-            add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row - 1, col - 1);
+            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 1, col - 1);
             possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
             if (possible_moves[next_move_index].is_possible)
                 next_move_index += 1;
-            add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row - 1, col + 1);
+            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 1, col + 1);
             possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
             if (possible_moves[next_move_index].is_possible)
                 next_move_index += 1;
             if (row == 6) //starting move
             {
-                add_move_to_possibilities(game, possible_moves, next_move_index, row, col, row - 2, col);
+                add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 2, col);
                 possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
             }
             break;
@@ -224,7 +217,7 @@ GAME_ACTION_RESULT get_possible_moves(game_t *game, int row, int col, possible_m
                     int r = row + row_delta;
                     int c = col + col_delta;
                     for (; 0 <= r && r < 8 && 0 <= c && c < 8; r += row_delta, c += col_delta) {
-                        add_move_to_possibilities(game, possible_moves, next_move_index, row, col, r, c);
+                        add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
                         if (!possible_moves[next_move_index].is_possible) //if blocked, no need to check more in this direction
                             break;
                         next_move_index += 1;
@@ -243,7 +236,7 @@ GAME_ACTION_RESULT get_possible_moves(game_t *game, int row, int col, possible_m
                     int r = row + row_delta;
                     int c = col + col_delta;
                     for (; 0 <= r && r < 8 && 0 <= c && c < 8; r += row_delta, c += col_delta) {
-                        add_move_to_possibilities(game, possible_moves, next_move_index, row, col, r, c);
+                        add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
                         if (!possible_moves[next_move_index].is_possible) //if blocked, no need to check more in this direction
                             break;
                         next_move_index += 1;
@@ -260,7 +253,7 @@ GAME_ACTION_RESULT get_possible_moves(game_t *game, int row, int col, possible_m
             for (int i = 0; i < 8; i++) {
                 int r = row + knight_x_deltas[i];
                 int c = col + knight_y_deltas[i];
-                add_move_to_possibilities(game, possible_moves, next_move_index, row, col, r, c);
+                add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
                 if (possible_moves[next_move_index].is_possible)
                     next_move_index += 1;
             }
@@ -275,8 +268,10 @@ GAME_ACTION_RESULT get_possible_moves(game_t *game, int row, int col, possible_m
                     int r = row + row_delta;
                     int c = col + col_delta;
                     for (; 0 <= r && r < 8 && 0 <= c && c < 8; r += row_delta, c += col_delta) {
-                        add_move_to_possibilities(game, possible_moves, next_move_index, row, col, r, c);
-                        if (!possible_moves[next_move_index].is_possible) //if blocked, no need to check more in this direction
+                        add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
+                        //if blocked, no need to check more in this direction:
+                        if (!possible_moves[next_move_index].is_possible ||
+                            possible_moves[next_move_index].is_capturing)
                             break;
                         next_move_index += 1;
                     }
@@ -292,7 +287,7 @@ GAME_ACTION_RESULT get_possible_moves(game_t *game, int row, int col, possible_m
                     int r = row + row_delta;
                     int c = col + col_delta;
                     if (0 <= r && r < 8 && 0 <= c && c < 8) {
-                        add_move_to_possibilities(game, possible_moves, next_move_index, row, col, r, c);
+                        add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
                         if (possible_moves[next_move_index].is_possible)
                             next_move_index += 1;
                     }
@@ -300,7 +295,7 @@ GAME_ACTION_RESULT get_possible_moves(game_t *game, int row, int col, possible_m
             }
             break;
         default:
-            println_error("BUG 123978134 with piece %c", piece);
+            println_error("BUG 123978134 with piece %c (%d)", piece, piece);
             break;
     }
 
