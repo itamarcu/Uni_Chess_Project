@@ -511,6 +511,7 @@ void load_button_game_action(widget_t *widget) {
 
 void restart_button_action(widget_t *widget) {
     start_game(widget->game);
+    reset_game_gui((game_gui_t *) widget->window->widgets[0]->data, widget->game);
 }
 
 void show_unsaved_game_box_message(widget_t *widget) {
