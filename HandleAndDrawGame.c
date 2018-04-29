@@ -206,7 +206,10 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
                 for (int j = 0; j < 8; ++j) {
                     if (game_gui->highlighted_squares[i][j] != NULL &&
                         SDL_PointInRect(&mouse_pos, &game_gui->board_square_rects[i][j])) {
-                        console_cmd_move(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i, j);
+                        if (console_cmd_move(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i,
+                                             j) != SUCCESS) {
+                            return;
+                        }
                         move_was_made(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i, j);
                         if (src->game->game_mode == GAME_MODE_SINGLEPLAYER) {
                             ComputerMove move = computer_move(src->game);
