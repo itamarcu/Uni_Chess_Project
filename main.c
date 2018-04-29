@@ -5,6 +5,8 @@
 #include "ChessGUI.h"
 
 int main(int argc, char *argv[]) {
+    init_scoring_function();
+
     game_t *game = (game_t *) malloc(sizeof(*game));
     if (argc <= 1) { //console mode is default
         game->program_mode = PROGRAM_MODE_CONSOLE;

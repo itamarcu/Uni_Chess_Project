@@ -226,7 +226,7 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
                         if ((src->game->current_player == WHITE && is_white_piece(src->game->board->grid[i][j])) ||
                             (src->game->current_player == BLACK && !is_white_piece(src->game->board->grid[i][j]))) {
                             // if the piece is white and its white turn or black piece and its black turn.
-                            if (get_possible_moves(src->game, i, j, possible_moves) != SUCCESS)
+                            if (get_possible_moves(src->game->board, i, j, possible_moves) != SUCCESS)
                                 return; // not suppose to ever happan cause there is a piece there and its valid row and col
                             reset_game_gui(game_gui, src->game);
                             fill_highlighted_squares_from_possible_moves(game_gui, possible_moves);

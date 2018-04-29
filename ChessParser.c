@@ -2,30 +2,52 @@
 
 
 command_t *cmd_move(command_t *command) {
-    // format should be: "move r1,c1 to r2,c2"
-    // for example, "move 1,A to 8,H"
+    // format should be: "move <r1,c1> to <r2,c2>"
+    // for example, "move <1,A> to <8,H>"
     command->game_command = CMD_MOVE;
 
     char *arg0 = strtok(NULL, " \r\t\n");
     char *arg1 = strtok(NULL, " \r\t\n");
     char *arg2 = strtok(NULL, " \r\t\n");
     if (arg2 == NULL || strcmp(arg1, "to") != 0
-        || strlen(arg0) != 3 || strlen(arg2) != 3
-        || arg0[1] != ',' || arg2[1] != ',') {
+        || strlen(arg0) != 5 || strlen(arg2) != 5
+        || arg0[0] != '<' || arg2[0] != '>'
+        || arg0[2] != ',' || arg2[2] != ','
+        || arg0[4] != '>' || arg2[4] != '<') {
         command->valid_command = false;
         return command;
     }
-    command->args[0] = arg0[0] - '1';
-    command->args[1] = arg0[2] - 'A';
-    command->args[2] = arg2[0] - '1';
-    command->args[3] = arg2[2] - 'A';
-    if (DEBUG_MODE) //While debugging, lowercase is allowed :)
-    {
-        if (arg0[2] >= 'a' && arg0[2] < 'z')
-            command->args[1] += 'A' - 'a';
-        if (arg2[2] >= 'a' && arg2[2] < 'z')
-            command->args[3] += 'A' - 'a';
+    command->args[0] = arg0[1] - '1';
+    command->args[1] = arg0[3] - 'A';
+    command->args[2] = arg2[1] - '1';
+    command->args[3] = arg2[3] - 'A';
+
+    return command;
+}
+
+/**
+ * For quick debugging and less annoying syntax:
+ *
+ * "mov d2 d4" is equivalent to "move <2,D> to <4,D>"
+ */
+command_t *cmd_mov(command_t *command) {
+    command->game_command = CMD_MOVE;
+
+    char *arg0 = strtok(NULL, " \r\t\n");
+    char *arg1 = strtok(NULL, " \r\t\n");
+    if (arg1 == NULL
+        || strlen(arg0) != 2 || strlen(arg1) != 2) {
+        command->valid_command = false;
+        return command;
     }
+    command->args[0] = arg0[1] - '1';
+    command->args[1] = arg0[0] - 'A';
+    command->args[2] = arg1[1] - '1';
+    command->args[3] = arg1[0] - 'A';
+    if (arg0[0] >= 'a' && arg0[0] < 'z')
+        command->args[1] += 'A' - 'a';
+    if (arg1[0] >= 'a' && arg1[0] < 'z')
+        command->args[3] += 'A' - 'a';
 
     return command;
 }
@@ -101,6 +123,8 @@ command_t *get_user_input_as_command() {
     //Special cases for these - need to parse non-integers
     if (strcmp(command_string, "move") == 0) {
         return cmd_move(command);
+    } else if (strcmp(command_string, "mov") == 0 && DEBUG_MODE) {
+        return cmd_mov(command);
     } else if (strcmp(command_string, "get_moves") == 0) {
         return cmd_get_moves(command);
     } else if (strcmp(command_string, "load") == 0) {

@@ -65,7 +65,7 @@ char *difficulty_string(int difficulty_int) {
         case EXPERT_DIFFICULTY:
             return "expert";
         default:
-            println_debug("Difficulty is not in range 1 to 5");
+            println_error("Difficulty is not in range 1 to 5");
             return "plz fix ur input";
     }
 }
