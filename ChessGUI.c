@@ -520,7 +520,7 @@ void show_unsaved_game_box_message(widget_t *widget) {
         SDL_MessageBoxButtonData buttons[] = {
                 {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "Save and quit"},
                 {SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 2, "Cancel"},
-                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 3, "Quit without saving"}
+                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 3, "Yes! Quit!"}
         };
         int button_id = show_message_box(widget->window, buttons, 3, "Quit without saving?",
                                          "Are you sure you want to quit without saving?");

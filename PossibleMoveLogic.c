@@ -150,7 +150,8 @@ void add_move_to_possibilities(board_t *board, possible_move_t *moves, int index
 }
 
 
-GAME_ACTION_RESULT get_possible_moves(board_t *board, int row, int col, possible_move_t *possible_moves) {
+GAME_ACTION_RESULT
+get_possible_moves(board_t *board, int row, int col, possible_move_t possible_moves[MOVES_ARRAY_SIZE]) {
     if (row < 0 || row >= 8 || col < 0 || col >= 8) {
         return INVALID_POS;
     }
@@ -218,9 +219,14 @@ GAME_ACTION_RESULT get_possible_moves(board_t *board, int row, int col, possible
                     int c = col + col_delta;
                     for (; 0 <= r && r < 8 && 0 <= c && c < 8; r += row_delta, c += col_delta) {
                         add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
-                        if (!possible_moves[next_move_index].is_possible) //if blocked, no need to check more in this direction
+
+                        // Do not change the order here:
+                        possible_move_t *possible_move = &possible_moves[next_move_index];
+                        if (!possible_move->is_possible)
                             break;
                         next_move_index += 1;
+                        if (possible_move->is_capturing)
+                            break;
                     }
                 }
             }
@@ -237,9 +243,14 @@ GAME_ACTION_RESULT get_possible_moves(board_t *board, int row, int col, possible
                     int c = col + col_delta;
                     for (; 0 <= r && r < 8 && 0 <= c && c < 8; r += row_delta, c += col_delta) {
                         add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
-                        if (!possible_moves[next_move_index].is_possible) //if blocked, no need to check more in this direction
+
+                        // Do not change the order here:
+                        possible_move_t *possible_move = &possible_moves[next_move_index];
+                        if (!possible_move->is_possible)
                             break;
                         next_move_index += 1;
+                        if (possible_move->is_capturing)
+                            break;
                     }
                 }
             }
@@ -269,11 +280,14 @@ GAME_ACTION_RESULT get_possible_moves(board_t *board, int row, int col, possible
                     int c = col + col_delta;
                     for (; 0 <= r && r < 8 && 0 <= c && c < 8; r += row_delta, c += col_delta) {
                         add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
-                        //if blocked, no need to check more in this direction:
-                        if (!possible_moves[next_move_index].is_possible ||
-                            possible_moves[next_move_index].is_capturing)
+
+                        // Do not change the order here:
+                        possible_move_t *possible_move = &possible_moves[next_move_index];
+                        if (!possible_move->is_possible)
                             break;
                         next_move_index += 1;
+                        if (possible_move->is_capturing)
+                            break;
                     }
                 }
             }
