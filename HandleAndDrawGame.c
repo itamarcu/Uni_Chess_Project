@@ -15,9 +15,13 @@ widget_t *create_game_gui(
     if (data == NULL) {
         goto FREE_ON_ERROR;
     }
-
-    data->board_BG = create_texture_from_path(DEFAULT_BG_PATH, window->renderer);
+    SDL_Surface *BG_surface = SDL_LoadBMP(DEFAULT_BG_PATH);
+    if (BG_surface == NULL) {
+        goto FREE_ON_ERROR;
+    }
+    data->board_BG = SDL_CreateTextureFromSurface(window->renderer, BG_surface);
     if (data->board_BG == NULL) {
+        SDL_FreeSurface(BG_surface);
         goto FREE_ON_ERROR;
     }
     data->board_dst_rect.x = 0;
