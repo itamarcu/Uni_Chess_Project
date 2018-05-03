@@ -111,7 +111,11 @@ void update_move_by_potential_threats(board_t *board, possible_move_t *move, int
     int knight_x_deltas[8] = {+1, +2, +2, +1, -1, -2, -2, -1}; //start from up-up-right and move clockwise
     int knight_y_deltas[8] = {-2, -1, +1, +2, +2, +1, -1, -2}; //start from up-up-right and move clockwise
     for (int i = 0; i < 8; i++) {
-        char piece_k = board->grid[rk + knight_x_deltas[i]][ck + knight_y_deltas[i]];
+        int row_from_k = rk + knight_x_deltas[i];
+        int col_from_k = ck + knight_y_deltas[i];
+        if (row_from_k < 0 || row_from_k >= 8 || col_from_k < 0 || col_from_k >= 8)
+            continue;
+        char piece_k = board->grid[row_from_k][col_from_k];
         if (!is_empty_space(piece_k) && (is_white_piece(piece_k) != is_white)) {
             if (piece_k == WHITE_KNIGHT || piece_k == BLACK_KNIGHT) {
                 //king will be threatened! no need to check anything more.
@@ -122,7 +126,11 @@ void update_move_by_potential_threats(board_t *board, possible_move_t *move, int
                 return;
             }
         } else if (!will_piece_be_threatened) {
-            char piece_p = board->grid[r2 + knight_x_deltas[i]][c2 + knight_y_deltas[i]];
+            int row_from_p = r2 + knight_x_deltas[i];
+            int col_from_p = c2 + knight_y_deltas[i];
+            if (row_from_p < 0 || row_from_p >= 8 || col_from_p < 0 || col_from_p >= 8)
+                continue;
+            char piece_p = board->grid[row_from_p][col_from_p];
             if (!is_empty_space(piece_p) && (is_white_piece(piece_p) != is_white)
                 && (piece_p == WHITE_KNIGHT || piece_p == BLACK_KNIGHT)) {
                 will_piece_be_threatened = true;
