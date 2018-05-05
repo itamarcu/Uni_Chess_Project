@@ -130,6 +130,13 @@ widget_t *create_slot_options(
         }
         if (is_file_exists(full_path) && !is_file_empty(full_path))
             data->is_saved_slots[l] = true;
+        else {
+            FILE *f = fopen(full_path, "w");
+            if (f == NULL) {
+                fclose(f);
+                goto FREE_ON_ERROR;
+            }
+        }
     }
     data->current_slots_alpha_factor = (Uint8 *) calloc((size_t) number_of_slots + 1, sizeof(int));
     if (data->current_slots_alpha_factor == NULL) {

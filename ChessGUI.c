@@ -378,6 +378,8 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
     }
     if (slot_options->is_loading_mode) {
         if (slot_options->is_saved_slots[clicked_index]) {
+            start_game(src->game);
+            src->window->windows->game_window->widgets[1]->is_disabled = true;
             if (load_game_from_path(src->game, full_path) == false) {
                 if (show_error_message_box(src->window,
                                            "There was an error trying to load the game, please try again") < 0) {
