@@ -212,12 +212,17 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
                         SDL_PointInRect(&mouse_pos, &game_gui->board_square_rects[i][j])) {
                         if (console_cmd_move(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i,
                                              j) != SUCCESS) {
+                            println_error("Programmer error 16290858162348: %d",
+                                          console_cmd_move(src->game, game_gui->focused_piece_row,
+                                                           game_gui->focused_piece_col, i,
+                                                           j));
                             return;
                         }
                         move_was_made(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i, j);
+                        reset_game_gui(game_gui, src->game);
                         if (src->game->game_mode == GAME_MODE_SINGLEPLAYER) {
                             ComputerMove move = computer_move(src->game);
-                            //move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
+                            move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
                         }
                         reset_game_gui(game_gui, src->game);
                         return;
