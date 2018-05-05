@@ -74,6 +74,8 @@ void handle_events_and_draw(window_t *current_window, GAME_WINDOW *curr_window, 
 
 void *build_main_menu(game_t *game, windows_t *windows);
 
+void new_game_button_action(widget_t *widget);
+
 void load_button_main_menu_action(widget_t *widget);
 
 void quit_button_action(widget_t *widget);

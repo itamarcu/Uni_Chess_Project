@@ -218,7 +218,7 @@ void handle_slot_options_event(widget_t *src, SDL_Event *e) {
             slot_i_rect = slot_options->first_slot_location;
             for (int i = 0; i < NUMBER_OF_DROWN_SLOTS; ++i) {
                 if (SDL_PointInRect(&mouse_pos, &slot_i_rect)) {
-                    slot_options->action(src, i);
+                    slot_options->action(src, i + slot_options->current_top_slot);
                 }
                 slot_i_rect.y += SLOT_HEIGHT;
             }

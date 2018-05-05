@@ -134,7 +134,7 @@ void *build_main_menu(game_t *game, windows_t *windows) {
 
     widget_t *new_game_button = create_button(main_menu, game, NEW_GAME_BUTTON_PATH,
                                               new_game_button_rect, windows->game_mode_window,
-                                              switch_window_and_change_prev_window_action);
+                                              new_game_button_action);
     widget_t *load_game_button = create_button(main_menu, game, LOAD_GAME_BUTTON_PATH,
                                                load_game_button_rect, windows->pick_slot_window,
                                                load_button_main_menu_action);
@@ -146,6 +146,11 @@ void *build_main_menu(game_t *game, windows_t *windows) {
     add_widget_to_window(main_menu, quit_game_button);
 }
 
+void new_game_button_action(widget_t *widget) {
+    start_game(widget->game);
+    reset_game_gui((game_gui_t *) widget->window->windows->game_window->widgets[0]->data, widget->game);
+    switch_window_and_change_prev_window_action(widget);
+}
 void load_button_main_menu_action(widget_t *widget) {
     switch_window_and_change_prev_window_action(widget);
     widget->next_window->next_window = widget->window->windows->game_window;
@@ -287,8 +292,11 @@ void *build_one_player_options_window(game_t *game, windows_t *windows) {
     diff_buttons[2] = moderate_button;
     diff_buttons[3] = hard_button;
     diff_buttons[4] = expert_button;
-    widget_t *diff_options_buttons = create_options_buttons(options_window, game, diff_buttons, 5);
-    add_widget_to_window(options_window, diff_options_buttons);
+    widget_t *diff_options_buttons_widget = create_options_buttons(options_window, game, diff_buttons, 5);
+    options_buttons_t *diff_option_buttons = (options_buttons_t *) diff_options_buttons_widget->data;
+    diff_option_buttons->current_pushed_button = 1;
+    ((button_t *) diff_buttons[1]->data)->current_alpha_factor = ALPHA_FACTOR_MOUSE_OVER;
+    add_widget_to_window(options_window, diff_options_buttons_widget);
 
     SDL_Rect white_button_rect;
     white_button_rect.x = amateur_button_rect.x;
@@ -310,8 +318,11 @@ void *build_one_player_options_window(game_t *game, windows_t *windows) {
     widget_t **colors_buttons = (widget_t **) malloc(3 * sizeof(widget_t *));
     colors_buttons[0] = white_button;
     colors_buttons[1] = black_button;
-    widget_t *colors_options_buttons = create_options_buttons(options_window, game, colors_buttons, 2);
-    add_widget_to_window(options_window, colors_options_buttons);
+    widget_t *colors_options_buttons_widget = create_options_buttons(options_window, game, colors_buttons, 2);
+    options_buttons_t *colors_options_buttons = (options_buttons_t *) colors_options_buttons_widget->data;
+    colors_options_buttons->current_pushed_button = 0;
+    ((button_t *) colors_buttons[0]->data)->current_alpha_factor = ALPHA_FACTOR_MOUSE_OVER;
+    add_widget_to_window(options_window, colors_options_buttons_widget);
 }
 
 void amateur_button_action(widget_t *widget) {
@@ -361,19 +372,19 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
     slot_options_t *slot_options = (slot_options_t *) src->data;
     char slot_num_str[10];
     char full_path[30];
-    itoa(slot_options->current_top_slot + clicked_index, slot_num_str, 10);
+    itoa(clicked_index + 1, slot_num_str, 10);
     if (sprintf(full_path, "%s%s.save", GAME_SLOTS_PATH, slot_num_str) < 0) {
-        return; // fatal error to handle.
+        return; // TO-DO fatal error to handle.
     }
     if (slot_options->is_loading_mode) {
         if (slot_options->is_saved_slots[clicked_index]) {
             if (load_game_from_path(src->game, full_path) == false) {
                 if (show_error_message_box(src->window,
-                                           "There was an error trying to load the game, please try again") <
-                    0) {
-                    return; // fatal error to handle.
+                                           "There was an error trying to load the game, please try again") < 0) {
+                    return; // TO-DO fatal error to handle.
                 }
             } else {
+                reset_game_gui((game_gui_t *) src->window->windows->game_window->widgets[0]->data, src->game);
                 src->game->is_saved = true;
                 switch_to_next_window_action(src);
             }
@@ -381,11 +392,9 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
     } else { // saving a game
         // check if the slot is not disables because there is not saved game in the slot
         if (save_game_to_path(src->game, full_path) == false) {
-            if (show_error_message_box(src->window,
-                                       "There was an error trying to save the game, please try again") <
-                0) {
-                return; // fatal error to handle.
-            };
+            if (show_error_message_box(src->window, "There was an error trying to save the game, please try again") < 0)
+                return; // TO-DO fatal error to handle.
+
         } else {
             src->game->is_saved = true;
             slot_options->is_saved_slots[clicked_index] = true;
@@ -519,12 +528,12 @@ void show_unsaved_game_box_message(widget_t *widget) {
     window_t *pick_slot_window = widget->window->windows->pick_slot_window;
     if (!(widget->game->is_saved)) {
         SDL_MessageBoxButtonData buttons[] = {
-                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "Save and quit"},
+                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "save first"},
                 {SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 2, "Cancel"},
-                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 3, "Yes! Quit!"}
+                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 3, "yes"}
         };
-        int button_id = show_message_box(widget->window, buttons, 3, "Quit without saving?",
-                                         "Are you sure you want to quit without saving?");
+        int button_id = show_message_box(widget->window, buttons, 3, "Continue without saving?",
+                                         "Are you sure you want to Continue without saving?");
         slot_options_t *slot_options;
         switch (button_id) {
             case 1:

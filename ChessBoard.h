@@ -46,4 +46,7 @@ bool is_empty_space(char piece);
 bool is_white_piece(char piece);
 
 const char *name_of_piece(char piece);
+
+bool is_piece_or_empty_space(char c);
+
 #endif //UNI_CHESS_PROJECT_BOARD_H

@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include "ChessBoard.h"
+#include "string.h"
 
 #define PROGRAM_MODE_CONSOLE 'c'
 #define PROGRAM_MODE_GRAPHICAL 'g'
@@ -24,6 +25,8 @@
 #define MODERATE_DIFFICULTY 3
 #define HARD_DIFFICULTY 4
 #define EXPERT_DIFFICULTY 5
+
+#define MAX_FILE_ROW_SIZE 64
 
 typedef struct history_t {
     board_t **prev_boards; // first element is most recent

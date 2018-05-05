@@ -79,7 +79,6 @@ widget_t *create_game_gui(
             data->board_pieces_rects[r][c] = square_piece_rect;
         }
     }
-    data->is_currently_saved = false;
     data->is_piece_focused = false;
     res->window = window;
     res->game = game;
@@ -219,6 +218,7 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
                             ComputerMove move = computer_move(src->game);
                             //move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
                         }
+                        src->game->is_saved = false;
                         reset_game_gui(game_gui, src->game);
                         return;
                     }

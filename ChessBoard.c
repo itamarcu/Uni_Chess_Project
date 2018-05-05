@@ -79,3 +79,24 @@ const char *name_of_piece(char piece) {
             return "BUG";
     }
 }
+
+bool is_piece_or_empty_space(char c) {
+    switch (c) {
+        case WHITE_PAWN:
+        case BLACK_PAWN:
+        case WHITE_BISHOP:
+        case BLACK_BISHOP:
+        case WHITE_ROOK:
+        case BLACK_ROOK:
+        case WHITE_KNIGHT:
+        case BLACK_KNIGHT:
+        case WHITE_QUEEN:
+        case BLACK_QUEEN:
+        case WHITE_KING:
+        case BLACK_KING:
+        case EMPTY_SPACE:
+            return true;
+        default:
+            return false;
+    }
+}

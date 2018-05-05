@@ -42,7 +42,7 @@ void handle_options_buttons_event(widget_t *src, SDL_Event *e) {
             for (int i = 0; i < options_buttons->num_of_buttons; i++) {
                 button = (button_t *) (buttons[i]->data);
                 if (SDL_PointInRect(&mouse_pos, &button->location)) {
-                    ((button_t *) (buttons[options_buttons->current_pushed_button]->data))->current_alpha_factor = 255;
+                    ((button_t *) (buttons[options_buttons->current_pushed_button]->data))->current_alpha_factor = 255; // unclick last pushed button.
                     options_buttons->current_pushed_button = i;
                     button->action(src);
                     button->current_alpha_factor = ALPHA_FACTOR_MOUSE_OVER;
