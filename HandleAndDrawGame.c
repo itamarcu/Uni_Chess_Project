@@ -155,6 +155,8 @@ void update_game_gui_board(game_gui_t *game_gui, game_t *game) {
 }
 
 void reset_game_gui(game_gui_t *game_gui, game_t *game) {
+    if (game->history->count != 1)
+        game_gui->undo_button->is_disabled = false;
     update_game_gui_board(game_gui, game);
     game_gui->is_piece_focused = false;
     game_gui->focused_piece_row = -1;

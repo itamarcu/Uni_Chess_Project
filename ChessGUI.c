@@ -411,7 +411,6 @@ void *build_game_window(game_t *game, windows_t *windows) {
     widget_t *game_gui_widget = create_game_gui(game_window, game);
     add_widget_to_window(game_window, game_gui_widget);
 
-    add_back_button_to_window(game_window, game);
 
     SDL_Rect undo_move_rec;
     undo_move_rec.x = 0;
@@ -451,6 +450,8 @@ void *build_game_window(game_t *game, windows_t *windows) {
 
     widget_t *undo_move_button = create_button(game_window, game, UNDO_MOVE_BUTTON_PATH, undo_move_rec,
                                                NULL, undo_button_action);
+    game_gui_t *game_gui = (game_gui_t *) game_gui_widget->data;
+    game_gui->undo_button = undo_move_button;
     widget_t *save_button = create_button(game_window, game, SAVE_GAME_BUTTON_PATH,
                                           save_button_rec,
                                           windows->pick_slot_window, save_button_action);
@@ -473,7 +474,7 @@ void *build_game_window(game_t *game, windows_t *windows) {
     add_widget_to_window(game_window, restart_button);
     add_widget_to_window(game_window, main_menu_button);
     add_widget_to_window(game_window, quit_button);
-
+    add_back_button_to_window(game_window, game);
 
 //    SDL_Rect *user_color_tex_rect = (SDL_Rect *) malloc(sizeof(SDL_Rect));
 //    user_color_tex_rect->x = diff_level_tex_rect->x;
@@ -493,6 +494,9 @@ void *build_game_window(game_t *game, windows_t *windows) {
 void undo_button_action(widget_t *widget) {
     switch (undo_move(widget->game)) {
         case SUCCESS:
+            if (widget->game->history->count == 1) {
+                widget->is_disabled = true;
+            }
             break;
         case EMPTY_HISTORY:
             show_error_message_box(widget->window, "ERROR: Empty history, no move to undo");

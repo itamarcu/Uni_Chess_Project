@@ -88,6 +88,7 @@ struct game_gui_t {
     int focused_piece_row;
     int focused_piece_col;
     bool is_possible_move[8][8];
+    widget_t *undo_button;
 };
 
 struct window_t {
