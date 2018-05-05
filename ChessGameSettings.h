@@ -26,6 +26,7 @@
 #define HARD_DIFFICULTY 4
 #define EXPERT_DIFFICULTY 5
 
+#define MAX_FILE_ROW_SIZE 64
 #define HISTORY_SIZE 7  // Current board is included
 
 typedef struct history_t {

@@ -79,7 +79,6 @@ widget_t *create_game_gui(
             data->board_pieces_rects[r][c] = square_piece_rect;
         }
     }
-    data->is_currently_saved = false;
     data->is_piece_focused = false;
     res->window = window;
     res->game = game;
