@@ -219,11 +219,13 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
                             return;
                         }
                         move_was_made(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i, j);
+                        // TODO check if src->game->state == GAME_STATE_QUIT
                         reset_game_gui(game_gui, src->game);
                         if (src->game->game_mode == GAME_MODE_SINGLEPLAYER) {
                             ComputerMove move = computer_move(src->game);
                             move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
                         }
+                        // TODO check if src->game->state == GAME_STATE_QUIT
                         reset_game_gui(game_gui, src->game);
                         return;
                     }
