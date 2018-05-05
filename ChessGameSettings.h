@@ -26,11 +26,11 @@
 #define HARD_DIFFICULTY 4
 #define EXPERT_DIFFICULTY 5
 
-#define MAX_FILE_ROW_SIZE 64
+#define HISTORY_SIZE 7  // Current board is included
 
 typedef struct history_t {
-    board_t **prev_boards; // first element is most recent
-    unsigned int *prev_moves; // each one defines the move via a four-char integer (int32). I know, this is ugly!
+    board_t *prev_boards[HISTORY_SIZE]; // first element is most recent
+    unsigned int prev_moves[HISTORY_SIZE]; // each one defines the move via a four-char integer (int32). I know, this is ugly!
     int count;  // 0 when empty, HISTORY_SIZE when full
 } History;
 

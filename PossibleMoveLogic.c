@@ -189,7 +189,7 @@ get_possible_moves(board_t *board, int row, int col, possible_move_t possible_mo
             possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
             if (possible_moves[next_move_index].is_possible)
                 next_move_index += 1;
-            if (row == 1) //starting move
+            if (row == 1 && is_empty_space(board->grid[row + 1][col])) //starting move
             {
                 add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 2, col);
                 possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
@@ -209,7 +209,7 @@ get_possible_moves(board_t *board, int row, int col, possible_move_t possible_mo
             possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
             if (possible_moves[next_move_index].is_possible)
                 next_move_index += 1;
-            if (row == 6) //starting move
+            if (row == 6 && is_empty_space(board->grid[row - 1][col])) //starting move
             {
                 add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 2, col);
                 possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;

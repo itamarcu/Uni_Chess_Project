@@ -1,7 +1,6 @@
 #include "Undo.h"
 #include "ChessGameLogic.h"
 
-
 /**
  * Helper function for undoing. This also prints the undo, if the program mode is PROGRAM_MODE_CONSOLE,
  * which isn't very nicely-designed code structure but I was in a hurry and the alternative was frustrating.
@@ -18,7 +17,7 @@ void undo_one_move(game_t *game) {
         char r2 = (char) ((m >> 8) + '1');
         char c2 = (char) ((m >> 0) + 'A');
         char *player = color_string(game->current_player);
-        println_output("Undo move for %s player: <%c,%c> -> <%c,%c>", player, r2, c2, r1, c1); // (CORRECT ORDER!)
+        println_output("Undo move for %s player: <%c,%c> -> <%c,%c>", player, r1, c1, r2, c2); // (CORRECT ORDER!)
     }
 
     free_board(game->history->prev_boards[0]);
@@ -40,14 +39,15 @@ GAME_ACTION_RESULT undo_move(game_t *game) {
         // Go back 1 move
         undo_one_move(game);
         free_board(game->board);
-        game->board = game->history->prev_boards[0];
+        game->board = copy_board(game->history->prev_boards[0]);
     } else {
         // Go back 2 moves
         undo_one_move(game);
         undo_one_move(game);
         free_board(game->board);
-        game->board = game->history->prev_boards[0];
+        game->board = copy_board(game->history->prev_boards[0]);
     }
+
     return SUCCESS;
 }
 

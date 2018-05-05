@@ -79,6 +79,7 @@ widget_t *create_game_gui(
             data->board_pieces_rects[r][c] = square_piece_rect;
         }
     }
+    data->is_currently_saved = false;
     data->is_piece_focused = false;
     res->window = window;
     res->game = game;
@@ -211,13 +212,20 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
                         SDL_PointInRect(&mouse_pos, &game_gui->board_square_rects[i][j])) {
                         if (console_cmd_move(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i,
                                              j) != SUCCESS) {
+                            println_error("Programmer error 16290858162348: %d",
+                                          console_cmd_move(src->game, game_gui->focused_piece_row,
+                                                           game_gui->focused_piece_col, i,
+                                                           j));
                             return;
                         }
                         move_was_made(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i, j);
+                        // TODO check if src->game->state == GAME_STATE_QUIT
                         if (src->game->game_mode == GAME_MODE_SINGLEPLAYER) {
                             ComputerMove move = computer_move(src->game);
                             //move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
+                            // TODO check if src->game->state == GAME_STATE_QUIT
                         }
+
                         src->game->is_saved = false;
                         reset_game_gui(game_gui, src->game);
                         return;

@@ -2,7 +2,7 @@
 
 
 board_t *make_starting_board() {
-    board_t *board = (board_t *) malloc(sizeof(*board));
+    board_t *board = malloc(sizeof(board_t));
     char whiteFirstRow[8] = {
             WHITE_ROOK, WHITE_KNIGHT, WHITE_BISHOP, WHITE_QUEEN, WHITE_KING, WHITE_BISHOP, WHITE_KNIGHT, WHITE_ROOK
     };
@@ -27,7 +27,7 @@ board_t *make_starting_board() {
 }
 
 board_t *copy_board(board_t *board) {
-    board_t *clone = (board_t *) malloc(sizeof(*clone));
+    board_t *clone = malloc(sizeof(board_t));
     if (clone == NULL) {
         println_error("MALLOC failure in copy_board!");
         return NULL;

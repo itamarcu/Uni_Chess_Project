@@ -17,9 +17,7 @@ void start_game(game_t *game) {
     free_board(game->board);
     game->board = make_starting_board();
     free_history(game->history);
-    game->history = (History *) malloc(sizeof(game->history));
-    game->history->prev_boards = (board_t **) malloc(sizeof(game->board) * HISTORY_SIZE);
-    game->history->prev_moves = (unsigned int *) malloc(sizeof(unsigned int) * HISTORY_SIZE);
+    game->history = malloc(sizeof(History));
     game->history->count = 0;
     push_move_to_history(game, 1, 2, 3, 4); // arbitrary values - not important
 }
@@ -127,6 +125,8 @@ bool is_partially_legal_move(char grid[8][8], int r1, int c1, int r2, int c2) {
  */
 bool is_partially_legal_move_without_start(char grid[8][8], int r1, int c1, int r2, int c2,
                                            char moving_piece, char target_piece) {
+    int dr = sign(r2 - r1);
+    int dc = sign(c2 - c1);
     switch (moving_piece) {
         case WHITE_PAWN:
             //advance 2 forward from start, or 1 forward, through and into empty spaces
@@ -155,16 +155,16 @@ bool is_partially_legal_move_without_start(char grid[8][8], int r1, int c1, int 
         case BLACK_ROOK:
         case WHITE_ROOK:
             //move in a straight unobstructed line
-            if (r1 == r2) {
-                for (int col = min(c1, c2); col < max(c1, c2); col++) {
+            if (dr == 0) {
+                for (int col = c1 + dc; col != c2; col += dc) {
                     if (!is_empty_space(grid[r1][col])) {
                         return false;
                     }
                 }
                 return true;
             }
-            if (c1 == c2) {
-                for (int row = min(r1, r2); row < max(r1, r2); row++) {
+            if (dc == 0) {
+                for (int row = r1 + dr; row != r2; row += dr) {
                     if (!is_empty_space(grid[row][c1])) {
                         return false;
                     }
@@ -176,14 +176,10 @@ bool is_partially_legal_move_without_start(char grid[8][8], int r1, int c1, int 
         case WHITE_BISHOP:
             //move in a 45 degree diagonal unobstructed line
         {
-            int delta_row = r2 - r1;
-            int delta_col = c2 - c1;
-            if (abs(delta_row) != abs(delta_col)) {
+            if (abs(r2 - r1) != abs(c2 - c1)) {
                 return false;
             }
 
-            int dr = sign(delta_row);
-            int dc = sign(c2 - c1);
             for (int row = r1, col = c1; row != r2 && col != c2; row += dr, col += dc) {
                 if (!is_empty_space(grid[row][col])) {
                     return false;
@@ -195,16 +191,16 @@ bool is_partially_legal_move_without_start(char grid[8][8], int r1, int c1, int 
         case WHITE_QUEEN:
             //move in a straight or diagonal unobstructed line.
             //I'll just copy paste from bishop and rook, sorry.
-            if (r1 == r2) {
-                for (int col = min(c1, c2); col < max(c1, c2); col++) {
+            if (dr == 0) {
+                for (int col = c1 + dc; col != c2; col += dc) {
                     if (!is_empty_space(grid[r1][col])) {
                         return false;
                     }
                 }
                 return true;
             }
-            if (c1 == c2) {
-                for (int row = min(r1, r2); row < max(r1, r2); row++) {
+            if (dc == 0) {
+                for (int row = r1 + dr; row != r2; row += dr) {
                     if (!is_empty_space(grid[row][c1])) {
                         return false;
                     }
@@ -212,14 +208,10 @@ bool is_partially_legal_move_without_start(char grid[8][8], int r1, int c1, int 
                 return true;
             }
 
-            int delta_row = r2 - r1;
-            int delta_col = c2 - c1;
-            if (abs(delta_row) != abs(delta_col)) {
+            if (abs(r2 - r1) != abs(c2 - c1)) {
                 return false;
             }
 
-            int dr = sign(delta_row);
-            int dc = sign(c2 - c1);
             for (int row = r1, col = c1; row != r2 && col != c2; row += dr, col += dc) {
                 if (!is_empty_space(grid[row][col])) {
                     return false;
