@@ -220,11 +220,11 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
                             return;
                         }
                         move_was_made(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i, j);
-                        // TODO check if src->game->state == GAME_STATE_QUIT
+                        if_end_game_or_check_handle(src->game, src->window);
                         if (src->game->game_mode == GAME_MODE_SINGLEPLAYER) {
                             ComputerMove move = computer_move(src->game);
                             //move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
-                            // TODO check if src->game->state == GAME_STATE_QUIT
+                            if_end_game_or_check_handle(src->game, src->window);
                         }
 
                         src->game->is_saved = false;
@@ -253,20 +253,31 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
             }
             reset_game_gui(game_gui, src->game);
             break;
-//        case SDL_MOUSEMOTION:
-//            slot_i_rect = slot_options->first_slot_location;
-//            for (int i = 0; i < NUMBER_OF_DROWN_SLOTS; ++i) {
-//                if (SDL_PointInRect(&mouse_pos, &slot_i_rect)) {
-//
-//                }
-//            }
-////            if (SDL_PointInRect(&mouse_pos, &button->location)) {
-////                SDL_SetTextureAlphaMod(button->texture, ALPHA_FACTOR_MOUSE_OVER);
-////            } else
-////                SDL_SetTextureAlphaMod(button->texture, 255);
-//            break;
         default:
             break;
+    }
+}
+
+void if_end_game_or_check_handle(game_t *game, window_t *game_window) {
+    SDL_MessageBoxButtonData buttons[] = {
+            {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "Ok"}
+    };
+    if (check_if_king_is_threatened(game->board, true) && game->current_player == WHITE) {
+        show_message_box(game_window, buttons, 1, "Pay Attention!", "White Player - you just got checked!");
+    }
+    if (check_if_king_is_threatened(game->board, false) && game->current_player == BLACK) {
+        show_message_box(game_window, buttons, 1, "Pay Attention!", "Black Player - you just got checked!");
+    }
+    if (game->state != GAME_STATE_QUIT)
+        return;
+    if (game->winner == GAME_WINNER_WHITE) {
+        show_message_box(game_window, buttons, 1, "Game Ended", "WHITE WON ! ! !");
+    }
+    if (game->winner == GAME_WINNER_BLACK) {
+        show_message_box(game_window, buttons, 1, "Game Ended", "BLACK WON ! ! !");
+    }
+    if (game->winner == GAME_WINNER_DRAW) {
+        show_message_box(game_window, buttons, 1, "Game Ended", "The game has ended with a draw");
     }
 }
 

@@ -48,6 +48,8 @@ void destroy_game_gui(widget_t *src);
 
 void handle_game_gui_event(widget_t *src, SDL_Event *event);
 
+void if_end_game_or_check_handle(game_t *game, window_t *game_window);
+
 void fill_highlighted_squares_from_possible_moves(game_gui_t *game_gui, possible_move_t possible_moves[32]);
 
 void draw_game_gui(widget_t *widget);
