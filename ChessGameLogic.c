@@ -73,10 +73,9 @@ void move_was_made(game_t *game, int r1, int c1, int r2, int c2) {
 }
 
 /**
- * Returns true if the checked player has 0 possible moves with their king (loss / draw)
+ * Returns true if the checked player has 0 possible moves
  * @param game the game
  * @param checking_for_white true if checking for white player
- * @return false if the "checked" player is checkmated
  */
 bool check_if_player_can_move(board_t *board, bool checking_for_white) {
     for (int row = 0; row < 8; row++)

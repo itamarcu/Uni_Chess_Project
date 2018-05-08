@@ -4,7 +4,8 @@
 ComputerMove computer_move(game_t *game) {
     bool computer_is_white = (game->user_color == BLACK);
     int board_score = calculate_simple_board_score(game->board);
-    return recursively_minimax_best_move(game->board, computer_is_white, board_score);
+    return recursively_minimax_best_move(game->board, computer_is_white, MIN_SCORE_VALUE, MAX_SCORE_VALUE,
+                                         game->difficulty);
 }
 
 /**
@@ -42,8 +43,27 @@ int calculate_simple_board_score(board_t *board) {
     return sum;
 }
 
-ComputerMove recursively_minimax_best_move(board_t *board, bool player_is_white, int board_score) {
+ComputerMove
+recursively_minimax_best_move(board_t *board, bool player_is_white, int alpha, int beta, int depthRemaining) {
     ComputerMove best_move;
+    best_move.r1 = -1; // signifies that there is no possible move found yet
+    if (depthRemaining == 0) {
+        // Stop, give heuristic value (board score)
+        bool game_ended = !check_if_player_can_move(board, player_is_white); // gotta test every time, because draws
+
+        if (game_ended) {
+            best_move.r1 = -2; // signifies that it's a game end scenario
+            if (check_if_king_is_threatened(board, player_is_white))  // is white Checked?
+                best_move.score = MIN_SCORE_VALUE; // Black win
+            else if (check_if_king_is_threatened(board, false))  // is black Checked?
+                best_move.score = MAX_SCORE_VALUE; // White win
+            else
+                best_move.score = 0; // Draw / Tie
+
+        }
+    }
+    // Remember:
+    // white is maximizing (+), black is minimizing (-)
     for (int x = 0; x < 8; x++) {
         for (int y = 0; y < 8; y++) {
             char piece = board->grid[x][y];
@@ -51,7 +71,8 @@ ComputerMove recursively_minimax_best_move(board_t *board, bool player_is_white,
                 continue;
             possible_move_t possible_moves[MOVES_ARRAY_SIZE];
             get_possible_moves(board, x, y, possible_moves);
-            for (int i = 0; i < MOVES_ARRAY_SIZE; i++) {
+            int i = 0;
+            for (; i < MOVES_ARRAY_SIZE; i++) {
                 possible_move_t m = possible_moves[i];
                 if (!m.is_possible)
                     break; // (all moves from now on are guaranteed to be not possible)
@@ -65,14 +86,12 @@ ComputerMove recursively_minimax_best_move(board_t *board, bool player_is_white,
                 possible_board->grid[x][y] = EMPTY_SPACE;
                 possible_board->grid[m.row][m.col] = piece;
             }
+            if (i == 0) { // no possible moves at all
+
+            }
         }
     }
 
-    best_move.r1 = 1;
-    best_move.c1 = 2;
-    best_move.r2 = 3;
-    best_move.c2 = 4;
-    best_move.moving_piece = 'M';
     return best_move;
 }
 

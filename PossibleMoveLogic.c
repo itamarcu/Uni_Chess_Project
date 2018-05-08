@@ -323,3 +323,241 @@ get_possible_moves(board_t *board, int row, int col, possible_move_t possible_mo
 
     return SUCCESS;
 }
+
+void is_move_(board_t *board, int r1, int c1, int r2, int c2) {
+    char moving_piece = board->grid[r1][c1];
+    char target_piece = board->grid[r2][c2];
+    bool is_white = is_white_piece(moving_piece);
+    if (!is_empty_space(target_piece)) {
+        if (is_white_piece(target_piece) == is_white) {
+            //attempt to move into allied unit
+            return false;
+        }
+    }
+
+    //---Test for king danger and piece danger---
+
+    //Temporarily make move attempt
+    board->grid[r2][c2] = moving_piece;
+    board->grid[r1][c1] = EMPTY_SPACE;
+
+    int rk, ck;
+    for (int row = 0; row < 8; row++)
+        for (int col = 0; col < 8; col++) {
+            if ((board->grid[row][col] == BLACK_KING && !is_white)
+                || (board->grid[row][col] == WHITE_KING && is_white)) {
+                rk = row;
+                ck = col;
+                goto FoundKing;
+            }
+        }
+    println_error("CRITICAL ERROR: King not found in board!!?!?");
+    return;
+
+    FoundKing:
+    // for each 'inverse-reachable' position on the board, check if the unit there is an enemy that can reach
+    // start with 8 directions
+    for (int row_delta = -1; row_delta <= 1; row_delta++)
+        for (int col_delta = -1; col_delta <= 1; col_delta++) {
+            if (row_delta == 0 && col_delta == 0)
+                continue;
+            if (has_enemy_in_that_direction(board, is_white, rk, ck, row_delta, col_delta)) {
+                //king will be threatened! no need to check anything more.
+                //Undo move
+                board->grid[r2][c2] = target_piece;
+                board->grid[r1][c1] = moving_piece;
+                return false;
+            }
+        }
+
+    // also check knights
+    int knight_x_deltas[8] = {+1, +2, +2, +1, -1, -2, -2, -1}; //start from up-up-right and move clockwise
+    int knight_y_deltas[8] = {-2, -1, +1, +2, +2, +1, -1, -2}; //start from up-up-right and move clockwise
+    for (int i = 0; i < 8; i++) {
+        int row_from_k = rk + knight_x_deltas[i];
+        int col_from_k = ck + knight_y_deltas[i];
+        if (row_from_k < 0 || row_from_k >= 8 || col_from_k < 0 || col_from_k >= 8)
+            continue;
+        char piece_k = board->grid[row_from_k][col_from_k];
+        if (!is_empty_space(piece_k) && (is_white_piece(piece_k) != is_white)) {
+            if (piece_k == WHITE_KNIGHT || piece_k == BLACK_KNIGHT) {
+                //king will be threatened! no need to check anything more.
+                //Undo move
+                board->grid[r2][c2] = target_piece;
+                board->grid[r1][c1] = moving_piece;
+                return false;
+            }
+        }
+    }
+
+    // Undo the temporary move
+    board->grid[r2][c2] = target_piece;
+    board->grid[r1][c1] = moving_piece;
+
+    return true;
+}
+
+bool has_any_possible_moves(board_t *board, int r1, int c1) {
+    if (row < 0 || row >= 8 || col < 0 || col >= 8) {
+        return INVALID_POS;
+    }
+
+    char piece = board->grid[row][col];
+    if (piece == EMPTY_SPACE) {
+        return NO_PIECE_IN_LOCATION;
+    }
+
+    for (int i = 0; i < MOVES_ARRAY_SIZE; i++) {
+        possible_moves[i].is_possible = false;
+    }
+
+    int next_move_index = 0;
+
+    switch (piece) {
+        case WHITE_PAWN:
+            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 1, col);
+            possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_possible)
+                next_move_index += 1;
+            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 1, col - 1);
+            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_possible)
+                next_move_index += 1;
+            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 1, col + 1);
+            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_possible)
+                next_move_index += 1;
+            if (row == 1 && is_empty_space(board->grid[row + 1][col])) //starting move
+            {
+                add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 2, col);
+                possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
+            }
+            break;
+        case BLACK_PAWN:
+            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 1, col);
+            possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_possible)
+                next_move_index += 1;
+
+            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 1, col - 1);
+            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_possible)
+                next_move_index += 1;
+            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 1, col + 1);
+            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_possible)
+                next_move_index += 1;
+            if (row == 6 && is_empty_space(board->grid[row - 1][col])) //starting move
+            {
+                add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 2, col);
+                possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
+            }
+            break;
+        case WHITE_BISHOP:
+        case BLACK_BISHOP:
+            for (int row_delta = -1; row_delta <= 1; row_delta++) {
+                for (int col_delta = -1; col_delta <= 1; col_delta++) {
+                    if (row_delta == 0 && col_delta == 0)
+                        continue;
+                    if (row_delta * col_delta == 0) //if not diagonal
+                        continue;
+                    int r = row + row_delta;
+                    int c = col + col_delta;
+                    for (; 0 <= r && r < 8 && 0 <= c && c < 8; r += row_delta, c += col_delta) {
+                        add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
+
+                        // Do not change the order here:
+                        possible_move_t *possible_move = &possible_moves[next_move_index];
+                        if (!possible_move->is_possible)
+                            break;
+                        next_move_index += 1;
+                        if (possible_move->is_capturing)
+                            break;
+                    }
+                }
+            }
+            break;
+        case WHITE_ROOK:
+        case BLACK_ROOK:
+            for (int row_delta = -1; row_delta <= 1; row_delta++) {
+                for (int col_delta = -1; col_delta <= 1; col_delta++) {
+                    if (row_delta == 0 && col_delta == 0)
+                        continue;
+                    if (row_delta * col_delta != 0) //if not horizontal/vertical
+                        continue;
+                    int r = row + row_delta;
+                    int c = col + col_delta;
+                    for (; 0 <= r && r < 8 && 0 <= c && c < 8; r += row_delta, c += col_delta) {
+                        add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
+
+                        // Do not change the order here:
+                        possible_move_t *possible_move = &possible_moves[next_move_index];
+                        if (!possible_move->is_possible)
+                            break;
+                        next_move_index += 1;
+                        if (possible_move->is_capturing)
+                            break;
+                    }
+                }
+            }
+            break;
+        case WHITE_KNIGHT:
+        case BLACK_KNIGHT: {
+            //start from up-up-right and move clockwise
+            int knight_x_deltas[8] = {+1, +2, +2, +1, -1, -2, -2, -1}; //
+            int knight_y_deltas[8] = {-2, -1, +1, +2, +2, +1, -1, -2}; //
+
+            for (int i = 0; i < 8; i++) {
+                int r = row + knight_x_deltas[i];
+                int c = col + knight_y_deltas[i];
+                add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
+                if (possible_moves[next_move_index].is_possible)
+                    next_move_index += 1;
+            }
+        }
+            break;
+        case WHITE_QUEEN:
+        case BLACK_QUEEN:
+            for (int row_delta = -1; row_delta <= 1; row_delta++) {
+                for (int col_delta = -1; col_delta <= 1; col_delta++) {
+                    if (row_delta == 0 && col_delta == 0)
+                        continue;
+                    int r = row + row_delta;
+                    int c = col + col_delta;
+                    for (; 0 <= r && r < 8 && 0 <= c && c < 8; r += row_delta, c += col_delta) {
+                        add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
+
+                        // Do not change the order here:
+                        possible_move_t *possible_move = &possible_moves[next_move_index];
+                        if (!possible_move->is_possible)
+                            break;
+                        next_move_index += 1;
+                        if (possible_move->is_capturing)
+                            break;
+                    }
+                }
+            }
+            break;
+        case WHITE_KING:
+        case BLACK_KING:
+            for (int row_delta = -1; row_delta <= 1; row_delta++) {
+                for (int col_delta = -1; col_delta <= 1; col_delta++) {
+                    if (row_delta == 0 && col_delta == 0)
+                        continue;
+                    int r = row + row_delta;
+                    int c = col + col_delta;
+                    if (0 <= r && r < 8 && 0 <= c && c < 8) {
+                        add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
+                        if (possible_moves[next_move_index].is_possible)
+                            next_move_index += 1;
+                    }
+                }
+            }
+            break;
+        default:
+            println_error("BUG 879873213 with piece %c (%d)", piece, piece);
+            break;
+    }
+
+    return false;
+}

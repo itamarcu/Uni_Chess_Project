@@ -21,4 +21,11 @@ typedef struct possible_move_t {
  */
 GAME_ACTION_RESULT get_possible_moves(board_t *board, int r1, int c1, possible_move_t possible_moves[MOVES_ARRAY_SIZE]);
 
+/**
+ * Returns true if the piece on the board has any valid moves (this is faster than get_possible_moves)
+ *
+ * NOTE: this assumes correct input (correct r1, r2, nonempty...)
+ */
+bool has_any_possible_moves(board_t *board, int r1, int c1);
+
 #endif //UNI_CHESS_PROJECT_POSSIBLEMOVELOGIC_H
