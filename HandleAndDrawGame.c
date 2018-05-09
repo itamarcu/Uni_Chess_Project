@@ -1,8 +1,14 @@
 #include "HandleAndDrawGame.h"
 
-widget_t *create_game_gui(
-        window_t *window,
-        game_t *game) {
+bool pressing_auto_move_key() {
+    return SDL_GetKeyboardState(NULL)[SDL_SCANCODE_LCTRL];
+}
+
+bool pressing_double_auto_move_key() {
+    return SDL_GetKeyboardState(NULL)[SDL_SCANCODE_LSHIFT];
+}
+
+widget_t *create_game_gui(window_t *window, game_t *game) {
     widget_t *res = 0;
     game_gui_t *data = 0;
 
@@ -64,16 +70,16 @@ widget_t *create_game_gui(
     update_game_gui_board(data, game);
     SDL_Rect square_piece_rect;
     SDL_Rect square_rect;
-    square_piece_rect.w = PEICE_DEST_W_H;
-    square_piece_rect.h = PEICE_DEST_W_H;
+    square_piece_rect.w = PIECE_DEST_W_H;
+    square_piece_rect.h = PIECE_DEST_W_H;
 
     square_rect.w = (int) AVERAGE_SQUARE_WIDTH;
     square_rect.h = (int) AVERAGE_SQUARE_HEIGHT;
     for (int r = 0; r < 8; ++r) {
-        square_piece_rect.y = FIRST_PEICE_X_Y + (int) ((7 - r) * AVERAGE_SQUARE_WIDTH);
+        square_piece_rect.y = FIRST_PIECE_X_Y + (int) ((7 - r) * AVERAGE_SQUARE_WIDTH);
         square_rect.y = FIRST_SQUARE_X_Y + (int) ((7 - r) * AVERAGE_SQUARE_WIDTH);
         for (int c = 0; c < 8; ++c) {
-            square_piece_rect.x = FIRST_PEICE_X_Y + (int) (c * AVERAGE_SQUARE_HEIGHT);
+            square_piece_rect.x = FIRST_PIECE_X_Y + (int) (c * AVERAGE_SQUARE_HEIGHT);
             square_rect.x = FIRST_SQUARE_X_Y + (int) (c * AVERAGE_SQUARE_HEIGHT);
             data->board_square_rects[r][c] = square_rect;
             data->board_pieces_rects[r][c] = square_piece_rect;
@@ -207,6 +213,26 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
     SDL_Point mouse_pos = {.x = e->button.x, .y = e->button.y};
     switch (e->type) {
         case SDL_MOUSEBUTTONUP:
+            if (pressing_double_auto_move_key()) {
+                ComputerMove move1 = computer_move(src->game);
+                move_was_made(src->game, move1.r1, move1.c1, move1.r2, move1.c2);
+                ComputerMove move2 = computer_move(src->game);
+                move_was_made(src->game, move2.r1, move2.c1, move2.r2, move2.c2);
+                draw_game_gui(src);
+                if_end_game_or_check_handle(src->game, src->window);
+                src->game->is_saved = false;
+                reset_game_gui(game_gui, src->game);
+                break;
+            }
+            if (pressing_auto_move_key()) {
+                ComputerMove move = computer_move(src->game);
+                move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
+                draw_game_gui(src);
+                if_end_game_or_check_handle(src->game, src->window);
+                src->game->is_saved = false;
+                reset_game_gui(game_gui, src->game);
+                break;
+            }
             for (int i = 0; i < 8; ++i) {
                 for (int j = 0; j < 8; ++j) {
                     if (game_gui->highlighted_squares[i][j] != NULL &&
@@ -264,10 +290,12 @@ void if_end_game_or_check_handle(game_t *game, window_t *game_window) {
     SDL_MessageBoxButtonData buttons[] = {
             {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "Ok"}
     };
-    if (check_if_king_is_threatened(game->board, true) && game->current_player == WHITE) {
+    if (!pressing_auto_move_key && !pressing_double_auto_move_key && check_if_king_is_threatened(game->board, true) &&
+        game->current_player == WHITE) {
         show_message_box(game_window, buttons, 1, "Pay Attention!", "White Player - you just got checked!");
     }
-    if (check_if_king_is_threatened(game->board, false) && game->current_player == BLACK) {
+    if (!pressing_auto_move_key && !pressing_double_auto_move_key && check_if_king_is_threatened(game->board, false) &&
+        game->current_player == BLACK) {
         show_message_box(game_window, buttons, 1, "Pay Attention!", "Black Player - you just got checked!");
     }
     if (game->state != GAME_STATE_QUIT)

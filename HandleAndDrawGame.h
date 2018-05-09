@@ -33,8 +33,8 @@
 #define AVERAGE_SQUARE_WIDTH 83.125
 #define AVERAGE_SQUARE_HEIGHT 82.875
 #define FIRST_SQUARE_X_Y 19
-#define FIRST_PEICE_X_Y 28
-#define PEICE_DEST_W_H 64
+#define FIRST_PIECE_X_Y 28
+#define PIECE_DEST_W_H 64
 
 widget_t *create_game_gui(
         window_t *window,

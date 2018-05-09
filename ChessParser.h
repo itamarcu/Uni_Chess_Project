@@ -14,7 +14,8 @@ typedef enum {
     CMD_SAVE,
     CMD_UNDO,
     CMD_RESET,
-    CMD_QUIT_GAME
+    CMD_QUIT_GAME,
+    CMD_MAKE_MY_MOVE
 } GAME_COMMAND;
 
 typedef enum {

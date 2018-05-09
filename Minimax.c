@@ -2,8 +2,8 @@
 #include "PossibleMoveLogic.h"
 
 ComputerMove computer_move(game_t *game) {
-    bool computer_is_white = (game->user_color == BLACK);
-    ComputerMove m = recursively_minimax_best_move(game->board, computer_is_white, MIN_SCORE_VALUE, MAX_SCORE_VALUE,
+    ComputerMove m = recursively_minimax_best_move(game->board, game->current_player == WHITE, MIN_SCORE_VALUE,
+                                                   MAX_SCORE_VALUE,
                                                    game->difficulty);
     game->board->grid[m.r2][m.c2] = game->board->grid[m.r1][m.c1];
     game->board->grid[m.r1][m.c1] = EMPTY_SPACE;

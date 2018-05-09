@@ -112,7 +112,8 @@ void CUI_settings_case(game_t *game) {
 void CUI_game_case(game_t *game) {
     if (game->game_mode == GAME_MODE_MULTIPLAYER || game->current_player == game->user_color) {
         print_board(game->board);
-        println_debug("BOARD SCORE: %d", calculate_simple_board_score(game->board));
+        if (DEBUG_MODE)
+            println_debug("[BOARD SCORE: %d]", calculate_simple_board_score(game->board));
         println_output("Enter your move (%s player):", color_string(game->current_player));
 
         command_t *command = get_user_input_as_command();
@@ -122,6 +123,7 @@ void CUI_game_case(game_t *game) {
         }
 
         possible_move_t moves[MOVES_ARRAY_SIZE];
+        ComputerMove auto_move;
 
         if (!command->valid_command) {
             println_error("ERROR: invalid command");
@@ -212,6 +214,14 @@ void CUI_game_case(game_t *game) {
                     break;
                 case CMD_NONE_GAME:
                     println_error("ERROR: invalid command");
+                    break;
+                case CMD_MAKE_MY_MOVE:
+                    auto_move = computer_move(game);
+                    println_output("Computer: move %s at <%d,%d> to <%d,%d>",
+                                   name_of_piece(game->board->grid[auto_move.r1][auto_move.r2]),
+                                   auto_move.r1, auto_move.c1,
+                                   auto_move.r2, auto_move.c2);
+                    move_was_made(game, auto_move.r1, auto_move.c1, auto_move.r2, auto_move.c2);
                     break;
                 default:
                     println_error("ERROR: unhandled game command in switch-case:    %d", command->game_command);

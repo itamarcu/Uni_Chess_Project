@@ -72,6 +72,11 @@ command_t *cmd_get_moves(command_t *command) {
     return command;
 }
 
+command_t *cmd_auto(command_t *command) {
+    command->game_command = CMD_MAKE_MY_MOVE;
+    return command;
+}
+
 command_t *cmd_load(command_t *command) {
     command->settings_command = CMD_LOAD;
     char *arg_string = strtok(NULL, " \r\t\n");
@@ -125,6 +130,8 @@ command_t *get_user_input_as_command() {
         return cmd_move(command);
     } else if (strcmp(command_string, "mov") == 0 && DEBUG_MODE) {
         return cmd_mov(command);
+    } else if (strcmp(command_string, "auto") == 0) { // special custom command
+        return cmd_auto(command);
     } else if (strcmp(command_string, "get_moves") == 0) {
         return cmd_get_moves(command);
     } else if (strcmp(command_string, "load") == 0) {
