@@ -34,4 +34,17 @@ void start_game(game_t *game);
 
 GAME_ACTION_RESULT console_cmd_move(game_t *game, int r1, int c1, int r2, int c2);
 
+
+// "Private" helper functions:
+
+
+bool is_partially_legal_move(char grid[8][8], int r1, int c1, int r2, int c2);
+
+/**
+ * Helper function - checks for move legality with the assumptions that
+ * all parameters are inside the grid and grid[r1][c1] has been emptied.
+ */
+bool is_partially_legal_move_without_start(char grid[8][8], int r1, int c1, int r2, int c2, char moving_piece,
+                                           char target_piece);
+
 #endif //UNI_CHESS_PROJECT_GAMELOGIC_H

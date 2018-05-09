@@ -324,7 +324,8 @@ get_possible_moves(board_t *board, int row, int col, possible_move_t possible_mo
     return SUCCESS;
 }
 
-void is_move_(board_t *board, int r1, int c1, int r2, int c2) {
+
+bool optimized_move_legality_check(board_t *board, int r1, int c1, int r2, int c2) {
     char moving_piece = board->grid[r1][c1];
     char target_piece = board->grid[r2][c2];
     bool is_white = is_white_piece(moving_piece);
@@ -352,7 +353,7 @@ void is_move_(board_t *board, int r1, int c1, int r2, int c2) {
             }
         }
     println_error("CRITICAL ERROR: King not found in board!!?!?");
-    return;
+    return false;
 
     FoundKing:
     // for each 'inverse-reachable' position on the board, check if the unit there is an enemy that can reach
@@ -397,60 +398,46 @@ void is_move_(board_t *board, int r1, int c1, int r2, int c2) {
     return true;
 }
 
-bool has_any_possible_moves(board_t *board, int r1, int c1) {
-    if (row < 0 || row >= 8 || col < 0 || col >= 8) {
-        return INVALID_POS;
-    }
-
+bool has_any_possible_moves(board_t *board, int row, int col) {
     char piece = board->grid[row][col];
-    if (piece == EMPTY_SPACE) {
-        return NO_PIECE_IN_LOCATION;
-    }
-
-    for (int i = 0; i < MOVES_ARRAY_SIZE; i++) {
-        possible_moves[i].is_possible = false;
-    }
-
-    int next_move_index = 0;
 
     switch (piece) {
         case WHITE_PAWN:
-            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 1, col);
-            possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
-            if (possible_moves[next_move_index].is_possible)
-                next_move_index += 1;
-            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 1, col - 1);
-            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
-            if (possible_moves[next_move_index].is_possible)
-                next_move_index += 1;
-            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 1, col + 1);
-            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
-            if (possible_moves[next_move_index].is_possible)
-                next_move_index += 1;
+            if (optimized_move_legality_check(board, row, col, row + 1, col)) {
+                return true;
+            }
+            if (optimized_move_legality_check(board, row, col, row + 1, col - 1) &&
+                !is_empty_space(board->grid[row + 1][col - 1])) {
+                return true;
+            }
+            if (optimized_move_legality_check(board, row, col, row + 1, col + 1) &&
+                !is_empty_space(board->grid[row + 1][col + 1])) {
+                return true;
+            }
             if (row == 1 && is_empty_space(board->grid[row + 1][col])) //starting move
             {
-                add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 2, col);
-                possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
+                if (optimized_move_legality_check(board, row, col, row + 2, col)) {
+                    return true;
+                }
             }
             break;
         case BLACK_PAWN:
-            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 1, col);
-            possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
-            if (possible_moves[next_move_index].is_possible)
-                next_move_index += 1;
-
-            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 1, col - 1);
-            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
-            if (possible_moves[next_move_index].is_possible)
-                next_move_index += 1;
-            add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 1, col + 1);
-            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
-            if (possible_moves[next_move_index].is_possible)
-                next_move_index += 1;
+            if (optimized_move_legality_check(board, row, col, row - 1, col)) {
+                return true;
+            }
+            if (optimized_move_legality_check(board, row, col, row - 1, col - 1) &&
+                !is_empty_space(board->grid[row - 1][col - 1])) {
+                return true;
+            }
+            if (optimized_move_legality_check(board, row, col, row - 1, col + 1) &&
+                !is_empty_space(board->grid[row - 1][col + 1])) {
+                return true;
+            }
             if (row == 6 && is_empty_space(board->grid[row - 1][col])) //starting move
             {
-                add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 2, col);
-                possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
+                if (optimized_move_legality_check(board, row, col, row - 2, col)) {
+                    return true;
+                }
             }
             break;
         case WHITE_BISHOP:
@@ -464,15 +451,9 @@ bool has_any_possible_moves(board_t *board, int r1, int c1) {
                     int r = row + row_delta;
                     int c = col + col_delta;
                     for (; 0 <= r && r < 8 && 0 <= c && c < 8; r += row_delta, c += col_delta) {
-                        add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
-
-                        // Do not change the order here:
-                        possible_move_t *possible_move = &possible_moves[next_move_index];
-                        if (!possible_move->is_possible)
-                            break;
-                        next_move_index += 1;
-                        if (possible_move->is_capturing)
-                            break;
+                        if (optimized_move_legality_check(board, row, col, r, c)) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -488,15 +469,9 @@ bool has_any_possible_moves(board_t *board, int r1, int c1) {
                     int r = row + row_delta;
                     int c = col + col_delta;
                     for (; 0 <= r && r < 8 && 0 <= c && c < 8; r += row_delta, c += col_delta) {
-                        add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
-
-                        // Do not change the order here:
-                        possible_move_t *possible_move = &possible_moves[next_move_index];
-                        if (!possible_move->is_possible)
-                            break;
-                        next_move_index += 1;
-                        if (possible_move->is_capturing)
-                            break;
+                        if (optimized_move_legality_check(board, row, col, r, c)) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -510,9 +485,9 @@ bool has_any_possible_moves(board_t *board, int r1, int c1) {
             for (int i = 0; i < 8; i++) {
                 int r = row + knight_x_deltas[i];
                 int c = col + knight_y_deltas[i];
-                add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
-                if (possible_moves[next_move_index].is_possible)
-                    next_move_index += 1;
+                if (optimized_move_legality_check(board, row, col, r, c)) {
+                    return true;
+                }
             }
         }
             break;
@@ -525,15 +500,9 @@ bool has_any_possible_moves(board_t *board, int r1, int c1) {
                     int r = row + row_delta;
                     int c = col + col_delta;
                     for (; 0 <= r && r < 8 && 0 <= c && c < 8; r += row_delta, c += col_delta) {
-                        add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
-
-                        // Do not change the order here:
-                        possible_move_t *possible_move = &possible_moves[next_move_index];
-                        if (!possible_move->is_possible)
-                            break;
-                        next_move_index += 1;
-                        if (possible_move->is_capturing)
-                            break;
+                        if (optimized_move_legality_check(board, row, col, r, c)) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -547,15 +516,15 @@ bool has_any_possible_moves(board_t *board, int r1, int c1) {
                     int r = row + row_delta;
                     int c = col + col_delta;
                     if (0 <= r && r < 8 && 0 <= c && c < 8) {
-                        add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
-                        if (possible_moves[next_move_index].is_possible)
-                            next_move_index += 1;
+                        if (optimized_move_legality_check(board, row, col, r, c)) {
+                            return true;
+                        }
                     }
                 }
             }
             break;
         default:
-            println_error("BUG 879873213 with piece %c (%d)", piece, piece);
+            println_error("BUG 789745643213 with piece %c (%d)", piece, piece);
             break;
     }
 

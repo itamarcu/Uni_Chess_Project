@@ -78,7 +78,8 @@ recursively_minimax_best_move(board_t *board, bool player_is_white, int alpha, i
                     break; // (all moves from now on are guaranteed to be not possible)
                 // Recursively try each possible move
                 board_t *possible_board = copy_board(board);
-                int new_board_score = board_score;
+                int new_board_score = 0;
+
                 char captured_piece = possible_board->grid[m.row][m.col];
                 if (!is_empty_space(captured_piece)) {
                     new_board_score -= PIECE_SCORES[captured_piece];

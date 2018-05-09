@@ -1,14 +1,6 @@
 #include "ChessGameLogic.h"
 #include "Undo.h"
 
-bool is_partially_legal_move(char grid[8][8], int r1, int c1, int r2, int c2);
-
-/**
- * Helper function - checks for move legality with the assumptions that
- * all parameters are inside the grid and grid[r1][c1] has been emptied.
- */
-bool is_partially_legal_move_without_start(char grid[8][8], int r1, int c1, int r2, int c2, char moving_piece,
-                                           char target_piece);
 
 void start_game(game_t *game) {
     game->state = GAME_STATE_GAME;
@@ -85,11 +77,7 @@ bool check_if_player_can_move(board_t *board, bool checking_for_white) {
                 continue;
             if (is_white_piece(piece) != checking_for_white)
                 continue;
-            possible_move_t moves[MOVES_ARRAY_SIZE];
-            if (get_possible_moves(board, row, col, moves) != SUCCESS)
-                println_error("BUG 15907624");
-
-            if (moves[0].is_possible)
+            if (has_any_possible_moves(board, row, col))
                 return true;
         }
     return false;
