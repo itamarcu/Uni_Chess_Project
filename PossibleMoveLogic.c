@@ -84,7 +84,7 @@ void update_move_by_potential_threats(board_t *board, possible_move_t *move, int
                 goto FoundKing;
             }
         }
-    println_error("CRITICAL ERROR: King not found in board!!?!?");
+    println_error("CRITICAL ERROR 975312: King not found in board!!?!?");
     return;
 
     FoundKing:
@@ -113,19 +113,20 @@ void update_move_by_potential_threats(board_t *board, possible_move_t *move, int
     for (int i = 0; i < 8; i++) {
         int row_from_k = rk + knight_x_deltas[i];
         int col_from_k = ck + knight_y_deltas[i];
-        if (row_from_k < 0 || row_from_k >= 8 || col_from_k < 0 || col_from_k >= 8)
-            continue;
-        char piece_k = board->grid[row_from_k][col_from_k];
-        if (!is_empty_space(piece_k) && (is_white_piece(piece_k) != is_white)) {
-            if (piece_k == WHITE_KNIGHT || piece_k == BLACK_KNIGHT) {
-                //king will be threatened! no need to check anything more.
-                move->is_possible = false;
-                //Undo move
-                board->grid[r2][c2] = target_piece;
-                board->grid[r1][c1] = moving_piece;
-                return;
+        if (!(row_from_k < 0 || row_from_k >= 8 || col_from_k < 0 || col_from_k >= 8)) {
+            char piece_k = board->grid[row_from_k][col_from_k];
+            if (!is_empty_space(piece_k) && (is_white_piece(piece_k) != is_white)) {
+                if (piece_k == WHITE_KNIGHT || piece_k == BLACK_KNIGHT) {
+                    //king will be threatened! no need to check anything more.
+                    move->is_possible = false;
+                    //Undo move
+                    board->grid[r2][c2] = target_piece;
+                    board->grid[r1][c1] = moving_piece;
+                    return;
+                }
             }
-        } else if (!will_piece_be_threatened) {
+        }
+        if (!will_piece_be_threatened) {
             int row_from_p = r2 + knight_x_deltas[i];
             int col_from_p = c2 + knight_y_deltas[i];
             if (row_from_p < 0 || row_from_p >= 8 || col_from_p < 0 || col_from_p >= 8)
@@ -230,10 +231,9 @@ get_possible_moves(board_t *board, int row, int col, possible_move_t possible_mo
 
                         // Do not change the order here:
                         possible_move_t *possible_move = &possible_moves[next_move_index];
-                        if (!possible_move->is_possible)
-                            break;
-                        next_move_index += 1;
-                        if (possible_move->is_capturing)
+                        if (possible_move->is_possible)
+                            next_move_index += 1;
+                        if (!is_empty_space(board->grid[r][c]))
                             break;
                     }
                 }
@@ -254,10 +254,9 @@ get_possible_moves(board_t *board, int row, int col, possible_move_t possible_mo
 
                         // Do not change the order here:
                         possible_move_t *possible_move = &possible_moves[next_move_index];
-                        if (!possible_move->is_possible)
-                            break;
-                        next_move_index += 1;
-                        if (possible_move->is_capturing)
+                        if (possible_move->is_possible)
+                            next_move_index += 1;
+                        if (!is_empty_space(board->grid[r][c]))
                             break;
                     }
                 }
@@ -291,10 +290,9 @@ get_possible_moves(board_t *board, int row, int col, possible_move_t possible_mo
 
                         // Do not change the order here:
                         possible_move_t *possible_move = &possible_moves[next_move_index];
-                        if (!possible_move->is_possible)
-                            break;
-                        next_move_index += 1;
-                        if (possible_move->is_capturing)
+                        if (possible_move->is_possible)
+                            next_move_index += 1;
+                        if (!is_empty_space(board->grid[r][c]))
                             break;
                     }
                 }
@@ -352,7 +350,7 @@ bool optimized_move_legality_check(board_t *board, int r1, int c1, int r2, int c
                 goto FoundKing;
             }
         }
-    println_error("CRITICAL ERROR: King not found in board!!?!?");
+    println_error("CRITICAL ERROR 21357987: King not found in board!!?!?");
     return false;
 
     FoundKing:
@@ -454,6 +452,8 @@ bool has_any_possible_moves(board_t *board, int row, int col) {
                         if (optimized_move_legality_check(board, row, col, r, c)) {
                             return true;
                         }
+                        if (!is_empty_space(board->grid[r][c]))
+                            break;
                     }
                 }
             }
@@ -472,6 +472,8 @@ bool has_any_possible_moves(board_t *board, int row, int col) {
                         if (optimized_move_legality_check(board, row, col, r, c)) {
                             return true;
                         }
+                        if (!is_empty_space(board->grid[r][c]))
+                            break;
                     }
                 }
             }
@@ -503,6 +505,8 @@ bool has_any_possible_moves(board_t *board, int row, int col) {
                         if (optimized_move_legality_check(board, row, col, r, c)) {
                             return true;
                         }
+                        if (!is_empty_space(board->grid[r][c]))
+                            break;
                     }
                 }
             }

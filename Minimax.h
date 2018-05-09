@@ -18,11 +18,24 @@ typedef struct computer_move_t {
 } ComputerMove;
 
 /**
- * Makes a move for the computer (updates the game board, too)
- * @return the move that was made
+ * Makes a "best" move for the computer (updates the game board, too).
+ *
+ * Does not call move_was_made(), you should do it yourself soon after calling this.
+ *
+ * Uses game->difficulty as the recursion depth.
+ * @return the move that was made.
  */
 ComputerMove computer_move(game_t *game);
 
+/**
+ * Applies minimax algorithm recursively. depthRemaining should be at least 1 on topmost call.
+ * @param board game board
+ * @param player_is_white true if optimizing for white, false if optimizing for black
+ * @param alpha minimum score that the maximizing player is assured of. Starts small, only increases
+ * @param beta maximum score that the minimizing player is assured of. Starts large, only decreases
+ * @param depthRemaining number of extra depth iterations to go (0 = stop here)
+ * @return best move to make from the state of the given board (irrelevant if depthRemaining == 0)
+ */
 ComputerMove
 recursively_minimax_best_move(board_t *board, bool player_is_white, int alpha, int beta, int depthRemaining);
 

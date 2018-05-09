@@ -220,10 +220,12 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
                             return;
                         }
                         move_was_made(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i, j);
+                        draw_game_gui(src);
                         if_end_game_or_check_handle(src->game, src->window);
                         if (src->game->game_mode == GAME_MODE_SINGLEPLAYER) {
                             ComputerMove move = computer_move(src->game);
-                            //move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
+                            move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
+                            draw_game_gui(src);
                             if_end_game_or_check_handle(src->game, src->window);
                         }
 

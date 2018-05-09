@@ -61,7 +61,7 @@ void CUI_settings_case(game_t *game) {
                     break;
                 }
                 game->difficulty = command->args[0];
-                println_output("Difficulty level is set to %d", difficulty_string(game->difficulty));
+                println_output("Difficulty level is set to %s", difficulty_string(game->difficulty));
                 break;
             case CMD_USER_COLOR:
                 if (game->game_mode == GAME_MODE_MULTIPLAYER) {
@@ -221,7 +221,8 @@ void CUI_game_case(game_t *game) {
     } else //computer's turn
     {
         ComputerMove move = computer_move(game);
-        println_output("Computer: move %s at <%d,%d> to <%d,%d>", name_of_piece(move.moving_piece), move.r1, move.c1,
+        println_output("Computer: move %s at <%d,%d> to <%d,%d>", name_of_piece(game->board->grid[move.r1][move.r2]),
+                       move.r1, move.c1,
                        move.r2, move.c2);
         move_was_made(game, move.r1, move.c1, move.r2, move.c2);
     }

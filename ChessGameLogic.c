@@ -26,7 +26,7 @@ bool check_if_king_is_threatened(board_t *board, bool checking_for_white) {
             }
         }
 
-    println_error("CRITICAL ERROR: King not found in board!!?!?");
+    println_error("CRITICAL ERROR 879456: King not found in board!!?!?");
     return false; //should never happen!!!
 
     FoundKing:

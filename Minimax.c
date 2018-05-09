@@ -3,9 +3,11 @@
 
 ComputerMove computer_move(game_t *game) {
     bool computer_is_white = (game->user_color == BLACK);
-    int board_score = calculate_simple_board_score(game->board);
-    return recursively_minimax_best_move(game->board, computer_is_white, MIN_SCORE_VALUE, MAX_SCORE_VALUE,
-                                         game->difficulty);
+    ComputerMove m = recursively_minimax_best_move(game->board, computer_is_white, MIN_SCORE_VALUE, MAX_SCORE_VALUE,
+                                                   game->difficulty);
+    game->board->grid[m.r2][m.c2] = game->board->grid[m.r1][m.c1];
+    game->board->grid[m.r1][m.c1] = EMPTY_SPACE;
+    return m;
 }
 
 /**
@@ -43,25 +45,36 @@ int calculate_simple_board_score(board_t *board) {
     return sum;
 }
 
+ComputerMove make_best_move_from_endgame_scenario(board_t *board, bool player_is_white) {
+    ComputerMove best_move;
+    best_move.r1 = -2; // signifies that it's s leaf node - no best move from here
+    // Stop, give heuristic value (board score)
+    bool game_ended = !check_if_player_can_move(board, player_is_white); // gotta test every time, because draws
+
+    if (game_ended) {
+        if (check_if_king_is_threatened(board, true))  // is white Checked?
+            best_move.score = SCORE_BLACK_CHECKMATE; // Black win
+        else if (check_if_king_is_threatened(board, false))  // is black Checked?
+            best_move.score = SCORE_WHITE_CHECKMATE; // White win
+        else
+            best_move.score = 0; // Draw / Tie
+        return best_move;
+    } else {
+        best_move.score = calculate_simple_board_score(board);
+        return best_move;
+    }
+}
+
 ComputerMove
 recursively_minimax_best_move(board_t *board, bool player_is_white, int alpha, int beta, int depthRemaining) {
     ComputerMove best_move;
     best_move.r1 = -1; // signifies that there is no possible move found yet
     if (depthRemaining == 0) {
-        // Stop, give heuristic value (board score)
-        bool game_ended = !check_if_player_can_move(board, player_is_white); // gotta test every time, because draws
-
-        if (game_ended) {
-            best_move.r1 = -2; // signifies that it's a game end scenario
-            if (check_if_king_is_threatened(board, player_is_white))  // is white Checked?
-                best_move.score = MIN_SCORE_VALUE; // Black win
-            else if (check_if_king_is_threatened(board, false))  // is black Checked?
-                best_move.score = MAX_SCORE_VALUE; // White win
-            else
-                best_move.score = 0; // Draw / Tie
-
-        }
+        return make_best_move_from_endgame_scenario(board, player_is_white);
     }
+
+    best_move.score = player_is_white ? MIN_SCORE_VALUE : MAX_SCORE_VALUE;
+
     // Remember:
     // white is maximizing (+), black is minimizing (-)
     for (int x = 0; x < 8; x++) {
@@ -78,21 +91,51 @@ recursively_minimax_best_move(board_t *board, bool player_is_white, int alpha, i
                     break; // (all moves from now on are guaranteed to be not possible)
                 // Recursively try each possible move
                 board_t *possible_board = copy_board(board);
-                int new_board_score = 0;
-
-                char captured_piece = possible_board->grid[m.row][m.col];
-                if (!is_empty_space(captured_piece)) {
-                    new_board_score -= PIECE_SCORES[captured_piece];
-                }
                 possible_board->grid[x][y] = EMPTY_SPACE;
                 possible_board->grid[m.row][m.col] = piece;
-            }
-            if (i == 0) { // no possible moves at all
 
+                ComputerMove best_recursively = recursively_minimax_best_move(possible_board, !player_is_white, alpha,
+                                                                              beta, depthRemaining - 1);
+                if (player_is_white) {
+                    if (best_move.score < best_recursively.score) {
+                        best_move.r1 = x;
+                        best_move.c1 = y;
+                        best_move.r2 = m.row;
+                        best_move.c2 = m.col;
+                        best_move.score = best_recursively.score;
+                        if (alpha < best_move.score)
+                            alpha = best_move.score;
+                        if (beta <= alpha) {
+                            free_board(possible_board);
+                            goto pruned;
+                        }
+                    }
+                } else {
+                    if (best_move.score > best_recursively.score) {
+                        best_move.r1 = x;
+                        best_move.c1 = y;
+                        best_move.r2 = m.row;
+                        best_move.c2 = m.col;
+                        best_move.score = best_recursively.score;
+                        if (beta > best_move.score)
+                            beta = best_move.score;
+                        if (beta <= alpha) {
+                            free_board(possible_board);
+                            goto pruned;
+                        }
+                    }
+                }
+
+                free_board(possible_board);
             }
         }
     }
+    if (best_move.r1 == -1) {
+        //Depth isn't 0, but game is still over in this scenario
+        return make_best_move_from_endgame_scenario(board, player_is_white);
+    }
 
+    pruned:
     return best_move;
 }
 
