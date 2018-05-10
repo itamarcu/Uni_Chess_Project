@@ -106,10 +106,7 @@ bool load_game_from_path(Game *game, char *path) {
     if (game_before_load == NULL) {
         return false;
     }
-    game_before_load = memcpy((void *) game_before_load, (void *) game, sizeof(struct game_t));
-    if (game_before_load == NULL) {
-        return false;
-    }
+    memcpy((void *) game_before_load, (void *) game, sizeof(struct game_t));
     FILE *f = fopen(path, "r");
     if (f == NULL) {
         return false;
@@ -253,10 +250,7 @@ bool load_game_from_path(Game *game, char *path) {
 
     HANDLE_ERROR:
 
-    game = memcpy((void *) game, (void *) game_before_load, sizeof(struct game_t));
-    if (game == NULL) {
-        return false;
-    }
+    memcpy((void *) game, (void *) game_before_load, sizeof(struct game_t));
     fclose(f);
 
 }
