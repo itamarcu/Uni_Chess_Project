@@ -34,8 +34,13 @@ GAME_ACTION_RESULT undo_move(Game *game) {
     if (game->history->count == 1) {
         return EMPTY_HISTORY;
     }
-
-    if (game->history->count == 2) {
+    if (game->state == GAME_STATE_QUIT && game->game_mode == GAME_MODE_SINGLEPLAYER) {
+        game->state = GAME_STATE_GAME;
+        // Go back 1 move
+        undo_one_move(game);
+        free_board(game->board);
+        game->board = copy_board(game->history->prev_boards[0]);
+    } else if (game->history->count == 2) {
         // Go back 1 move
         undo_one_move(game);
         free_board(game->board);

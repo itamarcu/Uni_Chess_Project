@@ -406,42 +406,40 @@ bool has_any_possible_moves(Board *board, int row, int col) {
 
     switch (piece) {
         case WHITE_PAWN:
-            if (optimized_move_legality_check(board, row, col, row + 1, col)) {
+            if (
+                    (row < 7 && is_empty_space(board->grid[row + 1][col]) &&
+                     optimized_move_legality_check(board, row, col, row + 1, col))
+                    ||
+                    (row < 7 && col > 0 && !is_empty_space(board->grid[row + 1][col - 1]) &&
+                     optimized_move_legality_check(board, row, col, row + 1, col - 1))
+                    ||
+                    (row < 7 && col < 7 && !is_empty_space(board->grid[row + 1][col + 1]) &&
+                     optimized_move_legality_check(board, row, col, row + 1, col + 1))
+                    ||
+                    (row == 1 && is_empty_space(board->grid[row + 1][col]) &&
+                     optimized_move_legality_check(board, row, col, row + 2, col))
+                    ) {
                 return true;
-            }
-            if (optimized_move_legality_check(board, row, col, row + 1, col - 1) &&
-                !is_empty_space(board->grid[row + 1][col - 1])) {
-                return true;
-            }
-            if (optimized_move_legality_check(board, row, col, row + 1, col + 1) &&
-                !is_empty_space(board->grid[row + 1][col + 1])) {
-                return true;
-            }
-            if (row == 1 && is_empty_space(board->grid[row + 1][col])) //starting move
-            {
-                if (optimized_move_legality_check(board, row, col, row + 2, col)) {
-                    return true;
-                }
+
             }
             break;
         case BLACK_PAWN:
-            if (optimized_move_legality_check(board, row, col, row - 1, col)) {
+            if (
+                    (row > 0 && is_empty_space(board->grid[row - 1][col]) &&
+                     optimized_move_legality_check(board, row, col, row - 1, col))
+                    ||
+                    (row > 0 && col > 0 && !is_empty_space(board->grid[row - 1][col - 1]) &&
+                     optimized_move_legality_check(board, row, col, row - 1, col - 1))
+                    ||
+                    (row > 0 && col < 7 && !is_empty_space(board->grid[row - 1][col + 1]) &&
+                     optimized_move_legality_check(board, row, col, row - 1, col + 1))
+                    ||
+                    (row == 6 && is_empty_space(board->grid[row - 1][col]) &&
+                     optimized_move_legality_check(board, row, col, row - 2, col))
+                    ) {
                 return true;
             }
-            if (optimized_move_legality_check(board, row, col, row - 1, col - 1) &&
-                !is_empty_space(board->grid[row - 1][col - 1])) {
-                return true;
-            }
-            if (optimized_move_legality_check(board, row, col, row - 1, col + 1) &&
-                !is_empty_space(board->grid[row - 1][col + 1])) {
-                return true;
-            }
-            if (row == 6 && is_empty_space(board->grid[row - 1][col])) //starting move
-            {
-                if (optimized_move_legality_check(board, row, col, row - 2, col)) {
-                    return true;
-                }
-            }
+
             break;
         case WHITE_BISHOP:
         case BLACK_BISHOP:

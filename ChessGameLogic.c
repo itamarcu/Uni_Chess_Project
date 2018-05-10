@@ -59,9 +59,10 @@ void move_was_made(Game *game, int r1, int c1, int r2, int c2) {
             game->winner = GAME_WINNER_WHITE;
         else
             game->winner = GAME_WINNER_DRAW;
-    } else {
-        change_current_player(game);
     }
+
+    change_current_player(game);
+
 }
 
 /**

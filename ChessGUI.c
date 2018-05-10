@@ -1,11 +1,10 @@
 #include "ChessGUI.h"
 
-void GUI_main_loop(Game *game)
-{
+void GUI_main_loop(Game *game) {
     // initialize SDL2 for video
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("ERROR: unable to init SDL: %s\n", SDL_GetError());
-        return ;
+        return;
     }
     window_t *main_menu = create_empty_centered_window(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, MAIN_MENU_TEXTURES,
                                                        MAIN_MENU_WIDGETS, MAIN_MENU);
@@ -151,6 +150,7 @@ void new_game_button_action(widget_t *widget) {
     reset_game_gui((game_gui_t *) widget->window->windows->game_window->widgets[0]->data, widget->game);
     switch_window_and_change_prev_window_action(widget);
 }
+
 void load_button_main_menu_action(widget_t *widget) {
     switch_window_and_change_prev_window_action(widget);
     widget->next_window->next_window = widget->window->windows->game_window;
@@ -387,6 +387,11 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
                     return; // TO-DO fatal error to handle.
                 }
             } else {
+                free_history(src->game->history);
+                src->game->history = malloc(sizeof(History));
+                src->game->history->count = 0;
+                push_move_to_history(src->game, 1, 2, 3, 4); // arbitrary values - not important
+
                 reset_game_gui((game_gui_t *) src->window->windows->game_window->widgets[0]->data, src->game);
                 src->game->is_saved = true;
                 switch_to_next_window_action(src);
@@ -535,12 +540,12 @@ void show_unsaved_game_box_message(widget_t *widget) {
     window_t *pick_slot_window = widget->window->windows->pick_slot_window;
     if (!(widget->game->is_saved)) {
         SDL_MessageBoxButtonData buttons[] = {
-                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "save first"},
+                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "Save first"},
                 {SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 2, "Cancel"},
-                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 3, "yes"}
+                {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 3, "Yes"}
         };
         int button_id = show_message_box(widget->window, buttons, 3, "Continue without saving?",
-                                         "Are you sure you want to Continue without saving?");
+                                         "Are you sure you want to exit to menu without saving?");
         slot_options_t *slot_options;
         switch (button_id) {
             case 1:

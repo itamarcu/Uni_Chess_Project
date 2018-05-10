@@ -211,79 +211,80 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
 
     game_gui_t *game_gui = (game_gui_t *) src->data;
     SDL_Point mouse_pos = {.x = e->button.x, .y = e->button.y};
-    switch (e->type) {
-        case SDL_MOUSEBUTTONUP:
-            if (pressing_double_auto_move_key()) {
-                ComputerMove move1 = computer_move(src->game);
-                move_was_made(src->game, move1.r1, move1.c1, move1.r2, move1.c2);
-                ComputerMove move2 = computer_move(src->game);
-                move_was_made(src->game, move2.r1, move2.c1, move2.r2, move2.c2);
-                draw_game_gui(src);
-                if_end_game_or_check_handle(src->game, src->window);
-                src->game->is_saved = false;
-                reset_game_gui(game_gui, src->game);
-                break;
-            }
-            if (pressing_auto_move_key()) {
-                ComputerMove move = computer_move(src->game);
-                move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
-                draw_game_gui(src);
-                if_end_game_or_check_handle(src->game, src->window);
-                src->game->is_saved = false;
-                reset_game_gui(game_gui, src->game);
-                break;
-            }
-            for (int i = 0; i < 8; ++i) {
-                for (int j = 0; j < 8; ++j) {
-                    if (game_gui->highlighted_squares[i][j] != NULL &&
-                        SDL_PointInRect(&mouse_pos, &game_gui->board_square_rects[i][j])) {
-                        if (console_cmd_move(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i,
-                                             j) != SUCCESS) {
-                            println_error("Programmer error 16290858162348: %d",
-                                          console_cmd_move(src->game, game_gui->focused_piece_row,
-                                                           game_gui->focused_piece_col, i,
-                                                           j));
-                            return;
-                        }
-                        move_was_made(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i, j);
-                        draw_game_gui(src);
-                        if_end_game_or_check_handle(src->game, src->window);
-                        if (src->game->game_mode == GAME_MODE_SINGLEPLAYER) {
-                            ComputerMove move = computer_move(src->game);
-                            move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
+    if (src->game->state == GAME_STATE_GAME)
+        switch (e->type) {
+            case SDL_MOUSEBUTTONUP:
+                if (pressing_double_auto_move_key()) {
+                    ComputerMove move1 = computer_move(src->game);
+                    move_was_made(src->game, move1.r1, move1.c1, move1.r2, move1.c2);
+                    ComputerMove move2 = computer_move(src->game);
+                    move_was_made(src->game, move2.r1, move2.c1, move2.r2, move2.c2);
+                    draw_game_gui(src);
+                    if_end_game_or_check_handle(src->game, src->window);
+                    src->game->is_saved = false;
+                    reset_game_gui(game_gui, src->game);
+                    break;
+                }
+                if (pressing_auto_move_key()) {
+                    ComputerMove move = computer_move(src->game);
+                    move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
+                    draw_game_gui(src);
+                    if_end_game_or_check_handle(src->game, src->window);
+                    src->game->is_saved = false;
+                    reset_game_gui(game_gui, src->game);
+                    break;
+                }
+                for (int i = 0; i < 8; ++i) {
+                    for (int j = 0; j < 8; ++j) {
+                        if (game_gui->highlighted_squares[i][j] != NULL &&
+                            SDL_PointInRect(&mouse_pos, &game_gui->board_square_rects[i][j])) {
+                            if (console_cmd_move(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i,
+                                                 j) != SUCCESS) {
+                                println_error("Programmer error 16290858162348: %d",
+                                              console_cmd_move(src->game, game_gui->focused_piece_row,
+                                                               game_gui->focused_piece_col, i,
+                                                               j));
+                                return;
+                            }
+                            move_was_made(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i, j);
                             draw_game_gui(src);
                             if_end_game_or_check_handle(src->game, src->window);
-                        }
+                            if (src->game->state == GAME_STATE_GAME && src->game->game_mode == GAME_MODE_SINGLEPLAYER) {
+                                ComputerMove move = computer_move(src->game);
+                                move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
+                                draw_game_gui(src);
+                                if_end_game_or_check_handle(src->game, src->window);
+                            }
 
-                        src->game->is_saved = false;
-                        reset_game_gui(game_gui, src->game);
-                        return;
-                    }
-                    if (game_gui->curr_pieces[i][j] != NULL &&
-                        SDL_PointInRect(&mouse_pos, &game_gui->board_pieces_rects[i][j]) &&
-                        (i != game_gui->focused_piece_row || j !=
-                                                             game_gui->focused_piece_col)) { // if there is a piece and we clicked there and its not focused.
-                        PossibleMove possible_moves[MOVES_ARRAY_SIZE] = {0};
-                        if ((src->game->current_player == WHITE && is_white_piece(src->game->board->grid[i][j])) ||
-                            (src->game->current_player == BLACK && !is_white_piece(src->game->board->grid[i][j]))) {
-                            // if the piece is white and its white turn or black piece and its black turn.
-                            if (get_possible_moves(src->game->board, i, j, possible_moves) != SUCCESS)
-                                return; // not suppose to ever happen cause there is a piece there and its valid row and col
+                            src->game->is_saved = false;
                             reset_game_gui(game_gui, src->game);
-                            fill_highlighted_squares_from_possible_moves(game_gui, possible_moves);
-                            game_gui->is_piece_focused = true;
-                            game_gui->focused_piece_row = i;
-                            game_gui->focused_piece_col = j;
                             return;
+                        }
+                        if (game_gui->curr_pieces[i][j] != NULL &&
+                            SDL_PointInRect(&mouse_pos, &game_gui->board_pieces_rects[i][j]) &&
+                            (i != game_gui->focused_piece_row || j !=
+                                                                 game_gui->focused_piece_col)) { // if there is a piece and we clicked there and its not focused.
+                            PossibleMove possible_moves[MOVES_ARRAY_SIZE] = {0};
+                            if ((src->game->current_player == WHITE && is_white_piece(src->game->board->grid[i][j])) ||
+                                (src->game->current_player == BLACK && !is_white_piece(src->game->board->grid[i][j]))) {
+                                // if the piece is white and its white turn or black piece and its black turn.
+                                if (get_possible_moves(src->game->board, i, j, possible_moves) != SUCCESS)
+                                    return; // not suppose to ever happen cause there is a piece there and its valid row and col
+                                reset_game_gui(game_gui, src->game);
+                                fill_highlighted_squares_from_possible_moves(game_gui, possible_moves);
+                                game_gui->is_piece_focused = true;
+                                game_gui->focused_piece_row = i;
+                                game_gui->focused_piece_col = j;
+                                return;
+                            }
                         }
                     }
                 }
-            }
-            reset_game_gui(game_gui, src->game);
-            break;
-        default:
-            break;
-    }
+                reset_game_gui(game_gui, src->game);
+                break;
+            default:
+                break;
+        }
 }
 
 void if_end_game_or_check_handle(Game *game, window_t *game_window) {
