@@ -140,7 +140,7 @@ window_t *create_empty_centered_window(int window_width, int window_height, int 
             window_height,
             SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
     if (window->window == NULL) {
-        printf("ERROR: unable to create window: %s\n", SDL_GetError());
+        println_error("ERROR: unable to create window: %s\n", SDL_GetError());
         SDL_Quit();
         return NULL;
     }
@@ -150,7 +150,7 @@ window_t *create_empty_centered_window(int window_width, int window_height, int 
     window->renderer = SDL_CreateRenderer(window->window, -1,
                                           SDL_RENDERER_PRESENTVSYNC); // need to check if should add SDL_RENDERER_ACCELERATED or SDL_RENDERER_SOFTWARE (should match settings in the VM)
     if (window->renderer == NULL) {
-        printf("ERROR: unable to create renderer: %s\n", SDL_GetError());
+        println_error("ERROR: unable to create renderer: %s\n", SDL_GetError());
         SDL_DestroyWindow(window->window);
         SDL_Quit();
         return NULL;

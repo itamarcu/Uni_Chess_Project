@@ -190,24 +190,6 @@ void destroy_game_gui(widget_t *src) {
 }
 
 void handle_game_gui_event(widget_t *src, SDL_Event *e) {
-    //    struct game_gui_t {
-//        SDL_Texture *board_BG;
-//        SDL_Texture *standard_square;
-//        SDL_Texture *threatened_square;
-//        SDL_Texture *capture_square;
-//        SDL_Texture *threatened_capture_square;
-//        SDL_Texture *pieces[NUM_COMBINED_PIECES_TYPES];
-//        SDL_Texture *highlighted_squares[8][8];
-//        SDL_Texture *curr_pieces[8][8];
-//        SDL_Rect board_square_rects[8][8];
-//        SDL_Rect board_pieces_rects[8][8];
-//        SDL_Rect board_dst_rect;
-//        bool is_piece_focused;
-//        int focused_piece_row;
-//        int focused_piece_col;
-//        bool is_possible_move[8][8];
-//        bool is_currently_saved;
-//    };
 
     game_gui_t *game_gui = (game_gui_t *) src->data;
     SDL_Point mouse_pos = {.x = e->button.x, .y = e->button.y};
@@ -236,8 +218,16 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
                 }
                 for (int i = 0; i < 8; ++i) {
                     for (int j = 0; j < 8; ++j) {
+                        // if we clicked on a highlighted square and the current focused piece belongs to the current player, then make a move.
                         if (game_gui->highlighted_squares[i][j] != NULL &&
-                            SDL_PointInRect(&mouse_pos, &game_gui->board_square_rects[i][j])) {
+                            SDL_PointInRect(&mouse_pos, &game_gui->board_square_rects[i][j]) &&
+                            ((is_white_piece(
+                                    src->game->board->grid[game_gui->focused_piece_row][game_gui->focused_piece_col]) &&
+                              src->game->current_player == WHITE) ||
+                             (!is_white_piece(
+                                     src->game->board->grid[game_gui->focused_piece_row][game_gui->focused_piece_col]) &&
+                              src->game->current_player == BLACK))) {
+
                             if (console_cmd_move(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i,
                                                  j) != SUCCESS) {
                                 println_error("Programmer error 16290858162348: %d",
@@ -265,18 +255,14 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
                             (i != game_gui->focused_piece_row || j !=
                                                                  game_gui->focused_piece_col)) { // if there is a piece and we clicked there and its not focused.
                             PossibleMove possible_moves[MOVES_ARRAY_SIZE] = {0};
-                            if ((src->game->current_player == WHITE && is_white_piece(src->game->board->grid[i][j])) ||
-                                (src->game->current_player == BLACK && !is_white_piece(src->game->board->grid[i][j]))) {
-                                // if the piece is white and its white turn or black piece and its black turn.
-                                if (get_possible_moves(src->game->board, i, j, possible_moves) != SUCCESS)
-                                    return; // not suppose to ever happen cause there is a piece there and its valid row and col
-                                reset_game_gui(game_gui, src->game);
-                                fill_highlighted_squares_from_possible_moves(game_gui, possible_moves);
-                                game_gui->is_piece_focused = true;
-                                game_gui->focused_piece_row = i;
-                                game_gui->focused_piece_col = j;
-                                return;
-                            }
+                            if (get_possible_moves(src->game->board, i, j, possible_moves) != SUCCESS)
+                                return; // not suppose to ever happen cause there is a piece there and its valid row and col
+                            reset_game_gui(game_gui, src->game);
+                            fill_highlighted_squares_from_possible_moves(game_gui, possible_moves);
+                            game_gui->is_piece_focused = true;
+                            game_gui->focused_piece_row = i;
+                            game_gui->focused_piece_col = j;
+                            return;
                         }
                     }
                 }
@@ -352,12 +338,4 @@ void draw_game_gui(widget_t *src) {
             }
         }
     }
-//    SDL_Rect slot_i_rect = slot_options->first_slot_location;
-//    for (int i = 0; i < NUMBER_OF_DRAWN_SLOTS; ++i) {
-//        SDL_RenderCopy(src->window->renderer, slot_options->slots_textures[slot_options->current_top_slot + i], NULL,
-//                       &slot_i_rect);
-//        slot_i_rect.y += SLOT_HEIGHT;
-//    }
-//    SDL_RenderCopy(src->window->renderer, slot_options->arrow_up_tex, NULL, &slot_options->arrow_up_location);
-//    SDL_RenderCopy(src->window->renderer, slot_options->arrow_down_tex, NULL, &slot_options->arrow_down_location);
 }

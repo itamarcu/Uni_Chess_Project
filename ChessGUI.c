@@ -427,31 +427,31 @@ void *build_game_window(Game *game, windows_t *windows) {
     undo_move_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
 
     SDL_Rect save_button_rec;
-    save_button_rec.x = (DEFAULT_WINDOW_WIDTH - (int) (2.5 * DEFAULT_GAME_BUTTON_WIDTH));
+    save_button_rec.x = (DEFAULT_WINDOW_WIDTH - DEFAULT_GAME_BUTTON_WIDTH) / 2;
     save_button_rec.y = GAME_BOARD_HEIGHT;
     save_button_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
     save_button_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
 
     SDL_Rect load_button_rec;
-    load_button_rec.x = (DEFAULT_WINDOW_WIDTH - (int) (1.5 * DEFAULT_GAME_BUTTON_WIDTH));
+    load_button_rec.x = DEFAULT_WINDOW_WIDTH - DEFAULT_GAME_BUTTON_WIDTH;
     load_button_rec.y = GAME_BOARD_HEIGHT;
     load_button_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
     load_button_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
 
     SDL_Rect restart_button_rec;
-    restart_button_rec.x = (DEFAULT_WINDOW_WIDTH - 3 * DEFAULT_GAME_BUTTON_WIDTH);
+    restart_button_rec.x = 0;
     restart_button_rec.y = GAME_BOARD_HEIGHT + DEFAULT_GAME_BUTTON_HEIGHT;
     restart_button_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
     restart_button_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
 
     SDL_Rect main_menu_button_rec;
-    main_menu_button_rec.x = (DEFAULT_WINDOW_WIDTH - 2 * DEFAULT_GAME_BUTTON_WIDTH);
+    main_menu_button_rec.x = (DEFAULT_WINDOW_WIDTH - DEFAULT_GAME_BUTTON_WIDTH) / 2;
     main_menu_button_rec.y = GAME_BOARD_HEIGHT + DEFAULT_GAME_BUTTON_HEIGHT;
     main_menu_button_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
     main_menu_button_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
 
     SDL_Rect quit_button_rec;
-    quit_button_rec.x = (DEFAULT_WINDOW_WIDTH - DEFAULT_GAME_BUTTON_WIDTH);
+    quit_button_rec.x = DEFAULT_WINDOW_WIDTH - DEFAULT_GAME_BUTTON_WIDTH;
     quit_button_rec.y = GAME_BOARD_HEIGHT + DEFAULT_GAME_BUTTON_HEIGHT;
     quit_button_rec.w = DEFAULT_GAME_BUTTON_WIDTH;
     quit_button_rec.h = DEFAULT_GAME_BUTTON_HEIGHT;
@@ -482,7 +482,7 @@ void *build_game_window(Game *game, windows_t *windows) {
     add_widget_to_window(game_window, restart_button);
     add_widget_to_window(game_window, main_menu_button);
     add_widget_to_window(game_window, quit_button);
-    add_back_button_to_window(game_window, game);
+    //add_back_button_to_window(game_window, game);
 
 //    SDL_Rect *user_color_tex_rect = (SDL_Rect *) malloc(sizeof(SDL_Rect));
 //    user_color_tex_rect->x = diff_level_tex_rect->x;
