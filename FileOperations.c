@@ -245,13 +245,15 @@ bool load_game_from_path(Game *game, char *path) {
     }
     if (fgets(letters_row, 2, f) != NULL) {
         goto HANDLE_ERROR;
-    } // if its true there is more written to the file we loading.
+    }
+
+    fclose(f);
     return true;
 
     HANDLE_ERROR:
-
-    memcpy((void *) game, (void *) game_before_load, sizeof(struct game_t));
     fclose(f);
+    memcpy((void *) game, (void *) game_before_load, sizeof(struct game_t));
+    return false;
 
 }
 
