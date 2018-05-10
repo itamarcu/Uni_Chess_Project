@@ -121,6 +121,7 @@ bool load_game_from_path(Game *game, char *path) {
     if (strcmp(color, "white\n") == 0)
         game->current_player = WHITE;
     else {
+
         if (strcmp(color, "black\n") == 0)
             game->current_player = BLACK;
         else {
@@ -248,6 +249,7 @@ bool load_game_from_path(Game *game, char *path) {
     if (fgets(letters_row, 2, f) != NULL) {
         goto HANDLE_ERROR;
     } // if its true there is more written to the file we loading.
+    return true;
 
     HANDLE_ERROR:
 
@@ -256,7 +258,7 @@ bool load_game_from_path(Game *game, char *path) {
         return false;
     }
     fclose(f);
-    return true;
+
 }
 
 bool does_file_exist(char *path) {
