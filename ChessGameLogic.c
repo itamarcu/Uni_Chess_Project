@@ -2,7 +2,7 @@
 #include "Undo.h"
 
 
-void start_game(game_t *game) {
+void start_game(Game *game) {
     game->state = GAME_STATE_GAME;
     game->current_player = WHITE;
     game->winner = GAME_WINNER_NONE;
@@ -14,7 +14,7 @@ void start_game(game_t *game) {
     push_move_to_history(game, 1, 2, 3, 4); // arbitrary values - not important
 }
 
-bool check_if_king_is_threatened(board_t *board, bool checking_for_white) {
+bool check_if_king_is_threatened(Board *board, bool checking_for_white) {
     int rk, ck;
     for (int row = 0; row < 8; row++)
         for (int col = 0; col < 8; col++) {
@@ -44,7 +44,7 @@ bool check_if_king_is_threatened(board_t *board, bool checking_for_white) {
     return false;
 }
 
-void move_was_made(game_t *game, int r1, int c1, int r2, int c2) {
+void move_was_made(Game *game, int r1, int c1, int r2, int c2) {
     //Push board to undo history
     push_move_to_history(game, r1, c1, r2, c2);
 
@@ -69,7 +69,7 @@ void move_was_made(game_t *game, int r1, int c1, int r2, int c2) {
  * @param game the game
  * @param checking_for_white true if checking for white player
  */
-bool check_if_player_can_move(board_t *board, bool checking_for_white) {
+bool check_if_player_can_move(Board *board, bool checking_for_white) {
     for (int row = 0; row < 8; row++)
         for (int col = 0; col < 8; col++) {
             char piece = board->grid[row][col];
@@ -83,7 +83,7 @@ bool check_if_player_can_move(board_t *board, bool checking_for_white) {
     return false;
 }
 
-void change_current_player(game_t *game) {
+void change_current_player(Game *game) {
     if (game->current_player == WHITE) {
         game->current_player = BLACK;
     } else {
@@ -223,7 +223,7 @@ bool is_partially_legal_move_without_start(char grid[8][8], int r1, int c1, int 
 /**
  * This uses zero-based indexing for rows and columns, please remember
  */
-GAME_ACTION_RESULT console_cmd_move(game_t *game, int r1, int c1, int r2, int c2) {
+GAME_ACTION_RESULT console_cmd_move(Game *game, int r1, int c1, int r2, int c2) {
     if (0 > r1 || r1 >= 8 || 0 > c1 || c1 >= 8 || 0 > r2 || r2 >= 8 || 0 > c2 || c2 >= 8) {
         return INVALID_POS;
     }

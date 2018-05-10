@@ -8,7 +8,7 @@ bool pressing_double_auto_move_key() {
     return SDL_GetKeyboardState(NULL)[SDL_SCANCODE_LSHIFT];
 }
 
-widget_t *create_game_gui(window_t *window, game_t *game) {
+widget_t *create_game_gui(window_t *window, Game *game) {
     widget_t *res = 0;
     game_gui_t *data = 0;
 
@@ -110,7 +110,7 @@ widget_t *create_game_gui(window_t *window, game_t *game) {
     return NULL;
 }
 
-void update_game_gui_board(game_gui_t *game_gui, game_t *game) {
+void update_game_gui_board(game_gui_t *game_gui, Game *game) {
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
             switch (game->board->grid[i][j]) {
@@ -160,7 +160,7 @@ void update_game_gui_board(game_gui_t *game_gui, game_t *game) {
     }
 }
 
-void reset_game_gui(game_gui_t *game_gui, game_t *game) {
+void reset_game_gui(game_gui_t *game_gui, Game *game) {
     if (game->history->count != 1)
         game_gui->undo_button->is_disabled = false;
     update_game_gui_board(game_gui, game);
@@ -263,12 +263,12 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
                         SDL_PointInRect(&mouse_pos, &game_gui->board_pieces_rects[i][j]) &&
                         (i != game_gui->focused_piece_row || j !=
                                                              game_gui->focused_piece_col)) { // if there is a piece and we clicked there and its not focused.
-                        possible_move_t possible_moves[MOVES_ARRAY_SIZE] = {0};
+                        PossibleMove possible_moves[MOVES_ARRAY_SIZE] = {0};
                         if ((src->game->current_player == WHITE && is_white_piece(src->game->board->grid[i][j])) ||
                             (src->game->current_player == BLACK && !is_white_piece(src->game->board->grid[i][j]))) {
                             // if the piece is white and its white turn or black piece and its black turn.
                             if (get_possible_moves(src->game->board, i, j, possible_moves) != SUCCESS)
-                                return; // not suppose to ever happan cause there is a piece there and its valid row and col
+                                return; // not suppose to ever happen cause there is a piece there and its valid row and col
                             reset_game_gui(game_gui, src->game);
                             fill_highlighted_squares_from_possible_moves(game_gui, possible_moves);
                             game_gui->is_piece_focused = true;
@@ -286,7 +286,7 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
     }
 }
 
-void if_end_game_or_check_handle(game_t *game, window_t *game_window) {
+void if_end_game_or_check_handle(Game *game, window_t *game_window) {
     SDL_MessageBoxButtonData buttons[] = {
             {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "Ok"}
     };
@@ -312,9 +312,9 @@ void if_end_game_or_check_handle(game_t *game, window_t *game_window) {
 }
 
 void
-fill_highlighted_squares_from_possible_moves(game_gui_t *game_gui, possible_move_t possible_moves[MOVES_ARRAY_SIZE]) {
+fill_highlighted_squares_from_possible_moves(game_gui_t *game_gui, PossibleMove possible_moves[MOVES_ARRAY_SIZE]) {
     for (int k = 0; k < MOVES_ARRAY_SIZE; ++k) {
-        if (possible_moves[k].is_possible) {
+        if (possible_moves[k].is_legal) {
             if (possible_moves[k].is_threatened_by_opponent && possible_moves[k].is_capturing) {
                 game_gui->highlighted_squares[possible_moves[k].row][possible_moves[k].col] = game_gui->threatened_capture_square;
                 continue;
@@ -352,7 +352,7 @@ void draw_game_gui(widget_t *src) {
         }
     }
 //    SDL_Rect slot_i_rect = slot_options->first_slot_location;
-//    for (int i = 0; i < NUMBER_OF_DROWN_SLOTS; ++i) {
+//    for (int i = 0; i < NUMBER_OF_DRAWN_SLOTS; ++i) {
 //        SDL_RenderCopy(src->window->renderer, slot_options->slots_textures[slot_options->current_top_slot + i], NULL,
 //                       &slot_i_rect);
 //        slot_i_rect.y += SLOT_HEIGHT;

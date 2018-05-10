@@ -8,12 +8,12 @@
 #include <strings.h>
 #include <ctype.h>
 
-void print_board(board_t *board);
+void print_board(Board *board);
 
-void CUI_settings_case(game_t *game);
+void CUI_settings_case(Game *game);
 
-void CUI_game_case(game_t *game);
+void CUI_game_case(Game *game);
 
-void CUI_main_loop(game_t *game);
+void CUI_main_loop(Game *game);
 
 #endif //UNI_CHESS_PROJECT_CONSOLEUI_H

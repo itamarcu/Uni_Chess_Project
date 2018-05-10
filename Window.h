@@ -32,7 +32,7 @@ void add_chess_BG_and_title(window_t *src, char *title_path);
 window_t *create_empty_centered_window(int window_width, int window_height, int num_of_textures, int num_of_widgets,
                                      GAME_WINDOW game_window);
 
-void add_back_button_to_window(window_t *window, game_t *game);
+void add_back_button_to_window(window_t *window, Game *game);
 
 void show_window_at_pos(window_t *next_window, int window_posX, int window_posY);
 

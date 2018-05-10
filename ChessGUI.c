@@ -1,6 +1,6 @@
 #include "ChessGUI.h"
 
-void GUI_main_loop(game_t *game)
+void GUI_main_loop(Game *game)
 {
     // initialize SDL2 for video
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -108,7 +108,7 @@ void handle_events_and_draw(window_t *current_window, GAME_WINDOW *curr_window, 
     }
 }
 
-void *build_main_menu(game_t *game, windows_t *windows) {
+void *build_main_menu(Game *game, windows_t *windows) {
     window_t *main_menu = windows->main_menu;
 
     add_chess_BG_and_title(main_menu, MAIN_MENU_TITLE_PATH);
@@ -162,7 +162,7 @@ void quit_button_action(widget_t *widget) {
     widget->window->next_window_frame = QUIT;
 }
 
-void *build_game_mode_window(game_t *game, windows_t *windows) {
+void *build_game_mode_window(Game *game, windows_t *windows) {
     window_t *game_mode_window = windows->game_mode_window;
     add_chess_BG_and_title(game_mode_window, GAME_MODE_TITLE_PATH);
     add_back_button_to_window(game_mode_window, game);
@@ -202,7 +202,7 @@ void two_players_button_action(widget_t *widget) {
 }
 
 
-void *build_one_player_options_window(game_t *game, windows_t *windows) {
+void *build_one_player_options_window(Game *game, windows_t *windows) {
     window_t *options_window = windows->options_window;
     add_chess_BG_and_title(options_window, OPTIONS_WINDOW_TITLE_PATH);
     add_back_button_to_window(options_window, game);
@@ -353,7 +353,7 @@ void black_button_action(widget_t *widget) {
     widget->game->user_color = BLACK;
 }
 
-void *build_pick_slot_window(game_t *game, windows_t *windows) {
+void *build_pick_slot_window(Game *game, windows_t *windows) {
     window_t *pick_slot_window = windows->pick_slot_window;
     add_chess_BG_and_title(pick_slot_window, PICK_SLOT_TITLE_PATH);
     pick_slot_window->next_window = windows->game_window; // will change if picking a slot for saving a game instead of loading a game.
@@ -406,7 +406,7 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
     }
 }
 
-void *build_game_window(game_t *game, windows_t *windows) {
+void *build_game_window(Game *game, windows_t *windows) {
     start_game(game);
     window_t *game_window = windows->game_window;
     SDL_SetRenderDrawColor(game_window->renderer, 155, 255, 255, 0);

@@ -3,8 +3,8 @@
 
 #include "ChessGameSettings.h"
 
-GAME_ACTION_RESULT undo_move(game_t *game);
+GAME_ACTION_RESULT undo_move(Game *game);
 
-void push_move_to_history(game_t *game, int r1, int c1, int r2, int c2);
+void push_move_to_history(Game *game, int r1, int c1, int r2, int c2);
 
 #endif //UNI_CHESS_PROJECT_UNDO_H

@@ -34,19 +34,49 @@
 
 typedef struct board_t {
     char grid[8][8]; //first row then column. grid[0] is the first row (Row 1).
-} board_t;
+} Board;
 
-board_t* make_starting_board();
+/**
+ * Creates a starting chess board (with all pieces) and returns a pointer to it.
+ *
+ * Pointer should be freed by the function caller.
+ */
+Board *make_starting_board();
 
-board_t *copy_board(board_t *board);
+/**
+ * Creates a new chess board as a deep copy of another chess board, and returns a pointer to it.
+ *
+ * Pointer should be freed by the function caller.
+ */
+Board *copy_board(Board *board);
 
-void free_board(board_t *board);
+/**
+ * Frees a board pointer.
+ */
+void free_board(Board *board);
 
+/**
+ * Returns true if piece is EMPTY_SPACE
+ */
 bool is_empty_space(char piece);
+
+/**
+ * Returns true if piece is WHITE_???.
+ *
+ * Returns false if piece is BLACK_???, EMPTY_SPACE, or anything unspecified
+ */
 bool is_white_piece(char piece);
 
+/**
+ * Returns name of piece, without color.
+ *
+ * e.g. name_of_piece(BLACK_BISHOP) == "bishop"
+ */
 const char *name_of_piece(char piece);
 
+/**
+ * Returns true unless the character is undefined (not BLACK_???, WHITE_??? or EMPTY_SPACE)
+ */
 bool is_piece_or_empty_space(char c);
 
 #endif //UNI_CHESS_PROJECT_BOARD_H

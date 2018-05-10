@@ -7,7 +7,7 @@
 int main(int argc, char *argv[]) {
     init_scoring_function();
 
-    game_t *game = malloc(sizeof(*game));
+    Game *game = malloc(sizeof(*game));
     if (argc <= 1) { //console mode is default
         game->program_mode = PROGRAM_MODE_CONSOLE;
     } else if (strcmp(argv[1], "-c") == 0) //console mode

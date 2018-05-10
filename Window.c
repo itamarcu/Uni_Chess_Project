@@ -166,7 +166,7 @@ window_t *create_empty_centered_window(int window_width, int window_height, int 
     return window;
 }
 
-void add_back_button_to_window(window_t *window, game_t *game) {
+void add_back_button_to_window(window_t *window, Game *game) {
     SDL_Rect new_game_button_rect;
     new_game_button_rect.x = 0;
     new_game_button_rect.y = window->height - DEFAULT_BACK_BUTTON_HEIGHT;

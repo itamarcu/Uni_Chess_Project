@@ -38,12 +38,18 @@ typedef struct command_t {
     SETTINGS_COMMAND settings_command;
     int args[4];
     char *path; // will be allocated and point to a valid string path only if its load or save command. otherwise points to NULL.
-} command_t;
+} Command;
 
-command_t *get_user_input_as_command();
+/**
+ * Asks user for command line input, use input to create and return a new Command pointer.
+ *
+ * Pointer should be freed by caller.
+ */
+Command *get_user_input_as_command();
 
-bool is_valid_path(char* path);
-
-void free_command(command_t *command);
+/**
+ * Frees a command.
+ */
+void free_command(Command *command);
 
 #endif //UNI_CHESS_PROJECT_PARSER_H

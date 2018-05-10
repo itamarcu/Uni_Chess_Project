@@ -11,28 +11,28 @@
 /**
  * @return true when the king of the current turn color is checked
  */
-bool check_if_king_is_threatened(board_t *board, bool checking_for_white);
+bool check_if_king_is_threatened(Board *board, bool checking_for_white);
 
 /**
  * Is called after a move is made. This function checks if the game has ended, and
  * if not, it simply switches to the next player (and the game progresses). This
  * also updates the game undo history.
  */
-void move_was_made(game_t *game, int r1, int c1, int r2, int c2);
+void move_was_made(Game *game, int r1, int c1, int r2, int c2);
 
 /**
  * Check if colored player has any available moves. Returns false if not (= checkmate).
  */
-bool check_if_player_can_move(board_t *board, bool checking_for_white);
+bool check_if_player_can_move(Board *board, bool checking_for_white);
 
 /**
  * Switches current player (BLACK ↔ WHITE)
  */
-void change_current_player(game_t *game);
+void change_current_player(Game *game);
 
-void start_game(game_t *game);
+void start_game(Game *game);
 
-GAME_ACTION_RESULT console_cmd_move(game_t *game, int r1, int c1, int r2, int c2);
+GAME_ACTION_RESULT console_cmd_move(Game *game, int r1, int c1, int r2, int c2);
 
 
 // "Private" helper functions:

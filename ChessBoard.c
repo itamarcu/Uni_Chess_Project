@@ -1,8 +1,8 @@
 #include "ChessBoard.h"
 
 
-board_t *make_starting_board() {
-    board_t *board = malloc(sizeof(board_t));
+Board *make_starting_board() {
+    Board *board = malloc(sizeof(Board));
     char whiteFirstRow[8] = {
             WHITE_ROOK, WHITE_KNIGHT, WHITE_BISHOP, WHITE_QUEEN, WHITE_KING, WHITE_BISHOP, WHITE_KNIGHT, WHITE_ROOK
     };
@@ -26,8 +26,8 @@ board_t *make_starting_board() {
     return board;
 }
 
-board_t *copy_board(board_t *board) {
-    board_t *clone = malloc(sizeof(board_t));
+Board *copy_board(Board *board) {
+    Board *clone = malloc(sizeof(Board));
     if (clone == NULL) {
         println_error("MALLOC failure in copy_board!");
         return NULL;
@@ -39,7 +39,7 @@ board_t *copy_board(board_t *board) {
     return clone;
 }
 
-void free_board(board_t *board) {
+void free_board(Board *board) {
     free(board);
 }
 
@@ -55,7 +55,7 @@ bool is_white_piece(char piece) {
 const char *name_of_piece(char piece) {
     switch (piece) {
         case EMPTY_SPACE:
-            return "BUG";
+            return "EMPTY_SPACE_THIS_IS_A_BUG";
         case WHITE_PAWN:
         case BLACK_PAWN:
             return "pawn";

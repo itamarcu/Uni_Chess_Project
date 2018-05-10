@@ -7,6 +7,7 @@
 #include "GUIStructs.h"
 #include "ChessGameSettings.h"
 #include "Window.h"
+#include "FileOperations.h"
 
 #define BLANK_SLOT_PATH "..\\pictures\\blank_slot.bmp"
 #define ARROW_UP_PATH "..\\pictures\\arrow_up.bmp"
@@ -31,11 +32,11 @@
 #define SLOT_OPTIONS_HEIGHT 300
 #define NUMBERS_X_ON_SLOT 14
 #define NUMBERS_Y_ON_SLOT 14
-#define NUMBER_OF_DROWN_SLOTS 5
+#define NUMBER_OF_DRAWN_SLOTS 5
 
 widget_t *create_slot_options(
         window_t *window,
-        game_t *game,
+        Game *game,
         int number_of_slots,
         int x_pos,
         int y_pos,
@@ -47,4 +48,4 @@ void handle_slot_options_event(widget_t *src, SDL_Event *event);
 
 void draw_slot_options(widget_t *widget);
 
-#endif /* SLOTOPTIONS_ */
+#endif //SLOTOPTIONS_H_

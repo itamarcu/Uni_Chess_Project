@@ -32,7 +32,7 @@ typedef enum _GAME_WINDOW {
 struct widget_t {
     window_t *window;
     window_t *next_window;
-    game_t *game;
+    Game *game;
     bool is_disabled;
     void (*draw)(struct widget_t *);
     void (*handle_event)(struct widget_t *, SDL_Event *);

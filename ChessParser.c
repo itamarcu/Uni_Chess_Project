@@ -1,7 +1,7 @@
 #include "ChessParser.h"
 
 
-command_t *cmd_move(command_t *command) {
+Command *cmd_move(Command *command) {
     // format should be: "move <r1,c1> to <r2,c2>"
     // for example, "move <1,A> to <8,H>"
     command->game_command = CMD_MOVE;
@@ -30,7 +30,7 @@ command_t *cmd_move(command_t *command) {
  *
  * "mov d2 d4" is equivalent to "move <2,D> to <4,D>"
  */
-command_t *cmd_mov(command_t *command) {
+Command *cmd_mov(Command *command) {
     command->game_command = CMD_MOVE;
 
     char *arg0 = strtok(NULL, " \r\t\n");
@@ -52,7 +52,7 @@ command_t *cmd_mov(command_t *command) {
     return command;
 }
 
-command_t *cmd_get_moves(command_t *command) {
+Command *cmd_get_moves(Command *command) {
     command->game_command = CMD_GET_MOVES;
 
     char *arg0 = strtok(NULL, " \r\t\n");
@@ -72,12 +72,16 @@ command_t *cmd_get_moves(command_t *command) {
     return command;
 }
 
-command_t *cmd_auto(command_t *command) {
+Command *cmd_auto(Command *command) {
     command->game_command = CMD_MAKE_MY_MOVE;
     return command;
 }
 
-command_t *cmd_load(command_t *command) {
+bool is_valid_path(char *path) {
+    //TODO is_valid_path()
+}
+
+Command *cmd_load(Command *command) {
     command->settings_command = CMD_LOAD;
     char *arg_string = strtok(NULL, " \r\t\n");
     if (arg_string != NULL) {
@@ -87,7 +91,7 @@ command_t *cmd_load(command_t *command) {
     return command;
 }
 
-command_t *cmd_save(command_t *command) {
+Command *cmd_save(Command *command) {
     command->game_command = CMD_SAVE;
     char *arg_string = strtok(NULL, " \r\t\n");
     if (arg_string != NULL) {
@@ -97,7 +101,7 @@ command_t *cmd_save(command_t *command) {
     return command;
 }
 
-command_t *get_user_input_as_command() {
+Command *get_user_input_as_command() {
 
     char input[1024 + 1];
     fgets(input, 1024 + 1, stdin);
@@ -108,7 +112,7 @@ command_t *get_user_input_as_command() {
     }
 
     //getting the words from the string
-    command_t *command = (command_t *) malloc(sizeof(*command));
+    Command *command = (Command *) malloc(sizeof(*command));
     if (command == NULL) {
         println_error("ERROR: malloc resulted in NULL pointer!");
         return NULL;
@@ -185,11 +189,7 @@ command_t *get_user_input_as_command() {
     return command;
 }
 
-bool is_valid_path(char *path) {
-    //TODO is_valid_path()
-}
-
-void free_command(command_t *command) {
+void free_command(Command *command) {
     free(command->path);
     free(command);
 }

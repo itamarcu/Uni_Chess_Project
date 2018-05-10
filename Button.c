@@ -2,7 +2,7 @@
 
 widget_t *create_button(
         window_t *window,
-        game_t *game,
+        Game *game,
         const char *image,
         SDL_Rect location,
         window_t *next_window,

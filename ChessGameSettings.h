@@ -30,7 +30,7 @@
 #define HISTORY_SIZE 7  // Current board is included
 
 typedef struct history_t {
-    board_t *prev_boards[HISTORY_SIZE]; // first element is most recent
+    Board *prev_boards[HISTORY_SIZE]; // first element is most recent
     unsigned int prev_moves[HISTORY_SIZE]; // each one defines the move via a four-char integer (int32). I know, this is ugly!
     int count;  // 0 when empty, HISTORY_SIZE when full
 } History;
@@ -42,36 +42,42 @@ typedef struct game_t {
     int difficulty; // 1 .. 5
     int user_color; // USER_COLOR_*
     int current_player; // ^ ditto ^
-    board_t *board;
+    Board *board;
     int winner; // GAME_CURRENT_WINNER_*
     History *history;
     bool is_saved;
-} game_t;
+} Game;
 
 /**
- * returns true if the game saved successfully and false otherwise.
+ * Resets game to default settings:
+ *
+ *
+ *  game->difficulty = 2;
+ *
+ *  game->game_mode = GAME_MODE_SINGLEPLAYER;
+ *
+ *  game->user_color = WHITE;
+ *
+ *  game->state = GAME_STATE_SETTINGS;
+ *
+ *  game->is_saved = false;
  */
-bool save_game_to_path(game_t *game, char *path);
 
-/*
- * assuming the file exist in path and containing the saved game with the
- * returns true if the game loaded successfully and false otherwise.
+void reset_default_settings(Game *game);
+
+/**
+ * Frees a History pointer.
  */
-bool load_game_from_path(game_t *game, char *path);
-
-bool is_file_exists(char *path);
-
-/*
- * assuming the file exists in path
- */
-bool is_file_empty(char *path);
-
-void reset_default_settings(game_t *game);
-
 void free_history(History *history);
 
-void free_game(game_t *game);
+/**
+ * Frees a Game pointer.
+ */
+void free_game(Game *game);
 
+/**
+ * Returns the difficulty matching an int: 1 = hard.... 5 = expert
+ */
 char *difficulty_string(int difficulty_int);
 
 char *color_string(int color_int);

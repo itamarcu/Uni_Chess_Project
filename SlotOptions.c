@@ -2,7 +2,7 @@
 
 widget_t *create_slot_options(
         window_t *window,
-        game_t *game,
+        Game *game,
         int number_of_slots,
         int x_pos,
         int y_pos,
@@ -128,7 +128,7 @@ widget_t *create_slot_options(
         if (sprintf(full_path, "%s%s.save", GAME_SLOTS_PATH, slot_num_str) < 0) {
             goto FREE_ON_ERROR;
         }
-        if (is_file_exists(full_path) && !is_file_empty(full_path))
+        if (does_file_exist(full_path) && !is_file_empty(full_path))
             data->is_saved_slots[l] = true;
         else {
             FILE *f = fopen(full_path, "w");
@@ -223,7 +223,7 @@ void handle_slot_options_event(widget_t *src, SDL_Event *e) {
     switch (e->type) {
         case SDL_MOUSEBUTTONUP:
             slot_i_rect = slot_options->first_slot_location;
-            for (int i = 0; i < NUMBER_OF_DROWN_SLOTS; ++i) {
+            for (int i = 0; i < NUMBER_OF_DRAWN_SLOTS; ++i) {
                 if (SDL_PointInRect(&mouse_pos, &slot_i_rect)) {
                     slot_options->action(src, i + slot_options->current_top_slot);
                 }
@@ -248,7 +248,7 @@ void handle_slot_options_event(widget_t *src, SDL_Event *e) {
             break;
         case SDL_MOUSEMOTION:
             slot_i_rect = slot_options->first_slot_location;
-            for (int i = 0; i < NUMBER_OF_DROWN_SLOTS; ++i) {
+            for (int i = 0; i < NUMBER_OF_DRAWN_SLOTS; ++i) {
                 if (SDL_PointInRect(&mouse_pos, &slot_i_rect)) {
                     slot_options->current_slots_alpha_factor[slot_options->current_top_slot +
                                                              i] = ALPHA_FACTOR_MOUSE_OVER;
@@ -275,7 +275,7 @@ void draw_slot_options(widget_t *src) {
     SDL_Rect slot_i_rect = slot_options->first_slot_location;
     int top_slot = slot_options->current_top_slot;
     int top_slot_i;
-    for (int i = 0; i < NUMBER_OF_DROWN_SLOTS; ++i) {
+    for (int i = 0; i < NUMBER_OF_DRAWN_SLOTS; ++i) {
         top_slot_i = top_slot + i;
         if (!slot_options->is_saved_slots[top_slot_i] && slot_options->is_loading_mode)
             slot_options->current_slots_alpha_factor[top_slot_i] = ALPHA_FACTOR_MOUSE_OVER;

@@ -25,7 +25,7 @@ typedef struct computer_move_t {
  * Uses game->difficulty as the recursion depth.
  * @return the move that was made.
  */
-ComputerMove computer_move(game_t *game);
+ComputerMove computer_move(Game *game);
 
 /**
  * Applies minimax algorithm recursively. depthRemaining should be at least 1 on topmost call.
@@ -37,12 +37,12 @@ ComputerMove computer_move(game_t *game);
  * @return best move to make from the state of the given board (irrelevant if depthRemaining == 0)
  */
 ComputerMove
-recursively_minimax_best_move(board_t *board, bool player_is_white, int alpha, int beta, int depthRemaining);
+recursively_minimax_best_move(Board *board, bool player_is_white, int alpha, int beta, int depthRemaining);
 
 /**
  * @return calculated score sum, without checking for draws/checkmates
  */
-int calculate_simple_board_score(board_t *board);
+int calculate_simple_board_score(Board *board);
 
 
 #endif //UNI_CHESS_PROJECT_MINIMAX_H

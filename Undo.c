@@ -6,7 +6,7 @@
  * which isn't very nicely-designed code structure but I was in a hurry and the alternative was frustrating.
  * This also changes current player because it fits every time.
  */
-void undo_one_move(game_t *game) {
+void undo_one_move(Game *game) {
     change_current_player(game);
 
     if (game->program_mode == PROGRAM_MODE_CONSOLE) {
@@ -29,7 +29,7 @@ void undo_one_move(game_t *game) {
     game->history->count -= 1;
 }
 
-GAME_ACTION_RESULT undo_move(game_t *game) {
+GAME_ACTION_RESULT undo_move(Game *game) {
     // (game->history->count != 0) !!!
     if (game->history->count == 1) {
         return EMPTY_HISTORY;
@@ -51,7 +51,7 @@ GAME_ACTION_RESULT undo_move(game_t *game) {
     return SUCCESS;
 }
 
-void push_move_to_history(game_t *game, int r1, int c1, int r2, int c2) {
+void push_move_to_history(Game *game, int r1, int c1, int r2, int c2) {
     if (game->history->count == HISTORY_SIZE) {
         // free the oldest record
         free_board(game->history->prev_boards[HISTORY_SIZE - 1]);

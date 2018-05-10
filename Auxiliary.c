@@ -3,7 +3,7 @@
 void println_error(const char *format, ...) {
     va_list args;
     va_start(args, format);
-
+    setbuf(stdout, 0);
     vfprintf(stdout, format, args);
     fprintf(stdout, "%s", "\n");
 
@@ -13,7 +13,7 @@ void println_error(const char *format, ...) {
 void println_output(const char *format, ...) {
     va_list args;
     va_start(args, format);
-
+    setbuf(stdout, 0);
     vfprintf(stdout, format, args);
     fprintf(stdout, "%s", "\n");
 
@@ -23,7 +23,7 @@ void println_output(const char *format, ...) {
 void println_debug(const char *format, ...) {
     va_list args;
     va_start(args, format);
-
+    setbuf(stdout, 0);
     if (DEBUG_MODE) {
         vfprintf(stdout, format, args);
         fprintf(stdout, "%s", "\n");
@@ -32,14 +32,6 @@ void println_debug(const char *format, ...) {
     va_end(args);
 }
 
-/**
- * Parses a string into an integer value, returns success value.
- * Uses base 10 (but if you want a different base you can edit this code or whatever).
- * Should work on numbers of these format examples: 1234, +1234, -1234, 001234
- * @param str pointer to string that contains string representation (of a number, hopefully)
- * @param int_ptr pointer to int that will be filled with result if possible
- * @return true (1) if succeeded, false (0) if failed
- */
 bool cast_str_to_int(const char *str, int *int_ptr) {
     /*
      * the reason this uses a weird pointer-of-pointer-of-char to test for NULL (0)...
@@ -52,16 +44,4 @@ bool cast_str_to_int(const char *str, int *int_ptr) {
 
 int sign(int x) {
     return (x > 0) - (x < 0);
-}
-
-int min(int n1, int n2) {
-    if (n1 < n2)
-        return n1;
-    return n2;
-}
-
-int max(int n1, int n2) {
-    if (n1 > n2)
-        return n1;
-    return n2;
 }

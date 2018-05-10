@@ -16,7 +16,7 @@
  *   -----------------
  *    A B C D E F G H
  */
-void print_board(board_t *board) {
+void print_board(Board *board) {
     for (int row = 7; row >= 0; row--) {
         printf("%d|", (row + 1));
         for (int col = 0; col < 8; col++) {
@@ -29,8 +29,8 @@ void print_board(board_t *board) {
 }
 
 //TO-DO: make it a switch-case over the different types of Commands, and check valid Settings_command first. also, add console respond prints.
-void CUI_settings_case(game_t *game) {
-    command_t *command = get_user_input_as_command();
+void CUI_settings_case(Game *game) {
+    Command *command = get_user_input_as_command();
     if (command == NULL) {
         println_error("Real error - malloc failed for command.");
         return;
@@ -43,10 +43,10 @@ void CUI_settings_case(game_t *game) {
             case CMD_GAME_MODE:
                 if (command->args[0] == 1) {
                     game->game_mode = GAME_MODE_SINGLEPLAYER;
-                    println_output("game_t mode is set to 1-player");
+                    println_output("Game mode is set to 1-player");
                 } else if (command->args[0] == 2) {
                     game->game_mode = GAME_MODE_MULTIPLAYER;
-                    println_output("game_t mode is set to 2-player");
+                    println_output("Game mode is set to 2-player");
                 } else {
                     println_error("Wrong game mode");
                 }
@@ -109,20 +109,20 @@ void CUI_settings_case(game_t *game) {
 }
 
 
-void CUI_game_case(game_t *game) {
+void CUI_game_case(Game *game) {
     if (game->game_mode == GAME_MODE_MULTIPLAYER || game->current_player == game->user_color) {
         print_board(game->board);
         if (DEBUG_MODE)
             println_debug("[BOARD SCORE: %d]", calculate_simple_board_score(game->board));
         println_output("Enter your move (%s player):", color_string(game->current_player));
 
-        command_t *command = get_user_input_as_command();
+        Command *command = get_user_input_as_command();
         if (command == NULL) {
             println_error("Real error - malloc failed for command.");
             return;
         }
 
-        possible_move_t moves[MOVES_ARRAY_SIZE];
+        PossibleMove moves[MOVES_ARRAY_SIZE];
         ComputerMove auto_move;
 
         if (!command->valid_command) {
@@ -161,7 +161,7 @@ void CUI_game_case(game_t *game) {
                     switch (get_possible_moves(game->board, command->args[0], command->args[1], moves)) {
                         case SUCCESS:
                             for (int i = 0; i < MOVES_ARRAY_SIZE; i++) {
-                                if (!moves[i].is_possible)
+                                if (!moves[i].is_legal)
                                     break; //all moves from now on are guaranteed to be not possible
                                 printf(("<%c,%c>"), moves[i].row + '1', moves[i].col + 'A');
                                 if (moves[i].is_threatened_by_opponent)
@@ -217,10 +217,10 @@ void CUI_game_case(game_t *game) {
                     break;
                 case CMD_MAKE_MY_MOVE:
                     auto_move = computer_move(game);
-                    println_output("Computer: move %s at <%d,%d> to <%d,%d>",
+                    println_output("Auto-Player: move %s at <%c,%c> to <%c,%c>",
                                    name_of_piece(game->board->grid[auto_move.r1][auto_move.r2]),
-                                   auto_move.r1, auto_move.c1,
-                                   auto_move.r2, auto_move.c2);
+                                   auto_move.r1 + '1', auto_move.c1 + 'A',
+                                   auto_move.r2 + '1', auto_move.c2 + 'A');
                     move_was_made(game, auto_move.r1, auto_move.c1, auto_move.r2, auto_move.c2);
                     break;
                 default:
@@ -231,15 +231,15 @@ void CUI_game_case(game_t *game) {
     } else //computer's turn
     {
         ComputerMove move = computer_move(game);
-        println_output("Computer: move %s at <%d,%d> to <%d,%d>", name_of_piece(game->board->grid[move.r1][move.r2]),
-                       move.r1, move.c1,
-                       move.r2, move.c2);
+        println_output("Computer: move %s at <%c,%c> to <%c,%c>", name_of_piece(game->board->grid[move.r1][move.r2]),
+                       move.r1 + '1', move.c1 + 'A',
+                       move.r2 + '1', move.c2 + 'A');
         move_was_made(game, move.r1, move.c1, move.r2, move.c2);
     }
 }
 
 
-void CUI_main_loop(game_t *game) {
+void CUI_main_loop(Game *game) {
     println_output("Chess");
     println_output("-------");
     println_output("Specify game settings or type 'start' to begin a game with the current settings:");

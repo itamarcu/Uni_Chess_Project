@@ -8,7 +8,7 @@
 /**
  * This function is faster than checking for each piece if it threatens this spot
  */
-bool has_enemy_in_that_direction(board_t *board, bool is_white, int row, int col, int row_delta, int col_delta) {
+bool has_enemy_in_that_direction(Board *board, bool is_white, int row, int col, int row_delta, int col_delta) {
     int original_row = row;
     int original_col = col;
     row += row_delta;
@@ -51,7 +51,7 @@ bool has_enemy_in_that_direction(board_t *board, bool is_white, int row, int col
     return false;
 }
 
-void update_move_by_potential_threats(board_t *board, possible_move_t *move, int r1, int c1) {
+void update_move_by_potential_threats(Board *board, PossibleMove *move, int r1, int c1) {
     int r2 = move->row;
     int c2 = move->col;
 
@@ -62,7 +62,7 @@ void update_move_by_potential_threats(board_t *board, possible_move_t *move, int
     if (!is_empty_space(target_piece)) {
         if (is_white_piece(target_piece) == is_white) {
             //attempt to move into allied unit
-            move->is_possible = false;
+            move->is_legal = false;
             return;
         }
     }
@@ -96,7 +96,7 @@ void update_move_by_potential_threats(board_t *board, possible_move_t *move, int
                 continue;
             if (has_enemy_in_that_direction(board, is_white, rk, ck, row_delta, col_delta)) {
                 //king will be threatened! no need to check anything more.
-                move->is_possible = false;
+                move->is_legal = false;
                 //Undo move
                 board->grid[r2][c2] = target_piece;
                 board->grid[r1][c1] = moving_piece;
@@ -118,7 +118,7 @@ void update_move_by_potential_threats(board_t *board, possible_move_t *move, int
             if (!is_empty_space(piece_k) && (is_white_piece(piece_k) != is_white)) {
                 if (piece_k == WHITE_KNIGHT || piece_k == BLACK_KNIGHT) {
                     //king will be threatened! no need to check anything more.
-                    move->is_possible = false;
+                    move->is_legal = false;
                     //Undo move
                     board->grid[r2][c2] = target_piece;
                     board->grid[r1][c1] = moving_piece;
@@ -144,23 +144,23 @@ void update_move_by_potential_threats(board_t *board, possible_move_t *move, int
     board->grid[r2][c2] = target_piece;
     board->grid[r1][c1] = moving_piece;
 
-    move->is_possible = true;
+    move->is_legal = true;
     move->is_capturing = target_piece != EMPTY_SPACE;
     move->is_threatened_by_opponent = will_piece_be_threatened;
 }
 
-void add_move_to_possibilities(board_t *board, possible_move_t *moves, int index, int r1, int c1, int r2, int c2) {
+void add_move_to_possibilities(Board *board, PossibleMove *moves, int index, int r1, int c1, int r2, int c2) {
     moves[index].row = r2;
     moves[index].col = c2;
     if (r2 < 0 || r2 >= 8 || c2 < 0 || c2 >= 8)
-        moves[index].is_possible = false;
+        moves[index].is_legal = false;
     else
         update_move_by_potential_threats(board, moves + index, r1, c1);
 }
 
 
 GAME_ACTION_RESULT
-get_possible_moves(board_t *board, int row, int col, possible_move_t possible_moves[MOVES_ARRAY_SIZE]) {
+get_possible_moves(Board *board, int row, int col, PossibleMove possible_moves[MOVES_ARRAY_SIZE]) {
     if (row < 0 || row >= 8 || col < 0 || col >= 8) {
         return INVALID_POS;
     }
@@ -171,7 +171,7 @@ get_possible_moves(board_t *board, int row, int col, possible_move_t possible_mo
     }
 
     for (int i = 0; i < MOVES_ARRAY_SIZE; i++) {
-        possible_moves[i].is_possible = false;
+        possible_moves[i].is_legal = false;
     }
 
     int next_move_index = 0;
@@ -179,41 +179,41 @@ get_possible_moves(board_t *board, int row, int col, possible_move_t possible_mo
     switch (piece) {
         case WHITE_PAWN:
             add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 1, col);
-            possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
-            if (possible_moves[next_move_index].is_possible)
+            possible_moves[next_move_index].is_legal &= !possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_legal)
                 next_move_index += 1;
             add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 1, col - 1);
-            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
-            if (possible_moves[next_move_index].is_possible)
+            possible_moves[next_move_index].is_legal &= possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_legal)
                 next_move_index += 1;
             add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 1, col + 1);
-            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
-            if (possible_moves[next_move_index].is_possible)
+            possible_moves[next_move_index].is_legal &= possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_legal)
                 next_move_index += 1;
             if (row == 1 && is_empty_space(board->grid[row + 1][col])) //starting move
             {
                 add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row + 2, col);
-                possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
+                possible_moves[next_move_index].is_legal &= !possible_moves[next_move_index].is_capturing;
             }
             break;
         case BLACK_PAWN:
             add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 1, col);
-            possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
-            if (possible_moves[next_move_index].is_possible)
+            possible_moves[next_move_index].is_legal &= !possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_legal)
                 next_move_index += 1;
 
             add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 1, col - 1);
-            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
-            if (possible_moves[next_move_index].is_possible)
+            possible_moves[next_move_index].is_legal &= possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_legal)
                 next_move_index += 1;
             add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 1, col + 1);
-            possible_moves[next_move_index].is_possible &= possible_moves[next_move_index].is_capturing;
-            if (possible_moves[next_move_index].is_possible)
+            possible_moves[next_move_index].is_legal &= possible_moves[next_move_index].is_capturing;
+            if (possible_moves[next_move_index].is_legal)
                 next_move_index += 1;
             if (row == 6 && is_empty_space(board->grid[row - 1][col])) //starting move
             {
                 add_move_to_possibilities(board, possible_moves, next_move_index, row, col, row - 2, col);
-                possible_moves[next_move_index].is_possible &= !possible_moves[next_move_index].is_capturing;
+                possible_moves[next_move_index].is_legal &= !possible_moves[next_move_index].is_capturing;
             }
             break;
         case WHITE_BISHOP:
@@ -230,8 +230,8 @@ get_possible_moves(board_t *board, int row, int col, possible_move_t possible_mo
                         add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
 
                         // Do not change the order here:
-                        possible_move_t *possible_move = &possible_moves[next_move_index];
-                        if (possible_move->is_possible)
+                        PossibleMove *possible_move = &possible_moves[next_move_index];
+                        if (possible_move->is_legal)
                             next_move_index += 1;
                         if (!is_empty_space(board->grid[r][c]))
                             break;
@@ -253,8 +253,8 @@ get_possible_moves(board_t *board, int row, int col, possible_move_t possible_mo
                         add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
 
                         // Do not change the order here:
-                        possible_move_t *possible_move = &possible_moves[next_move_index];
-                        if (possible_move->is_possible)
+                        PossibleMove *possible_move = &possible_moves[next_move_index];
+                        if (possible_move->is_legal)
                             next_move_index += 1;
                         if (!is_empty_space(board->grid[r][c]))
                             break;
@@ -272,7 +272,7 @@ get_possible_moves(board_t *board, int row, int col, possible_move_t possible_mo
                 int r = row + knight_x_deltas[i];
                 int c = col + knight_y_deltas[i];
                 add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
-                if (possible_moves[next_move_index].is_possible)
+                if (possible_moves[next_move_index].is_legal)
                     next_move_index += 1;
             }
         }
@@ -289,8 +289,8 @@ get_possible_moves(board_t *board, int row, int col, possible_move_t possible_mo
                         add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
 
                         // Do not change the order here:
-                        possible_move_t *possible_move = &possible_moves[next_move_index];
-                        if (possible_move->is_possible)
+                        PossibleMove *possible_move = &possible_moves[next_move_index];
+                        if (possible_move->is_legal)
                             next_move_index += 1;
                         if (!is_empty_space(board->grid[r][c]))
                             break;
@@ -308,7 +308,7 @@ get_possible_moves(board_t *board, int row, int col, possible_move_t possible_mo
                     int c = col + col_delta;
                     if (0 <= r && r < 8 && 0 <= c && c < 8) {
                         add_move_to_possibilities(board, possible_moves, next_move_index, row, col, r, c);
-                        if (possible_moves[next_move_index].is_possible)
+                        if (possible_moves[next_move_index].is_legal)
                             next_move_index += 1;
                     }
                 }
@@ -323,7 +323,12 @@ get_possible_moves(board_t *board, int row, int col, possible_move_t possible_mo
 }
 
 
-bool optimized_move_legality_check(board_t *board, int r1, int c1, int r2, int c2) {
+/**
+* Returns true if the move is valid (this is much faster than update_move_by_potential_threats)
+*
+* NOTE: this assumes correct input (correct r1, r2, nonempty...)
+*/
+bool optimized_move_legality_check(Board *board, int r1, int c1, int r2, int c2) {
     char moving_piece = board->grid[r1][c1];
     char target_piece = board->grid[r2][c2];
     bool is_white = is_white_piece(moving_piece);
@@ -396,7 +401,7 @@ bool optimized_move_legality_check(board_t *board, int r1, int c1, int r2, int c
     return true;
 }
 
-bool has_any_possible_moves(board_t *board, int row, int col) {
+bool has_any_possible_moves(Board *board, int row, int col) {
     char piece = board->grid[row][col];
 
     switch (piece) {
