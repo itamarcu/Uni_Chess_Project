@@ -595,7 +595,7 @@ int build_pick_slot_window(Game *game, windows_t *windows) {
         goto HANDLE_ERROR;
     pick_slot_window->next_window = windows->game_window; // will change if picking a slot for saving a game instead of loading a game.
 
-    widget_t *slot_options_widget = create_slot_options(pick_slot_window, game, 10,
+    widget_t *slot_options_widget = create_slot_options(pick_slot_window, game, NUMBER_OF_TOTAL_SLOTS,
                                                         (DEFAULT_WINDOW_WIDTH - SLOT_OPTIONS_WIDTH) / 2, 250,
                                                         save_load_game_slots_action);
     if (slot_options_widget == NULL)
