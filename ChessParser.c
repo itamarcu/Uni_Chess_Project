@@ -1,6 +1,9 @@
 #include "ChessParser.h"
 #include <string.h>
 
+/**
+ * like strdup() but without the need for compiler-dependent include
+ */
 char *strdup_2(char *src) {
     char *ret = malloc(strlen(src) + 1);
 
@@ -142,7 +145,7 @@ Command *get_user_input_as_command() {
     //Special cases for these - need to parse non-integers
     if (strcmp(command_string, "move") == 0) {
         return cmd_move(command);
-    } else if (strcmp(command_string, "mov") == 0 && DEBUG_MODE) {
+    } else if (strcmp(command_string, "mov") == 0) {
         return cmd_mov(command);
     } else if (strcmp(command_string, "auto") == 0) { // special custom command
         return cmd_auto(command);

@@ -1,5 +1,8 @@
 #include "SlotOptions.h"
 
+/**
+ * like pow() from math.h
+ */
 int pow_2(int base, int exp);
 
 void destroy_slot_options(widget_t *src);
