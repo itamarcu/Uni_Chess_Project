@@ -633,6 +633,20 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
                 src->game->history = malloc(sizeof(History));
                 src->game->history->count = 0;
                 push_move_to_history(src->game, 1, 2, 3, 4); // arbitrary values - not important
+
+                //Check if next player is checkmated
+                bool game_ended = !check_if_player_can_move(src->game->board, src->game->current_player != WHITE);
+
+                if (game_ended) {
+                    src->game->state = GAME_STATE_QUIT;
+                    if (check_if_king_is_threatened(src->game->board, true))  // is white Checked?
+                        src->game->winner = GAME_WINNER_BLACK;
+                    else if (check_if_king_is_threatened(src->game->board, false))  // is black Checked?
+                        src->game->winner = GAME_WINNER_WHITE;
+                    else
+                        src->game->winner = GAME_WINNER_DRAW;
+                }
+
                 maybe_make_first_computer_turn(src->game,
                                                (game_gui_t *) src->window->windows->game_window->widgets[0]->data,
                                                src->window->windows->game_window);

@@ -6,7 +6,9 @@
 
 #include "GUIStructs.h"
 
-// useful function for NULL-safe destroy
+/*
+ * Frees a widget pointer (NULL-safe).
+ */
 void destroy_widget(widget_t *src);
 
 #endif /* WIDGET_H_ */
