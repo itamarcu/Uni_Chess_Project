@@ -713,7 +713,7 @@ void show_unsaved_game_box_message(widget_t *widget) {
         };
         int button_id = show_message_box(widget->window, buttons, 3, "Continue without saving?",
                                          "Are you sure you want to exit to menu without saving?");
-        slot_options_t *slot_options;
+        slot_options_t *slot_options = NULL;
         switch (button_id) {
             case 1:
                 pick_slot_window->next_window = after_save_window;
