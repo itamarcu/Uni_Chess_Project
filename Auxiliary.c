@@ -20,6 +20,17 @@ void println_output(const char *format, ...) {
     va_end(args);
 }
 
+
+void println_error_weak(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    setbuf(stdout, 0);
+    vfprintf(stdout, format, args);
+    fprintf(stdout, "%s", "\n");
+
+    va_end(args);
+}
+
 void println_debug(const char *format, ...) {
     va_list args;
     va_start(args, format);

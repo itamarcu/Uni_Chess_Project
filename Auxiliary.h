@@ -35,6 +35,11 @@ void println_error(const char *format, ...);
 void println_output(const char *format, ...);
 
 /**
+ * just like println_output. Used for expected error messages (e.g. invalid input)
+ */
+void println_error_weak(const char *format, ...);
+
+/**
  * just like println_output, but only activates if DEBUG_MODE is true.
  */
 void println_debug(const char *format, ...);

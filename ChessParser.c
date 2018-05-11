@@ -11,9 +11,9 @@ Command *cmd_move(Command *command) {
     char *arg2 = strtok(NULL, " \r\t\n");
     if (arg2 == NULL || strcmp(arg1, "to") != 0
         || strlen(arg0) != 5 || strlen(arg2) != 5
-        || arg0[0] != '<' || arg2[0] != '>'
+        || arg0[0] != '<' || arg2[0] != '<'
         || arg0[2] != ',' || arg2[2] != ','
-        || arg0[4] != '>' || arg2[4] != '<') {
+        || arg0[4] != '>' || arg2[4] != '>') {
         command->valid_command = false;
         return command;
     }
@@ -129,6 +129,9 @@ Command *get_user_input_as_command() {
     bool arg_valids[4];
     command->valid_command = true;
 
+    command->settings_command = CMD_NONE_SETTINGS;
+    command->game_command = CMD_NONE_GAME;
+
     //Special cases for these - need to parse non-integers
     if (strcmp(command_string, "move") == 0) {
         return cmd_move(command);
@@ -156,9 +159,6 @@ Command *get_user_input_as_command() {
             }
         }
     }
-
-    command->settings_command = CMD_NONE_SETTINGS;
-    command->game_command = CMD_NONE_GAME;
 
     if (strcmp(command_string, "game_mode") == 0) {
         command->settings_command = CMD_GAME_MODE;
