@@ -278,7 +278,7 @@ int build_main_menu(Game *game, windows_t *windows) {
                                      load_game_button_rect, windows->pick_slot_window,
                                      load_button_main_menu_action);
     quit_game_button = create_button(main_menu, game, QUIT_GAME_BUTTON_PATH,
-                                               quit_game_button_rect, NULL, quit_button_action);
+                                     quit_game_button_rect, NULL, quit_button_action);
     if (new_game_button == NULL || load_game_button == NULL || quit_game_button == NULL)
         goto HANDLE_ERROR;
 
@@ -478,7 +478,7 @@ int build_one_player_options_window(Game *game, windows_t *windows) {
     hard_button = create_button(options_window, game, HARD_BUTTON_PATH, hard_button_rect,
                                 NULL, hard_button_action);
     expert_button = create_button(options_window, game, EXPERT_BUTTON_PATH, expert_button_rect,
-                                            NULL, expert_button_action);
+                                  NULL, expert_button_action);
 
     SDL_Rect white_button_rect;
     white_button_rect.x = amateur_button_rect.x;
@@ -495,7 +495,7 @@ int build_one_player_options_window(Game *game, windows_t *windows) {
     white_button = create_button(options_window, game, WHITE_BUTTON_PATH, white_button_rect,
                                  NULL, white_button_action);
     black_button = create_button(options_window, game, BLACK_BUTTON_PATH, black_button_rect,
-                                           NULL, black_button_action);
+                                 NULL, black_button_action);
 
     if (amateur_button == NULL || easy_button == NULL || moderate_button == NULL || hard_button == NULL ||
         expert_button == NULL || white_button == NULL || black_button == NULL)
@@ -635,7 +635,8 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
                 push_move_to_history(src->game, 1, 2, 3, 4); // arbitrary values - not important
 
                 //Check if next player is checkmated
-                bool game_ended = !check_if_player_can_move(src->game->board, src->game->current_player != WHITE);
+                bool game_ended = !check_if_player_can_move(src->game->board, true) ||
+                                  !check_if_player_can_move(src->game->board, false);
 
                 if (game_ended) {
                     src->game->state = GAME_STATE_QUIT;

@@ -3,7 +3,7 @@ OBJS = Button.o Auxiliary.o ChessBoard.o ChessConsoleUI.o ChessGameLogic.o Chess
 FileOperations.o HandleAndDrawGame.o Minimax.o OptionsButtons.o PossibleMoveLogic.o SlotOptions.o Undo.o Widget.o \
  Window.o main.o
 
-EXEC = myprog
+EXEC = chessprog
 COMP_FLAG = -std=c99 -Wall -Wextra \
 -Werror -pedantic-errors
 SDL_COMP_FLAG = -I/usr/local/lib/sdl_2.0.5/include/SDL2 -D_REENTRANT
