@@ -3,7 +3,6 @@
 
 #include <SDL.h>
 #include <SDL_video.h>
-#include <math.h>
 #include "GUIStructs.h"
 #include "ChessGameSettings.h"
 #include "Window.h"

@@ -1,5 +1,19 @@
 #include "SlotOptions.h"
 
+int pow_2(int base, int exp) {
+    int result = 1;
+    while (true) {
+        if (exp & 1)
+            result *= base;
+        exp >>= 1;
+        if (!exp)
+            break;
+        base *= base;
+    }
+
+    return result;
+}
+
 widget_t *create_slot_options(
         window_t *window,
         Game *game,
@@ -65,7 +79,7 @@ widget_t *create_slot_options(
             slot_number /= 10;
         }
         slot_number = slot_index + 1;
-        int digit = slot_number / (int) pow(10, num_of_digits - 1);
+        int digit = slot_number / pow_2(10, num_of_digits - 1);
         while (num_of_digits != 0) {
             SDL_Rect digit_dst_rect;
             digit_dst_rect.x = next_digit_x;
@@ -76,11 +90,11 @@ widget_t *create_slot_options(
             if (SDL_BlitSurface(digits_surfaces[digit], NULL, numbered_slot_surface, &digit_dst_rect) < 0) {
                 goto FREE_ON_ERROR;
             }
-            slot_number = slot_number - (int) (pow(10, num_of_digits - 1)) * digit;
+            slot_number = slot_number - (pow_2(10, num_of_digits - 1)) * digit;
             if (num_of_digits == 1)
                 break;
             num_of_digits--;
-            digit = slot_number / (int) pow(10, num_of_digits - 1);
+            digit = slot_number / pow_2(10, num_of_digits - 1);
         }
         SDL_SetColorKey(numbered_slot_surface, SDL_TRUE, map_rgb);
         data->slots_textures[slot_index] = SDL_CreateTextureFromSurface(window->renderer, numbered_slot_surface);

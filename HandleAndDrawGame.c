@@ -261,7 +261,7 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
                             SDL_PointInRect(&mouse_pos, &game_gui->board_pieces_rects[i][j]) &&
                             (i != game_gui->focused_piece_row || j !=
                                                                  game_gui->focused_piece_col)) { // if there is a piece and we clicked there and its not focused.
-                            PossibleMove possible_moves[MOVES_ARRAY_SIZE] = {0};
+                            PossibleMove possible_moves[MOVES_ARRAY_SIZE] = {{0}};
                             if (get_possible_moves(src->game->board, i, j, possible_moves) != SUCCESS)
                                 return; // not suppose to ever happen cause there is a piece there and its valid row and col
                             reset_game_gui(game_gui, src->game);
@@ -287,11 +287,13 @@ void if_end_game_or_check_handle(Game *game, window_t *game_window) {
     SDL_MessageBoxButtonData buttons[] = {
             {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "Ok"}
     };
-    if (!pressing_auto_move_key && !pressing_double_auto_move_key && check_if_king_is_threatened(game->board, true) &&
+    if (!pressing_auto_move_key() && !pressing_double_auto_move_key() &&
+        check_if_king_is_threatened(game->board, true) &&
         game->current_player == WHITE) {
         show_message_box(game_window, buttons, 1, "Pay Attention!", "White Player - you just got checked!");
     }
-    if (!pressing_auto_move_key && !pressing_double_auto_move_key && check_if_king_is_threatened(game->board, false) &&
+    if (!pressing_auto_move_key() && !pressing_double_auto_move_key() &&
+        check_if_king_is_threatened(game->board, false) &&
         game->current_player == BLACK) {
         show_message_box(game_window, buttons, 1, "Pay Attention!", "Black Player - you just got checked!");
     }
