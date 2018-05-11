@@ -16,14 +16,15 @@ int main(int argc, char *argv[]) {
     }
     if (argc <= 1) { //console mode is default
         game->program_mode = PROGRAM_MODE_CONSOLE;
-    } else if (strcmp(argv[1], "-c") == 0) //console mode
+    } else if (strcmp(argv[1], "-c") == 0 || strcmp(argv[1], "--console") == 0) //console mode
     {
         game->program_mode = PROGRAM_MODE_CONSOLE;
 
-    } else if (strcmp(argv[1], "-g") == 0) //graphic mode
+    } else if (strcmp(argv[1], "-g") == 0 || strcmp(argv[1], "--graphic") == 0) //graphic mode
     {
         game->program_mode = PROGRAM_MODE_GRAPHICAL;
-    } else if (strcmp(argv[1], "-m") == 0) //graphic mode with no message boxes
+    } else if (strcmp(argv[1], "-m") == 0 ||
+               strcmp(argv[1], "--graphic-no-message-boxes") == 0) //graphic mode with no message boxes
     {
         game->program_mode = PROGRAM_MODE_GRAPHICAL;
         NO_MESSAGE_BOX_MODE = true;
