@@ -35,6 +35,11 @@ void one_player_button_action(widget_t *widget);
 void two_players_button_action(widget_t *widget);
 
 /**
+ * starting game
+ */
+void start_game_button_action(widget_t *widget);
+
+/**
  * changing the computer difficulty to amateur.
  */
 void amateur_button_action(widget_t *widget);
@@ -418,7 +423,7 @@ int build_one_player_options_window(Game *game, windows_t *windows) {
 
     widget_t *start_button = create_button(options_window, game, START_BUTTON_PATH,
                                            start_button_rect, windows->game_window,
-                                           switch_window_and_change_prev_window_action);
+                                           start_game_button_action);
     if (start_button == NULL)
         goto HANDLE_ERROR;
     // if something goes wrong after the widget is added, it will be destroyed in destroy_window in the main loop:
@@ -537,6 +542,16 @@ int build_one_player_options_window(Game *game, windows_t *windows) {
     destroy_widget(white_button);
     destroy_widget(black_button);
     return -1;
+}
+
+void start_game_button_action(widget_t *widget) {
+    println_output("1");
+    maybe_make_first_computer_turn(widget->game,
+                                   (game_gui_t *) widget->window->widgets[0]->data,
+                                   widget->window);
+    println_output("2");
+    switch_window_and_change_prev_window_action(widget);
+    println_output("3");
 }
 
 void amateur_button_action(widget_t *widget) {
