@@ -10,7 +10,7 @@
 
 /**
  *
- * @param window the relavent window_t of the button
+ * @param window the relevant window_t of the button
  * @param image the path to the image of the button
  * @param next_window if the button will change the window with switch_window_and_change_prev_window_action
  * it will change to next_window.
