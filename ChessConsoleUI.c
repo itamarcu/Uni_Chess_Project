@@ -277,7 +277,7 @@ void CUI_main_loop(Game *game) {
                 break;
         }
     }
-    if (game->winner == GAME_WINNER_NONE) {
+    if (game->board == NULL || game->winner == GAME_WINNER_NONE) {
         //No text, just immediately terminate
         return;
     }

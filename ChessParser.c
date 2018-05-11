@@ -125,15 +125,11 @@ Command *get_user_input_as_command() {
     }
     command->path = NULL; //should be something
 
-    char *command_string_ptr = strtok(input, " \r\t\n");
-    if (command_string_ptr == NULL) {
+    char *command_string = strtok(input, " \r\t\n");
+    if (command_string == NULL) {
         command->valid_command = false;
         return command;
     }
-    char command_string[1024 + 1];
-    memset(command_string, 0, sizeof command_string);
-    strcpy(command_string, command_string_ptr);
-    free(command_string_ptr);
 
     bool arg_valids[4];
     command->valid_command = true;

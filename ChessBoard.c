@@ -40,6 +40,8 @@ Board *copy_board(Board *board) {
 }
 
 void free_board(Board *board) {
+    if (board == NULL)
+        return;
     free(board);
 }
 
