@@ -113,7 +113,9 @@ struct game_gui_t {
     bool is_possible_move[8][8];
     widget_t *undo_button;
 };
-
+/**
+ * all the relevant window data. textures to draw, widgets with there locations to draw and handle, and more.
+ */
 struct window_t {
     SDL_Window *window;
     int height;
@@ -130,7 +132,9 @@ struct window_t {
     GAME_WINDOW prev_window;
     windows_t *windows;
 };
-
+/**
+ * all the windows in the game.
+ */
 struct windows_t {
     window_t *main_menu;
     window_t *game_mode_window;
