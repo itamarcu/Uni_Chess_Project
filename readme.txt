@@ -2,7 +2,7 @@ This is the chess game we've made. It supports a full console/graphical game, in
 
 When we ran tests in the nova server through MobaXTerm, we encountered one bug we couldn't solve - the application kept crashing after showing message boxes, due to some SDL/X11 issue.
 Since we didn't manage to fix this in time, we added a workaround - you can run the program with the "-m" mode and it will avoid using message boxes.
-
+The total number of slots can be redefined inside ChessGui.h, in the "define" section.
 
 
 Usage:
