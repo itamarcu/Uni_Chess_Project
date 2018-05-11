@@ -1,16 +1,33 @@
 #include "HandleAndDrawGame.h"
 
-
+/**
+ * update the game gui board from the current game->board.
+ */
 void update_game_gui_board(game_gui_t *game_gui, Game *game);
 
+/**
+ * destroying the game_gui widget.
+ */
 void destroy_game_gui(widget_t *src);
 
+/**
+ * handling all the game_gui events - making a move, choosing a piece.
+ */
 void handle_game_gui_event(widget_t *src, SDL_Event *e);
 
+/**
+ * displaying message box to the user if the user got checked or the game has ended.
+ */
 void if_end_game_or_check_handle(Game *game, window_t *game_window);
 
+/**
+ * filling the relevant squares with the relevant textures according to possible_moves.
+ */
 void fill_highlighted_squares_from_possible_moves(game_gui_t *game_gui, PossibleMove possible_moves[32]);
 
+/**
+ * drawing the game_gui widget.
+ */
 void draw_game_gui(widget_t *src);
 
 bool pressing_auto_move_key() {

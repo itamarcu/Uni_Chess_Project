@@ -233,7 +233,8 @@ int pow_2(int base, int exp) {
 
 void destroy_slot_options(widget_t *src) {
     slot_options_t *data = (slot_options_t *) src->data;
-
+    free(data->current_slots_alpha_factor);
+    free(data->is_saved_slots);
     SDL_DestroyTexture(data->arrow_up_tex);
     SDL_DestroyTexture(data->arrow_down_tex);
     for (int i = data->num_of_slots - 1; i >= 0; i--) {
