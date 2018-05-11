@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <SDL_video.h>
 #include "GUIStructs.h"
+#include "Auxiliary.h"
 
 #define ALPHA_FACTOR_MOUSE_OVER 170
 
