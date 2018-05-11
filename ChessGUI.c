@@ -374,7 +374,7 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
     if (slot_options->is_loading_mode)
         error_message = "There was an error trying to load the game, please try again";
     char full_path[30];
-    if (sprintf(full_path, "%s%d.save", GAME_SLOTS_PATH, clicked_index + 1) < 0) {
+    if (sprintf(full_path, "%s" SEP "%d.save", SAVED_GAMES_DIRECTORY, clicked_index + 1) < 0) {
         goto HANDLE_ERROR;
     }
     if (slot_options->is_loading_mode) {

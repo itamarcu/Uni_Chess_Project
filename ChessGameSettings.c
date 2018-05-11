@@ -1,4 +1,5 @@
 #include "ChessGameSettings.h"
+#include "Auxiliary.h"
 
 void reset_default_settings(Game *game) {
     game->difficulty = 2;

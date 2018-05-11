@@ -1,4 +1,5 @@
 #include "OptionsButtons.h"
+#include "Button.h"
 
 widget_t *create_options_buttons(window_t *window, Game *game, widget_t **buttons, int num_of_buttons) {
     widget_t *res = (widget_t *) malloc(sizeof(widget_t));

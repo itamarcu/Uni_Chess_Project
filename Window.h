@@ -10,8 +10,8 @@
 #include "Auxiliary.h"
 
 
-#define DEFAULT_BG_PATH "..\\pictures\\chessboard.bmp"
-#define DEFAULT_BACK_BUTTON_PATH "..\\pictures\\button_back.bmp"
+#define DEFAULT_BG_PATH (PICTURES_DIRECTORY SEP "chessboard.bmp")
+#define DEFAULT_BACK_BUTTON_PATH (PICTURES_DIRECTORY SEP "button_back.bmp")
 #define DEFAULT_BACK_BUTTON_WIDTH 116
 #define DEFAULT_BACK_BUTTON_HEIGHT 40
 

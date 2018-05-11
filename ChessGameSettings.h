@@ -2,8 +2,8 @@
 #define UNI_CHESS_PROJECT_GAMESETTINGS_H
 
 #include <stdbool.h>
-#include "ChessBoard.h"
 #include <string.h>
+#include "ChessBoard.h"
 
 #define PROGRAM_MODE_CONSOLE 'c'
 #define PROGRAM_MODE_GRAPHICAL 'g'

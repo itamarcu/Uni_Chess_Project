@@ -2,6 +2,7 @@
 #define UNI_CHESS_PROJECT_UNDO_H
 
 #include "ChessGameSettings.h"
+#include "Auxiliary.h"
 
 GAME_ACTION_RESULT undo_move(Game *game);
 

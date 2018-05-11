@@ -1,5 +1,5 @@
 #include "FileOperations.h"
-
+#include "Auxiliary.h"
 
 bool save_game_to_path(Game *game, char *path) {
 

@@ -10,25 +10,25 @@
 #include "ChessGameLogic.h"
 #include "Minimax.h"
 
-#define BLACK_BISHOP_PATH "..\\pictures\\black_bishop.bmp"
-#define BLACK_KING_PATH "..\\pictures\\black_king.bmp"
-#define BLACK_KNIGHT_PATH "..\\pictures\\black_knight.bmp"
-#define BLACK_PAWN_PATH "..\\pictures\\black_pawn.bmp"
-#define BLACK_QUEEN_PATH "..\\pictures\\black_queen.bmp"
-#define BLACK_ROOK_PATH "..\\pictures\\black_rook.bmp"
-#define WHITE_BISHOP_PATH "..\\pictures\\white_bishop.bmp"
-#define WHITE_KING_PATH "..\\pictures\\white_king.bmp"
-#define WHITE_KNIGHT_PATH "..\\pictures\\white_knight.bmp"
-#define WHITE_PAWN_PATH "..\\pictures\\white_pawn.bmp"
-#define WHITE_QUEEN_PATH "..\\pictures\\white_queen.bmp"
-#define WHITE_ROOK_PATH "..\\pictures\\white_rook.bmp"
+#define BLACK_BISHOP_PATH (PICTURES_DIRECTORY SEP "black_bishop.bmp")
+#define BLACK_KING_PATH (PICTURES_DIRECTORY SEP "black_king.bmp")
+#define BLACK_KNIGHT_PATH (PICTURES_DIRECTORY SEP "black_knight.bmp")
+#define BLACK_PAWN_PATH (PICTURES_DIRECTORY SEP "black_pawn.bmp")
+#define BLACK_QUEEN_PATH (PICTURES_DIRECTORY SEP "black_queen.bmp")
+#define BLACK_ROOK_PATH (PICTURES_DIRECTORY SEP "black_rook.bmp")
+#define WHITE_BISHOP_PATH (PICTURES_DIRECTORY SEP "white_bishop.bmp")
+#define WHITE_KING_PATH (PICTURES_DIRECTORY SEP "white_king.bmp")
+#define WHITE_KNIGHT_PATH (PICTURES_DIRECTORY SEP "white_knight.bmp")
+#define WHITE_PAWN_PATH (PICTURES_DIRECTORY SEP "white_pawn.bmp")
+#define WHITE_QUEEN_PATH (PICTURES_DIRECTORY SEP "white_queen.bmp")
+#define WHITE_ROOK_PATH (PICTURES_DIRECTORY SEP "white_rook.bmp")
 
-#define STANDARD_SQUARE_PATH "..\\pictures\\standard_square.bmp"
-#define THREATENED_SQUARE_PATH "..\\pictures\\threatened_square.bmp"
-#define CAPTURE_SQUARE_PATH "..\\pictures\\capture_square.bmp"
-#define THREATENED_CAPTURE_SQUARE_PATH "..\\pictures\\threatened_capture_square.bmp"
-#define FOCUSED_SQUARE_PATH "..\\pictures\\focused_square.bmp"
-#define FOCUSED_SQUARE_ENEMY_PATH "..\\pictures\\focused_square_enemy.bmp"
+#define STANDARD_SQUARE_PATH (PICTURES_DIRECTORY SEP "standard_square.bmp")
+#define THREATENED_SQUARE_PATH (PICTURES_DIRECTORY SEP "threatened_square.bmp")
+#define CAPTURE_SQUARE_PATH (PICTURES_DIRECTORY SEP "capture_square.bmp")
+#define THREATENED_CAPTURE_SQUARE_PATH (PICTURES_DIRECTORY SEP "threatened_capture_square.bmp")
+#define FOCUSED_SQUARE_PATH (PICTURES_DIRECTORY SEP "focused_square.bmp")
+#define FOCUSED_SQUARE_ENEMY_PATH (PICTURES_DIRECTORY SEP "focused_square_enemy.bmp")
 
 #define BOARD_W_H 700
 #define AVERAGE_SQUARE_WIDTH 83.125

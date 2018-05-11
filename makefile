@@ -1,8 +1,8 @@
 CC = gcc
 OBJS = Button.o Auxiliary.o ChessBoard.o ChessConsoleUI.o ChessGameLogic.o ChessGameSettings.o ChessGUI.o ChessParser.o \
-FileOperations.o HandleAndDrawGame.o Minimax.o OptionsButtons.o PossibleMoveLogic.o OptionsButtons.o PossibleMoveLogic.o\
- SlotOptions.o Undo.o Widget.o Window.o main.o
- 
+FileOperations.o HandleAndDrawGame.o Minimax.o OptionsButtons.o PossibleMoveLogic.o SlotOptions.o Undo.o Widget.o \
+ Window.o main.o
+
 EXEC = myprog
 COMP_FLAG = -std=c99 -Wall -Wextra \
 -Werror -pedantic-errors
@@ -31,6 +31,8 @@ FileOperations.o: FileOperations.c FileOperations.h ChessGameSettings.h ChessBoa
 	$(CC) $(COMP_FLAG) $(SDL_COMP_FLAG) -c $*.c
 HandleAndDrawGame.o: HandleAndDrawGame.c HandleAndDrawGame.h GUIStructs.h ChessGameSettings.h Window.h ChessGameLogic.h Minimax.h
 	$(CC) $(COMP_FLAG) $(SDL_COMP_FLAG) -c $*.c
+main.o: main.c ChessConsoleUI.h ChessGUI.h
+	$(CC) $(COMP_FLAG) $(SDL_COMP_FLAG) -c $*.c
 Minimax.o: Minimax.c Minimax.h ChessGameSettings.h
 	$(CC) $(COMP_FLAG) $(SDL_COMP_FLAG) -c $*.c
 OptionsButtons.o: OptionsButtons.c OptionsButtons.h GUIStructs.h Button.h
@@ -44,8 +46,6 @@ Undo.o: Undo.c Undo.h ChessGameSettings.h
 Widget.o: Widget.c Widget.h GUIStructs.h
 	$(CC) $(COMP_FLAG) $(SDL_COMP_FLAG) -c $*.c
 Window.o: Window.c Window.h GUIStructs.h Widget.h Button.h Auxiliary.h
-	$(CC) $(COMP_FLAG) $(SDL_COMP_FLAG) -c $*.c
-main.o: main.c ChessConsoleUI.h ChessGUI.h
 	$(CC) $(COMP_FLAG) $(SDL_COMP_FLAG) -c $*.c
 clean:
 	rm -f *.o $(EXEC) $(UNIT_TESTS)
