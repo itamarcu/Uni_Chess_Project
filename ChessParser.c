@@ -124,13 +124,14 @@ Command *get_user_input_as_command() {
         return NULL;
     }
     command->path = NULL; //should be something
-    char *command_string = strtok(input, " \r\t\n");
-    if (command_string != NULL) {
-        command_string = strdup_2(command_string);
-    } else {
+    char *command_string_ptr = strtok(input, " \r\t\n");
+    if (command_string_ptr == NULL) {
         command->valid_command = false;
         return command;
     }
+    char command_string[1024 + 1];
+    strc(command_string);
+    free(command_string_ptr);
 
     bool arg_valids[4];
     command->valid_command = true;
