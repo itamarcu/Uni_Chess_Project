@@ -38,7 +38,7 @@ int calculate_simple_board_score(Board *board) {
     int sum = 0;
     for (int x = 0; x < 8; x++) {
         for (int y = 0; y < 8; y++) {
-            sum += PIECE_SCORES[board->grid[x][y]];
+            sum += PIECE_SCORES[(int) board->grid[x][y]];
         }
     }
 
