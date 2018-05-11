@@ -3,6 +3,7 @@
 /**
  * handling an event e on the button src. if its pressed call the button's action.
  * if the mouse is over the button then add some transparency.
+ * @param src a pointer to a widget containing button_t* as its data.
  */
 void handle_button_event(widget_t *src, SDL_Event *e);
 

@@ -5,7 +5,7 @@
  *
  * when an event happens and curr_window is changed because of it,
  * then the new current_window is shown at the same position as the previous one and the previous is hidden.
- * @param current_window the current shown window.
+ * @param current_window  pointer to the current shown window.
  * @param curr_window a pointer to the current_window enum value. When it's changed,
  * the loop will handle the new window.
  */
@@ -84,6 +84,7 @@ void black_button_action(widget_t *widget);
  * If it's in saving mode then it will save a game and go to its next_window.
  *
  * That could quit the game, get back to game window, or go to main menu.
+ * @param src a pointer to a widget containing slot_options_t * as its data.
  */
 void save_load_game_slots_action(widget_t *src, int clicked_index);
 

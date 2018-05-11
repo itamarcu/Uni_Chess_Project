@@ -5,11 +5,23 @@
  */
 int pow_2(int base, int exp);
 
+/**
+ * destroying all the relevant data in src->data assuming its data is slot_options_t *.
+ * @param src a pointer to a widget containing slot_options_t * as its data.
+ */
 void destroy_slot_options(widget_t *src);
 
-void handle_slot_options_event(widget_t *src, SDL_Event *event);
+/**
+ * handling slot_options widget event when assuming src->data its data is slot_options_t *.
+ * @param src a pointer to a widget containing slot_options_t * as its data.
+ */
+void handle_slot_options_event(widget_t *src, SDL_Event *e);
 
-void draw_slot_options(widget_t *widget);
+/**
+ * drawing slot_options widget when assuming src->data its data is slot_options_t *.
+ * @param src a pointer to a widget containing slot_options_t * as its data.
+ */
+void draw_slot_options(widget_t *src);
 
 widget_t *create_slot_options(
         window_t *window,
@@ -40,12 +52,19 @@ widget_t *create_slot_options(
         println_error("ERROR: Could not allocate memory when creating the slots widget");
         return NULL;
     }
-
+    data->slots_textures = (SDL_Texture **) malloc((number_of_slots + 1) * sizeof(SDL_Texture *));
+    if (data->slots_textures == NULL) {
+        free(data);
+        free(res);
+        println_error("ERROR: Could not allocate memory when creating the slots widget");
+        return NULL;
+    }
+    // a blank slot without numbering on it.
     blank_slot_surface = SDL_LoadBMP(BLANK_SLOT_PATH);
     if (blank_slot_surface == NULL) {
         goto HANDLE_ERROR;
     }
-
+    // creating all the digits surfaces.
     char *digits_paths[10] = {ZERO_PATH, ONE_PATH, TWO_PATH, THREE_PATH, FOUR_PATH, FIVE_PATH, SIX_PATH, SEVEN_PATH,
                               EIGHT_PATH, NINE_PATH};
     for (int i = 0; i < 10; i++) {
@@ -55,7 +74,7 @@ widget_t *create_slot_options(
         }
     }
 
-
+    //this is the surface we copy the blank surface into and then the relevant digits surfaces depend on the index.
     numbered_slot_surface = SDL_CreateRGBSurface(0, SLOT_WIDTH, SLOT_HEIGHT, 32, 0, 0, 0, 0);
     if (numbered_slot_surface == NULL) {
         goto HANDLE_ERROR;
@@ -67,7 +86,7 @@ widget_t *create_slot_options(
     slot_rect_dst.y = 0;
     slot_rect_dst.w = SLOT_WIDTH;
     slot_rect_dst.h = SLOT_HEIGHT;
-    data->slots_textures = (SDL_Texture **) malloc((number_of_slots + 1) * sizeof(SDL_Texture *));
+    //this loop will fill the data->slots_textures with numbered textures.
     for (int slot_index = 0; slot_index < number_of_slots; slot_index++) {
         if (SDL_BlitSurface(blank_slot_surface, NULL, numbered_slot_surface, &slot_rect_dst) < 0) {
             goto HANDLE_ERROR;
@@ -175,8 +194,6 @@ widget_t *create_slot_options(
     data->arrow_down_location.y = y_pos + ARROWS_HEIGHT;
     data->arrow_down_location.w = ARROWS_WIDTH;
     data->arrow_down_location.h = ARROWS_HEIGHT;
-
-    //TO-DO: check for saved games
 
     data->num_of_slots = number_of_slots;
     data->arrow_up_tex = arrow_up_texture;

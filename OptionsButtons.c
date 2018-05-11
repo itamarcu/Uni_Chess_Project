@@ -1,10 +1,22 @@
 #include "OptionsButtons.h"
 #include "Button.h"
 
+/**
+ * destroy all the relevant data in options_button widget.
+ * @param src widget containing options_buttons_t* as its data.
+ */
 void destroy_options_buttons(widget_t *src);
 
+/**
+ * handle options_buttons widget event.
+ * @param src widget containing options_buttons_t* as its data.
+ */
 void handle_options_buttons_event(widget_t *src, SDL_Event *e);
 
+/**
+ * draw options_buttons widget. drawing all of its buttons.
+ * @param src widget containing options_buttons_t* as its data.
+ */
 void draw_options_buttons(widget_t *src);
 
 widget_t *create_options_buttons(window_t *window, Game *game, widget_t **buttons, int num_of_buttons) {
