@@ -54,11 +54,10 @@
 #define PICK_SLOT_WINDOW_TEXTURES 3
 #define PICK_SLOT_WINDOW_WIDGETS 2
 
-
 #define GAME_WINDOW_HEIGHT 800
 #define GAME_BOARD_HEIGHT 700
 #define GAME_WINDOW_TEXTURES 1
-#define GAME_WINDOW_WIDGETS 8
+#define GAME_WINDOW_WIDGETS 7 // the game_gui and 6 buttons.
 #define DEFAULT_GAME_BUTTON_WIDTH 180
 #define DEFAULT_GAME_BUTTON_HEIGHT 50
 #define UNDO_MOVE_BUTTON_PATH "..\\pictures\\button_undo-move.bmp"
@@ -69,9 +68,11 @@
 #define RESTART_BUTTON_PATH "..\\pictures\\button_restart.bmp"
 
 
+
 void GUI_main_loop(Game *game);
 
 void handle_events_and_draw(window_t *current_window, GAME_WINDOW *curr_window, windows_t *windows);
+
 
 void build_main_menu(Game *game, windows_t *windows);
 
@@ -81,11 +82,13 @@ void load_button_main_menu_action(widget_t *widget);
 
 void quit_button_action(widget_t *widget);
 
+
 void build_game_mode_window(Game *game, windows_t *windows);
 
 void one_player_button_action(widget_t *widget);
 
 void two_players_button_action(widget_t *widget);
+
 
 void build_one_player_options_window(Game *game, windows_t *windows);
 
@@ -103,9 +106,11 @@ void white_button_action(widget_t *widget);
 
 void black_button_action(widget_t *widget);
 
+
 void build_pick_slot_window(Game *game, windows_t *windows);
 
 void save_load_game_slots_action(widget_t *src, int clicked_index);
+
 
 void build_game_window(Game *game, windows_t *windows);
 
@@ -118,4 +123,6 @@ void load_button_game_action(widget_t *widget);
 void restart_button_action(widget_t *widget);
 
 void show_unsaved_game_box_message(widget_t *widget);
+
+
 #endif //UNI_CHESS_PROJECT_GUI_H

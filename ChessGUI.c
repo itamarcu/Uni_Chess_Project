@@ -369,25 +369,20 @@ void build_pick_slot_window(Game *game, windows_t *windows) {
 }
 
 void save_load_game_slots_action(widget_t *src, int clicked_index) {
+    char *error_message = "There was an error trying to save the game, please try again";
     slot_options_t *slot_options = (slot_options_t *) src->data;
-    char slot_num_str[10];
+    if (slot_options->is_loading_mode)
+        error_message = "There was an error trying to load the game, please try again";
     char full_path[30];
-    if (sprintf(slot_num_str, "%d", clicked_index + 1) < 0) {
-        return; // TO-DO fatal error to handle.
-    }
-    if (sprintf(full_path, "%s%s.save", GAME_SLOTS_PATH, slot_num_str) < 0) {
-        return; // TO-DO fatal error to handle.
+    if (sprintf(full_path, "%s%d.save", GAME_SLOTS_PATH, clicked_index + 1) < 0) {
+        goto HANDLE_ERROR;
     }
     if (slot_options->is_loading_mode) {
         if (slot_options->is_saved_slots[clicked_index]) {
             start_game(src->game);
             src->window->windows->game_window->widgets[1]->is_disabled = true;
             if (load_game_from_path(src->game, full_path) == false) {
-                //should call something to update the history according to the current board state.
-                if (show_error_message_box(src->window,
-                                           "There was an error trying to load the game, please try again") < 0) {
-                    return; // TO-DO fatal error to handle.
-                }
+                goto HANDLE_ERROR;
             } else {
                 free_history(src->game->history);
                 src->game->history = malloc(sizeof(History));
@@ -402,14 +397,19 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
     } else { // saving a game
         // check if the slot is not disables because there is not saved game in the slot
         if (save_game_to_path(src->game, full_path) == false) {
-            if (show_error_message_box(src->window, "There was an error trying to save the game, please try again") < 0)
-                return; // TO-DO fatal error to handle.
-
+            goto HANDLE_ERROR;
         } else {
             src->game->is_saved = true;
             slot_options->is_saved_slots[clicked_index] = true;
             switch_to_next_window_action(src);
         }
+    }
+    return;
+
+    HANDLE_ERROR:
+    if (show_error_message_box(src->window, error_message) < 0) {
+        println_error(error_message);
+        println_error("There was an error trying display error message box");
     }
 }
 
@@ -484,20 +484,6 @@ void build_game_window(Game *game, windows_t *windows) {
     add_widget_to_window(game_window, restart_button);
     add_widget_to_window(game_window, main_menu_button);
     add_widget_to_window(game_window, quit_button);
-    //add_back_button_to_window(game_window, game);
-
-//    SDL_Rect *user_color_tex_rect = (SDL_Rect *) malloc(sizeof(SDL_Rect));
-//    user_color_tex_rect->x = diff_level_tex_rect->x;
-//    user_color_tex_rect->y = diff_level_tex_rect->y + 2 * OPTIONS_WINDOW_DEFAULT_TEX_HEIGHT;
-//    user_color_tex_rect->w = OPTIONS_WINDOW_DEFAULT_TEX_WIDTH;
-//    user_color_tex_rect->h = OPTIONS_WINDOW_DEFAULT_TEX_HEIGHT;
-//    SDL_Texture *user_color_tex;
-//    if((user_color_tex = create_texture_from_path(USER_COLOR_TEX_PATH, game_window->renderer)) == NULL)
-//    {
-//        destroy_window(game_window);
-//        return;
-//    }
-//    add_texture_to_window(game_window, user_color_tex, user_color_tex_rect);
 
 }
 
@@ -565,19 +551,20 @@ void show_unsaved_game_box_message(widget_t *widget) {
                 if (after_save_window == NULL) {
                     widget->window->next_window_frame = QUIT;
                 } else {
-                    // after_save_window should be main menu
+                    // after save window should be main menu
                     switch_window_and_change_prev_window_action(widget);
                 }
                 break;
             default:
-                //error displaying the box.
+                println_error(
+                        "There was an error trying display a message box when clicking on the button, please try again");
                 break;
         }
     } else {
         if (after_save_window == NULL) {
             widget->window->next_window_frame = QUIT;
         } else {
-            // after_save_window should be main menu
+            // after save window should be main menu
             switch_window_and_change_prev_window_action(widget);
         }
     }

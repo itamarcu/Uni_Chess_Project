@@ -9,19 +9,19 @@ widget_t *create_button(
         void (*action)(widget_t *src)) {
     widget_t *res = (widget_t *) malloc(sizeof(widget_t));
     if (res == NULL)
-        return NULL;
+        goto PRINT_ERROR_RETURN_NULL;
 
     button_t *data = (button_t *) malloc(sizeof(button_t));
     if (data == NULL) {
         free(res);
-        return NULL;
+        goto PRINT_ERROR_RETURN_NULL;
     }
 
     SDL_Surface *surface = SDL_LoadBMP(image);
     if (surface == NULL) {
         free(data);
         free(res);
-        return NULL;
+        goto PRINT_ERROR_RETURN_NULL;
     }
     SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 255, 255, 255));
     SDL_Texture *texture = SDL_CreateTextureFromSurface(window->renderer, surface);
@@ -29,7 +29,7 @@ widget_t *create_button(
         SDL_FreeSurface(surface);
         free(data);
         free(res);
-        return NULL;
+        goto PRINT_ERROR_RETURN_NULL;
     }
 
     // surface is not needed after texture is created
@@ -50,6 +50,11 @@ widget_t *create_button(
     res->handle_event = handle_button_event;
     res->data = data;
     return res;
+
+    PRINT_ERROR_RETURN_NULL:
+
+    println_error("ERROR: problem occurred when trying to create a button");
+    return NULL;
 }
 
 void destroy_button(widget_t *src) {

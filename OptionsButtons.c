@@ -3,12 +3,12 @@
 widget_t *create_options_buttons(window_t *window, Game *game, widget_t **buttons, int num_of_buttons) {
     widget_t *res = (widget_t *) malloc(sizeof(widget_t));
     if (res == NULL)
-        return NULL;
+        goto PRINT_ERROR_RETURN_NULL;
 
     options_buttons_t *data = (options_buttons_t *) malloc(sizeof(options_buttons_t));
     if (data == NULL) {
         free(res);
-        return NULL;
+        goto PRINT_ERROR_RETURN_NULL;
     }
     res->window = window;
     res->game = game;
@@ -20,6 +20,12 @@ widget_t *create_options_buttons(window_t *window, Game *game, widget_t **button
     data->num_of_buttons = num_of_buttons;
     data->current_pushed_button = 0;
     return res;
+
+    PRINT_ERROR_RETURN_NULL:
+
+    println_error("ERROR: problem occurred when trying to create the buttons options widget");
+    return NULL;
+
 }
 
 void destroy_options_buttons(widget_t *src) {

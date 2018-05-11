@@ -4,10 +4,19 @@
 #include <SDL.h>
 #include <SDL_video.h>
 #include "GUIStructs.h"
-//#include "widget_t.h"
 
 #define ALPHA_FACTOR_MOUSE_OVER 170
 
+/**
+ *
+ * @param window
+ * @param game
+ * @param image
+ * @param location
+ * @param next_window
+ * @param action
+ * @return
+ */
 widget_t *create_button(
         window_t *window,
         Game *game,

@@ -33,16 +33,16 @@ widget_t *create_slot_options(
 
     res = (widget_t *) malloc(sizeof(widget_t));
     if (res == NULL)
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
 
     data = (slot_options_t *) malloc(sizeof(slot_options_t));
     if (data == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
 
     blank_slot_surface = SDL_LoadBMP(BLANK_SLOT_PATH);
     if (blank_slot_surface == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
 
     char *digits_paths[10] = {ZERO_PATH, ONE_PATH, TWO_PATH, THREE_PATH, FOUR_PATH, FIVE_PATH, SIX_PATH, SEVEN_PATH,
@@ -50,14 +50,14 @@ widget_t *create_slot_options(
     for (int i = 0; i < 10; i++) {
         digits_surfaces[i] = SDL_LoadBMP(digits_paths[i]);
         if (digits_surfaces[i] == NULL) {
-            goto FREE_ON_ERROR;
+            goto HANDLE_ERROR;
         }
     }
 
 
     numbered_slot_surface = SDL_CreateRGBSurface(0, SLOT_WIDTH, SLOT_HEIGHT, 32, 0, 0, 0, 0);
     if (numbered_slot_surface == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
 
     Uint32 map_rgb = SDL_MapRGB(blank_slot_surface->format, 250, 250, 250); //same format for all surfaces
@@ -69,7 +69,7 @@ widget_t *create_slot_options(
     data->slots_textures = (SDL_Texture **) malloc((number_of_slots + 1) * sizeof(SDL_Texture *));
     for (int slot_index = 0; slot_index < number_of_slots; slot_index++) {
         if (SDL_BlitSurface(blank_slot_surface, NULL, numbered_slot_surface, &slot_rect_dst) < 0) {
-            goto FREE_ON_ERROR;
+            goto HANDLE_ERROR;
         }
         int next_digit_x = NUMBERS_X_ON_SLOT;
         int slot_number = slot_index + 1;
@@ -88,7 +88,7 @@ widget_t *create_slot_options(
             digit_dst_rect.h = digits_surfaces[digit]->h;
             next_digit_x += digit_dst_rect.w;
             if (SDL_BlitSurface(digits_surfaces[digit], NULL, numbered_slot_surface, &digit_dst_rect) < 0) {
-                goto FREE_ON_ERROR;
+                goto HANDLE_ERROR;
             }
             slot_number = slot_number - (pow_2(10, num_of_digits - 1)) * digit;
             if (num_of_digits == 1)
@@ -99,7 +99,7 @@ widget_t *create_slot_options(
         SDL_SetColorKey(numbered_slot_surface, SDL_TRUE, map_rgb);
         data->slots_textures[slot_index] = SDL_CreateTextureFromSurface(window->renderer, numbered_slot_surface);
         if (data->slots_textures[slot_index] == NULL) {
-            goto FREE_ON_ERROR;
+            goto HANDLE_ERROR;
         }
     }
 
@@ -111,38 +111,38 @@ widget_t *create_slot_options(
 
     arrow_up_surface = SDL_LoadBMP(ARROW_UP_PATH);
     if (arrow_up_surface == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
     SDL_SetColorKey(arrow_up_surface, SDL_TRUE, map_rgb);
     arrow_up_texture = SDL_CreateTextureFromSurface(window->renderer, arrow_up_surface);
     if (arrow_up_texture == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
     SDL_FreeSurface(arrow_up_surface);
 
     arrow_down_surface = SDL_LoadBMP(ARROW_DOWN_PATH);
     if (arrow_down_surface == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
     SDL_SetColorKey(arrow_down_surface, SDL_TRUE, map_rgb);
     arrow_down_texture = SDL_CreateTextureFromSurface(window->renderer, arrow_down_surface);
     if (arrow_down_texture == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
     SDL_FreeSurface(arrow_down_surface);
 
     data->is_saved_slots = (bool *) calloc((size_t) number_of_slots + 1, sizeof(bool));
     if (data->is_saved_slots == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
     char slot_num_str[10];
     char full_path[30];
     for (int l = 0; l < number_of_slots; ++l) {
         if (sprintf(slot_num_str, "%d", l + 1) < 0) {
-            goto FREE_ON_ERROR;
+            goto HANDLE_ERROR;
         }
         if (sprintf(full_path, "%s%s.save", GAME_SLOTS_PATH, slot_num_str) < 0) {
-            goto FREE_ON_ERROR;
+            goto HANDLE_ERROR;
         }
         if (does_file_exist(full_path) && !is_file_empty(full_path))
             data->is_saved_slots[l] = true;
@@ -150,13 +150,13 @@ widget_t *create_slot_options(
             FILE *f = fopen(full_path, "w");
             if (f == NULL) {
                 fclose(f);
-                goto FREE_ON_ERROR;
+                goto HANDLE_ERROR;
             }
         }
     }
     data->current_slots_alpha_factor = (Uint8 *) calloc((size_t) number_of_slots + 1, sizeof(int));
     if (data->current_slots_alpha_factor == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
     for (int k = 0; k < number_of_slots; k++) {
         data->current_slots_alpha_factor[k] = 255;
@@ -191,7 +191,8 @@ widget_t *create_slot_options(
     res->data = data;
     return res;
 
-    FREE_ON_ERROR:
+    HANDLE_ERROR:
+    println_error("ERROR: problem occurred when trying to create the slots widget");
     if (data != NULL) {
         free(data->current_slots_alpha_factor);
         free(data->is_saved_slots);

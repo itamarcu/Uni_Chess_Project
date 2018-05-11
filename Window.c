@@ -67,12 +67,13 @@ void draw_window(window_t *src) {
 SDL_Texture *create_texture_from_path(char *tex_path, SDL_Renderer *rend) {
     SDL_Surface *surface = SDL_LoadBMP(tex_path);
     if (surface == NULL) {
-//        printf("ERROR: unable to load image: %s\n", SDL_GetError());
+        println_error("ERROR: unable to load image: %s", SDL_GetError());
         return NULL;
     }
     SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 255, 255, 255));
     SDL_Texture *texture = SDL_CreateTextureFromSurface(rend, surface);
     if (texture == NULL) {
+        println_error("ERROR: unable to create texture from surface: %s", SDL_GetError());
         SDL_FreeSurface(surface);
         return NULL;
     }
@@ -91,7 +92,7 @@ void add_widget_to_window(window_t *src, widget_t *widget) {
     src->num_of_widgets++;
 }
 
-void add_chess_BG_and_title(window_t *src, char *title_path) {
+int add_chess_BG_and_title(window_t *src, char *title_path) {
     SDL_Renderer *rend = src->renderer;
     SDL_SetRenderDrawBlendMode(rend, SDL_BLENDMODE_BLEND);
 
@@ -99,14 +100,14 @@ void add_chess_BG_and_title(window_t *src, char *title_path) {
     if (background_surface == NULL) {
         printf("ERROR: unable to load image: %s\n", SDL_GetError());
         destroy_window(src);
-        return;
+        return -1;
     }
     SDL_Texture *background_texture = SDL_CreateTextureFromSurface(rend, background_surface);
     if (background_texture == NULL) {
         printf("ERROR: unable to create texture: %s\n", SDL_GetError());
         SDL_FreeSurface(background_surface);
         destroy_window(src);
-        return;
+        return -1;
     }
     SDL_FreeSurface(background_surface);
     SDL_Texture *title_texture;
@@ -114,7 +115,7 @@ void add_chess_BG_and_title(window_t *src, char *title_path) {
         printf("ERROR: unable to create texture: %s\n", SDL_GetError());
         SDL_DestroyTexture(background_texture);
         destroy_window(src);
-        return;
+        return -1;
     }
 
     SDL_Rect *title_rect = (SDL_Rect *) malloc(sizeof(SDL_Rect));
@@ -127,6 +128,7 @@ void add_chess_BG_and_title(window_t *src, char *title_path) {
 
     add_texture_to_window(src, background_texture, NULL);
     add_texture_to_window(src, title_texture, title_rect);
+    return 0;
 }
 
 window_t *create_empty_centered_window(int window_width, int window_height, int num_of_textures, int num_of_widgets,
@@ -166,7 +168,7 @@ window_t *create_empty_centered_window(int window_width, int window_height, int 
     return window;
 }
 
-void add_back_button_to_window(window_t *window, Game *game) {
+int add_back_button_to_window(window_t *window, Game *game) {
     SDL_Rect new_game_button_rect;
     new_game_button_rect.x = 0;
     new_game_button_rect.y = window->height - DEFAULT_BACK_BUTTON_HEIGHT;
@@ -174,7 +176,12 @@ void add_back_button_to_window(window_t *window, Game *game) {
     new_game_button_rect.h = DEFAULT_BACK_BUTTON_HEIGHT;
     widget_t *back_button = create_button(window, game, DEFAULT_BACK_BUTTON_PATH,
                                           new_game_button_rect, NULL, switch_to_prev_window_action);
+    if (back_button == NULL) {
+        println_error("ERROR: unable to add the button to the window");
+        return -1;
+    }
     add_widget_to_window(window, back_button);
+    return 0;
 }
 
 void show_window_at_pos(window_t *next_window, int window_posX, int window_posY) {

@@ -12,23 +12,22 @@ widget_t *create_game_gui(window_t *window, Game *game) {
     widget_t *res = 0;
     game_gui_t *data = 0;
 
-
     res = (widget_t *) malloc(sizeof(widget_t));
     if (res == NULL)
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
 
     data = (game_gui_t *) calloc(1, sizeof(game_gui_t)); // every bool field is false (calloc put 0)
     if (data == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
     SDL_Surface *BG_surface = SDL_LoadBMP(DEFAULT_BG_PATH);
     if (BG_surface == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
     data->board_BG = SDL_CreateTextureFromSurface(window->renderer, BG_surface);
     if (data->board_BG == NULL) {
         SDL_FreeSurface(BG_surface);
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
     data->board_dst_rect.x = 0;
     data->board_dst_rect.y = 0;
@@ -37,27 +36,27 @@ widget_t *create_game_gui(window_t *window, Game *game) {
 
     data->standard_square = create_texture_from_path(STANDARD_SQUARE_PATH, window->renderer);
     if (data->standard_square == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
     data->threatened_square = create_texture_from_path(THREATENED_SQUARE_PATH, window->renderer);
     if (data->threatened_square == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
     data->capture_square = create_texture_from_path(CAPTURE_SQUARE_PATH, window->renderer);
     if (data->capture_square == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
     data->threatened_capture_square = create_texture_from_path(THREATENED_CAPTURE_SQUARE_PATH, window->renderer);
     if (data->threatened_capture_square == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
     data->focused_square = create_texture_from_path(FOCUSED_SQUARE_PATH, window->renderer);
     if (data->focused_square == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
     data->focused_square_enemy = create_texture_from_path(FOCUSED_SQUARE_ENEMY_PATH, window->renderer);
     if (data->focused_square_enemy == NULL) {
-        goto FREE_ON_ERROR;
+        goto HANDLE_ERROR;
     }
     char *pieces_paths[12] = {BLACK_BISHOP_PATH, BLACK_KING_PATH,
                               BLACK_KNIGHT_PATH, BLACK_PAWN_PATH,
@@ -68,7 +67,7 @@ widget_t *create_game_gui(window_t *window, Game *game) {
     for (int i = 0; i < 12; i++) {
         data->pieces[i] = create_texture_from_path(pieces_paths[i], window->renderer);
         if (data->pieces[i] == NULL) {
-            goto FREE_ON_ERROR;
+            goto HANDLE_ERROR;
         }
     }
     update_game_gui_board(data, game);
@@ -99,7 +98,8 @@ widget_t *create_game_gui(window_t *window, Game *game) {
     res->data = data;
     return res;
 
-    FREE_ON_ERROR:
+    HANDLE_ERROR:
+    println_error("ERROR: problem occurred when trying to create the graphical game board");
     if (data != NULL) {
         for (int i = 11; i >= 0; i--) {
             SDL_DestroyTexture(data->pieces[i]);
