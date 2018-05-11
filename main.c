@@ -6,6 +6,7 @@
 
 int main(int argc, char *argv[]) {
     DEBUG_MODE = false;
+    NO_MESSAGE_BOX_MODE = false;
     init_scoring_function();
 
     Game *game = malloc(sizeof(Game));
@@ -22,6 +23,10 @@ int main(int argc, char *argv[]) {
     } else if (strcmp(argv[1], "-g") == 0) //graphic mode
     {
         game->program_mode = PROGRAM_MODE_GRAPHICAL;
+    } else if (strcmp(argv[1], "-m") == 0) //graphic mode with no message boxes
+    {
+        game->program_mode = PROGRAM_MODE_GRAPHICAL;
+        NO_MESSAGE_BOX_MODE = true;
     }
     if (argc >= 3)
         if (strcmp(argv[2], "-d") == 0 || strcmp(argv[2], "--debug") == 0) {

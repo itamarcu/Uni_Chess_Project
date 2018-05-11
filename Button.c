@@ -114,6 +114,7 @@ void switch_to_next_window_action(widget_t *widget) {
         widget->window->next_window->prev_window = widget->window->window_enum_val;
     } else
         widget->window->next_window_frame = QUIT;
+
 }
 
 void switch_to_prev_window_action(widget_t *widget) {

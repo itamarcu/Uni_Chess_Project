@@ -147,7 +147,6 @@ widget_t *create_slot_options(
         else {
             FILE *f = fopen(full_path, "w");
             if (f == NULL) {
-                fclose(f);
                 goto HANDLE_ERROR;
             }
         }

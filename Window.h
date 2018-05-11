@@ -37,8 +37,8 @@ int add_back_button_to_window(window_t *window, Game *game);
 void show_window_at_pos(window_t *next_window, int window_posX, int window_posY);
 
 int show_message_box(window_t *window, SDL_MessageBoxButtonData *buttons, int num_of_buttons, const char *box_title,
-                     const char *message);
+                     const char *message, int default_option);
 
-int show_error_message_box(window_t *window, const char *message);
+int show_error_message_box(window_t *window, const char *message, int default_option);
 
 #endif /* WINDOW_H_ */

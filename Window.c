@@ -147,8 +147,11 @@ window_t *create_empty_centered_window(int window_width, int window_height, int 
     SDL_HideWindow(window->window);
     window->height = window_height;
     window->width = window_width;
+
+    // using SDL_RENDERER_ACCELERATED instead of SDL_RENDERER_SOFTWARE is malfunctioning on the VM
     window->renderer = SDL_CreateRenderer(window->window, -1,
-                                          SDL_RENDERER_SOFTWARE); // need to check if should add SDL_RENDERER_ACCELERATED or SDL_RENDERER_SOFTWARE (should match settings in the VM)
+                                          SDL_RENDERER_SOFTWARE);
+
     if (window->renderer == NULL) {
         println_error("ERROR: unable to create renderer: %s\n", SDL_GetError());
         SDL_DestroyWindow(window->window);
@@ -190,7 +193,9 @@ void show_window_at_pos(window_t *next_window, int window_posX, int window_posY)
 }
 
 int show_message_box(window_t *window, SDL_MessageBoxButtonData buttons[], int num_of_buttons, const char *box_title,
-                     const char *message) {
+                     const char *message, int default_option) {
+    if (NO_MESSAGE_BOX_MODE)
+        return default_option;
     const SDL_MessageBoxColorScheme colorScheme = {
             { /* .colors (.r, .g, .b) */
                     /* [SDL_MESSAGEBOX_COLOR_BACKGROUND] */
@@ -216,10 +221,16 @@ int show_message_box(window_t *window, SDL_MessageBoxButtonData buttons[], int n
     };
 
     int buttonid;
+
+    // ---BUG HERE---
+//    println_output("Calling SDL_ShowMessageBox now...");
     if (SDL_ShowMessageBox(&messageboxdata, &buttonid) < 0) {
         println_error("error displaying message box");
         return -1;
     }
+//    println_output("Returned from SDL_ShowMessageBox :)");
+
+
     if (buttonid == -1) {
         return 0;
     } else {
@@ -227,10 +238,10 @@ int show_message_box(window_t *window, SDL_MessageBoxButtonData buttons[], int n
     }
 }
 
-int show_error_message_box(window_t *window, const char *message) {
+int show_error_message_box(window_t *window, const char *message, int default_option) {
     println_error(message);
     SDL_MessageBoxButtonData buttons[] = {
             {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "OK"}
     };
-    return show_message_box(window, buttons, 1, "ERROR", message);
+    return show_message_box(window, buttons, 1, "ERROR", message, default_option);
 }

@@ -21,6 +21,7 @@
 #define PICTURES_DIRECTORY "pictures"
 
 bool DEBUG_MODE;
+bool NO_MESSAGE_BOX_MODE;
 
 typedef enum {
     SUCCESS,

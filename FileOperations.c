@@ -268,7 +268,6 @@ bool load_game_from_path(Game *game, char *path) {
 bool does_file_exist(char *path) {
     FILE *f = fopen(path, "r");
     if (f == NULL) {
-        fclose(f);
         return false;
     }
     fclose(f);
