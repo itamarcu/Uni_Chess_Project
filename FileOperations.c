@@ -1,5 +1,6 @@
 #include "FileOperations.h"
 #include "Auxiliary.h"
+#include "ChessGameLogic.h"
 
 bool save_game_to_path(Game *game, char *path) {
 
@@ -111,6 +112,9 @@ bool load_game_from_path(Game *game, char *path) {
     if (f == NULL) {
         return false;
     }
+
+    start_game(game);
+
     char color[MAX_FILE_ROW_SIZE] = {0};
     if (fgets(color, MAX_FILE_ROW_SIZE, f) == NULL) {
         goto HANDLE_ERROR;

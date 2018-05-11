@@ -5,6 +5,7 @@
 #include "ChessGUI.h"
 
 int main(int argc, char *argv[]) {
+    DEBUG_MODE = false;
     init_scoring_function();
 
     Game *game = malloc(sizeof(*game));
@@ -18,6 +19,10 @@ int main(int argc, char *argv[]) {
     {
         game->program_mode = PROGRAM_MODE_GRAPHICAL;
     }
+    if (argc >= 3)
+        if (strcmp(argv[2], "-d") == 0 || strcmp(argv[2], "--debug") == 0) {
+            DEBUG_MODE = true;
+        }
 
     reset_default_settings(game);
     game->board = NULL;

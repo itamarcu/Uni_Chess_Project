@@ -72,8 +72,8 @@ void CUI_settings_case(Game *game) {
                 println_output("User color is set to %s", color_string(game->user_color));
                 break;
             case CMD_LOAD:
-                if (command->valid_path && load_game_from_path(game, command->path) == false)
-                    println_error_weak("ERROR: could not load the game from the specified path, please try again");
+                if (load_game_from_path(game, command->path) == false)
+                    println_error_weak("Error: File doesn’t exist or cannot be opened");
                 break;
             case CMD_DEFAULT:
                 reset_default_settings(game);
@@ -195,7 +195,9 @@ void CUI_game_case(Game *game) {
                     case CMD_SAVE:
                         if (save_game_to_path(game, command->path) == false)
                             println_error_weak(
-                                    "ERROR: could not save the game to the specified path, please try again");
+                                    "File cannot be created or modified");
+                        else
+                            println_output("Game saved to: %s", command->path);
                         break;
                     case CMD_UNDO:
                         switch (undo_move(game)) {

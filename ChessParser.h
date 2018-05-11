@@ -32,7 +32,6 @@ typedef enum {
 //args gets maximum 4 numbers in move command - r1,c1,r2,c2 (c1 = 0 for Column A for example)
 typedef struct command_t {
     bool valid_command;
-    bool valid_path;
     GAME_COMMAND game_command;
     SETTINGS_COMMAND settings_command;
     int args[4];

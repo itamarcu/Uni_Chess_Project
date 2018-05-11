@@ -1,5 +1,5 @@
 #include "ChessParser.h"
-#include "FileOperations.h"
+#include <string.h>
 
 char *strdup_2(char *src) {
     char *ret = malloc(strlen(src) + 1);
@@ -92,7 +92,6 @@ Command *cmd_load(Command *command) {
     char *arg_string = strtok(NULL, " \r\t\n");
     if (arg_string != NULL) {
         command->path = strdup_2(arg_string);
-        command->valid_path = does_file_exist(command->path);
     } else command->valid_command = false;
     return command;
 }
@@ -102,7 +101,6 @@ Command *cmd_save(Command *command) {
     char *arg_string = strtok(NULL, " \r\t\n");
     if (arg_string != NULL) {
         command->path = strdup_2(arg_string);
-        command->valid_path = does_file_exist(command->path);
     } else command->valid_command = false;
     return command;
 }

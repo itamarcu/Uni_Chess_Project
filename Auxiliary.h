@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-#define DEBUG_MODE false
 #define NULL_CHAR '\0'
 
 #define WHITE 1
@@ -21,6 +20,7 @@
 
 #define PICTURES_DIRECTORY "pictures"
 
+bool DEBUG_MODE;
 
 typedef enum {
     SUCCESS,
