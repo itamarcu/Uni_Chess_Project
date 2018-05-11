@@ -37,12 +37,22 @@
 #define FIRST_PIECE_X_Y 28
 #define PIECE_DEST_W_H 64
 
+/**
+ * Creates the GUI widget for the game window.
+ * @return pointer to widget (to be freed by caller)
+ */
 widget_t *create_game_gui(
         window_t *window,
         Game *game);
 
+/**
+ * Resets game GUI so that there is no selected piece, no highlights, etc.
+ */
 void reset_game_gui(game_gui_t *game_gui, Game *game);
 
+/**
+ * Special-case function - will make the computer's first move when the game is loaded, if needed.
+ */
 void maybe_make_first_computer_turn(Game *game, game_gui_t *game_gui, window_t *window);
 
 
