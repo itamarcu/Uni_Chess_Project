@@ -66,14 +66,14 @@ void draw_window(window_t *src) {
     SDL_Delay(10);
 }
 
-SDL_Texture *create_texture_from_path(char *tex_path, SDL_Renderer *rend) {
-    SDL_Surface *surface = SDL_LoadBMP(tex_path);
+SDL_Texture *create_texture_from_path(char *texture_path, SDL_Renderer *renderer) {
+    SDL_Surface *surface = SDL_LoadBMP(texture_path);
     if (surface == NULL) {
         println_error("ERROR: unable to load image: %s", SDL_GetError());
         return NULL;
     }
     SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 255, 255, 255));
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(rend, surface);
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
     if (texture == NULL) {
         println_error("ERROR: unable to create texture from surface: %s", SDL_GetError());
         SDL_FreeSurface(surface);
@@ -94,7 +94,7 @@ void add_widget_to_window(window_t *src, widget_t *widget) {
     src->num_of_widgets++;
 }
 
-int add_chess_BG_and_title(window_t *src, char *title_path) {
+int add_chess_BG_and_title(window_t *src, char *title_image_path) {
     SDL_Renderer *rend = src->renderer;
     SDL_SetRenderDrawBlendMode(rend, SDL_BLENDMODE_BLEND);
 
@@ -111,7 +111,7 @@ int add_chess_BG_and_title(window_t *src, char *title_path) {
     }
     SDL_FreeSurface(background_surface);
     SDL_Texture *title_texture;
-    if ((title_texture = create_texture_from_path(title_path, rend)) == NULL) {
+    if ((title_texture = create_texture_from_path(title_image_path, rend)) == NULL) {
         SDL_DestroyTexture(background_texture);
         return -1;
     }
@@ -238,10 +238,10 @@ int show_message_box(window_t *window, SDL_MessageBoxButtonData buttons[], int n
     }
 }
 
-int show_error_message_box(window_t *window, const char *message, int default_option) {
+int show_error_message_box(window_t *window, const char *message) {
     println_error(message);
     SDL_MessageBoxButtonData buttons[] = {
             {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "OK"}
     };
-    return show_message_box(window, buttons, 1, "ERROR", message, default_option);
+    return show_message_box(window, buttons, 1, "ERROR", message, 1);
 }

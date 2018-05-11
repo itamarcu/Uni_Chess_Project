@@ -654,7 +654,7 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
     return;
 
     HANDLE_ERROR:
-    if (show_error_message_box(src->window, error_message, 0) < 0) {
+    if (show_error_message_box(src->window, error_message) < 0) {
         println_error(error_message);
         println_error("There was an error trying display error message box");
     }
@@ -761,7 +761,7 @@ void undo_button_action(widget_t *widget) {
             }
             break;
         case EMPTY_HISTORY:
-            show_error_message_box(widget->window, "ERROR: Empty history, no move to undo", 0);
+            show_error_message_box(widget->window, "ERROR: Empty history, no move to undo");
             break;
         default:
             println_error("Unexpected enum value after using cmd_undo");
