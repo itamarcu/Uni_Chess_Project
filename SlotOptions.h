@@ -28,11 +28,19 @@
 #define ARROWS_WIDTH 40
 #define ARROWS_HEIGHT 150
 #define SLOT_OPTIONS_WIDTH 220
-#define SLOT_OPTIONS_HEIGHT 300
 #define NUMBERS_X_ON_SLOT 14
 #define NUMBERS_Y_ON_SLOT 14
 #define NUMBER_OF_DRAWN_SLOTS 5
 
+/**
+ * creating a widget containing slot_options_t * as its data.
+ * using all the digits from 0 - 9 pictures as surfaces and creating all the textures needed for the slots.
+ * @param number_of_slots the total number of slots that can be used. assuming number_of_slots > 0;
+ * @param x_pos the position in x axis of the first slot drawn on window.
+ * @param y_pos the position in y axis of the first slot drawn on window.
+ * @param action the action to make when clicking on one of the slot, when they are not disabled.
+ * @return a pointer to the widget containing slot_options_t * as its data. returns NULL on error.
+ */
 widget_t *create_slot_options(
         window_t *window,
         Game *game,

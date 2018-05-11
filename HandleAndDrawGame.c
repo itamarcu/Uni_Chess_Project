@@ -7,11 +7,13 @@ void update_game_gui_board(game_gui_t *game_gui, Game *game);
 
 /**
  * destroying the game_gui widget.
+ * @param src pointer to a widget containing game_gui_t as its data.
  */
 void destroy_game_gui(widget_t *src);
 
 /**
  * handling all the game_gui events - making a move, choosing a piece.
+ * @param src pointer to a widget containing game_gui_t as its data.
  */
 void handle_game_gui_event(widget_t *src, SDL_Event *e);
 
@@ -27,13 +29,18 @@ void fill_highlighted_squares_from_possible_moves(game_gui_t *game_gui, Possible
 
 /**
  * drawing the game_gui widget.
+ * @param src pointer to a widget containing game_gui_t as its data.
  */
 void draw_game_gui(widget_t *src);
-
+/**
+ * return true if CTRL is pressed.
+ */
 bool pressing_auto_move_key() {
     return SDL_GetKeyboardState(NULL)[SDL_SCANCODE_LCTRL];
 }
-
+/**
+ * return true if shift is pressed.
+ */
 bool pressing_double_auto_move_key() {
     return SDL_GetKeyboardState(NULL)[SDL_SCANCODE_LSHIFT];
 }

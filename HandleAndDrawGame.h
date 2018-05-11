@@ -39,7 +39,7 @@
 
 /**
  * Creates the GUI widget for the game window.
- * @return pointer to widget (to be freed by caller)
+ * @return pointer to widget containing game_gui_t as data. return NULL on error.
  */
 widget_t *create_game_gui(
         window_t *window,
