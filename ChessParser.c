@@ -19,12 +19,16 @@ Command *cmd_move(Command *command) {
     char *arg0 = strtok(NULL, " \r\t\n");
     char *arg1 = strtok(NULL, " \r\t\n");
     char *arg2 = strtok(NULL, " \r\t\n");
-    if (arg2 == NULL || strcmp(arg1, "to") != 0
-        || strlen(arg0) != 5 || strlen(arg2) != 5
+    if (arg2 == NULL || strcmp(arg1, "to") != 0) {
+        command->valid_command = false;
+        return command;
+    }
+    if (strlen(arg0) != 5 || strlen(arg2) != 5
         || arg0[0] != '<' || arg2[0] != '<'
         || arg0[2] != ',' || arg2[2] != ','
         || arg0[4] != '>' || arg2[4] != '>') {
-        command->valid_command = false;
+        //Probably an invalid position - instructions were unclear yet frustrating
+        command->args[0] = -1;
         return command;
     }
     command->args[0] = arg0[1] - '1';

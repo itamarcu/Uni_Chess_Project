@@ -38,7 +38,10 @@ GAME_ACTION_RESULT undo_move(Game *game) {
         game->state = GAME_STATE_GAME;
         // Go back 1 move
         undo_one_move(game);
-        if (game->game_mode == GAME_MODE_MULTIPLAYER && game->history->count >= 2) {
+        if ((
+                    game->game_mode == GAME_MODE_MULTIPLAYER ||
+                    game->current_player != (game->user_color == WHITE)
+            ) && game->history->count >= 2) {
             // Go back 2 moves (1 extra)
             undo_one_move(game);
         }
