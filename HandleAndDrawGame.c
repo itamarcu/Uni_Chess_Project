@@ -104,6 +104,8 @@ widget_t *create_game_gui(window_t *window, Game *game) {
         for (int i = 11; i >= 0; i--) {
             SDL_DestroyTexture(data->pieces[i]);
         }
+        SDL_DestroyTexture(data->focused_square_enemy);
+        SDL_DestroyTexture(data->focused_square);
         SDL_DestroyTexture(data->threatened_capture_square);
         SDL_DestroyTexture(data->capture_square);
         SDL_DestroyTexture(data->threatened_square);
@@ -208,19 +210,17 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
                     move_was_made(src->game, move1.r1, move1.c1, move1.r2, move1.c2);
                     ComputerMove move2 = computer_move(src->game);
                     move_was_made(src->game, move2.r1, move2.c1, move2.r2, move2.c2);
-                    draw_game_gui(src);
+                    reset_game_gui(game_gui, src->game);
                     if_end_game_or_check_handle(src->game, src->window);
                     src->game->is_saved = false;
-                    reset_game_gui(game_gui, src->game);
                     break;
                 }
                 if (pressing_auto_move_key()) {
                     ComputerMove move = computer_move(src->game);
                     move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
-                    draw_game_gui(src);
+                    reset_game_gui(game_gui, src->game);
                     if_end_game_or_check_handle(src->game, src->window);
                     src->game->is_saved = false;
-                    reset_game_gui(game_gui, src->game);
                     break;
                 }
                 for (int i = 0; i < 8; ++i) {
@@ -244,17 +244,16 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
                                 return;
                             }
                             move_was_made(src->game, game_gui->focused_piece_row, game_gui->focused_piece_col, i, j);
-                            draw_game_gui(src);
+                            reset_game_gui(game_gui, src->game);
                             if_end_game_or_check_handle(src->game, src->window);
                             if (src->game->state == GAME_STATE_GAME && src->game->game_mode == GAME_MODE_SINGLEPLAYER) {
                                 ComputerMove move = computer_move(src->game);
                                 move_was_made(src->game, move.r1, move.c1, move.r2, move.c2);
-                                draw_game_gui(src);
+                                reset_game_gui(game_gui, src->game);
                                 if_end_game_or_check_handle(src->game, src->window);
                             }
 
                             src->game->is_saved = false;
-                            reset_game_gui(game_gui, src->game);
                             return;
                         }
                         if (game_gui->curr_pieces[i][j] != NULL &&
