@@ -1,5 +1,6 @@
 #include "Minimax.h"
 #include "PossibleMoveLogic.h"
+#include "ChessGameLogic.h"
 
 ComputerMove computer_move(Game *game) {
     ComputerMove m = recursively_minimax_best_move(game->board, game->current_player == WHITE, MIN_SCORE_VALUE,

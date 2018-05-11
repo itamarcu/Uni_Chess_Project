@@ -6,7 +6,7 @@ widget_t *create_button(
         const char *image,
         SDL_Rect location,
         window_t *next_window,
-        void (*action)(widget_t *src)) {
+        void (*action)(widget_t *)) {
     widget_t *res = (widget_t *) malloc(sizeof(widget_t));
     if (res == NULL)
         return NULL;

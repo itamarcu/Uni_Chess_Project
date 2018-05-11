@@ -7,11 +7,20 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-#define DEBUG_MODE 1
+#define DEBUG_MODE false
 #define NULL_CHAR '\0'
 
 #define WHITE 1
 #define BLACK 2
+
+#if defined(WIN32) || defined(_WIN32)
+#define SEP "\\"
+#else
+#define SEP "/"
+#endif
+
+#define PICTURES_DIRECTORY "pictures"
+
 
 typedef enum {
     SUCCESS,

@@ -1,13 +1,92 @@
 #include "PossibleMoveLogic.h"
 
-/*
- * WARNING: UGLY CODE AHEAD
- * (it's well-optimized though)
- */
-
 /**
- * This function is faster than checking for each piece if it threatens this spot
- */
+* Returns true if the move is valid (this is much faster than update_move_by_potential_threats)
+*
+* NOTE: this assumes correct input (correct r1, r2, nonempty...)
+*/
+bool optimized_move_legality_check(Board *board, int r1, int c1, int r2, int c2);
+
+bool has_enemy_in_that_direction(Board *board, bool is_white, int row, int col, int row_delta, int col_delta);
+
+void update_move_by_potential_threats(Board *board, PossibleMove *move, int r1, int c1);
+
+void add_move_to_possibilities(Board *board, PossibleMove *moves, int index, int r1, int c1, int r2, int c2);
+
+
+bool optimized_move_legality_check(Board *board, int r1, int c1, int r2, int c2) {
+    char moving_piece = board->grid[r1][c1];
+    char target_piece = board->grid[r2][c2];
+    bool is_white = is_white_piece(moving_piece);
+    if (!is_empty_space(target_piece)) {
+        if (is_white_piece(target_piece) == is_white) {
+            //attempt to move into allied unit
+            return false;
+        }
+    }
+
+    //---Test for king danger and piece danger---
+
+    //Temporarily make move attempt
+    board->grid[r2][c2] = moving_piece;
+    board->grid[r1][c1] = EMPTY_SPACE;
+
+    int rk, ck;
+    for (int row = 0; row < 8; row++)
+        for (int col = 0; col < 8; col++) {
+            if ((board->grid[row][col] == BLACK_KING && !is_white)
+                || (board->grid[row][col] == WHITE_KING && is_white)) {
+                rk = row;
+                ck = col;
+                goto FoundKing;
+            }
+        }
+    println_error("CRITICAL ERROR 21357987: King not found in board!!?!?");
+    return false;
+
+    FoundKing:
+    // for each 'inverse-reachable' position on the board, check if the unit there is an enemy that can reach
+    // start with 8 directions
+    for (int row_delta = -1; row_delta <= 1; row_delta++)
+        for (int col_delta = -1; col_delta <= 1; col_delta++) {
+            if (row_delta == 0 && col_delta == 0)
+                continue;
+            if (has_enemy_in_that_direction(board, is_white, rk, ck, row_delta, col_delta)) {
+                //king will be threatened! no need to check anything more.
+                //Undo move
+                board->grid[r2][c2] = target_piece;
+                board->grid[r1][c1] = moving_piece;
+                return false;
+            }
+        }
+
+    // also check knights
+    int knight_x_deltas[8] = {+1, +2, +2, +1, -1, -2, -2, -1}; //start from up-up-right and move clockwise
+    int knight_y_deltas[8] = {-2, -1, +1, +2, +2, +1, -1, -2}; //start from up-up-right and move clockwise
+    for (int i = 0; i < 8; i++) {
+        int row_from_k = rk + knight_x_deltas[i];
+        int col_from_k = ck + knight_y_deltas[i];
+        if (row_from_k < 0 || row_from_k >= 8 || col_from_k < 0 || col_from_k >= 8)
+            continue;
+        char piece_k = board->grid[row_from_k][col_from_k];
+        if (!is_empty_space(piece_k) && (is_white_piece(piece_k) != is_white)) {
+            if (piece_k == WHITE_KNIGHT || piece_k == BLACK_KNIGHT) {
+                //king will be threatened! no need to check anything more.
+                //Undo move
+                board->grid[r2][c2] = target_piece;
+                board->grid[r1][c1] = moving_piece;
+                return false;
+            }
+        }
+    }
+
+    // Undo the temporary move
+    board->grid[r2][c2] = target_piece;
+    board->grid[r1][c1] = moving_piece;
+
+    return true;
+}
+
 bool has_enemy_in_that_direction(Board *board, bool is_white, int row, int col, int row_delta, int col_delta) {
     int original_row = row;
     int original_col = col;
@@ -157,7 +236,6 @@ void add_move_to_possibilities(Board *board, PossibleMove *moves, int index, int
     else
         update_move_by_potential_threats(board, moves + index, r1, c1);
 }
-
 
 GAME_ACTION_RESULT
 get_possible_moves(Board *board, int row, int col, PossibleMove possible_moves[MOVES_ARRAY_SIZE]) {
@@ -320,85 +398,6 @@ get_possible_moves(Board *board, int row, int col, PossibleMove possible_moves[M
     }
 
     return SUCCESS;
-}
-
-
-/**
-* Returns true if the move is valid (this is much faster than update_move_by_potential_threats)
-*
-* NOTE: this assumes correct input (correct r1, r2, nonempty...)
-*/
-bool optimized_move_legality_check(Board *board, int r1, int c1, int r2, int c2) {
-    char moving_piece = board->grid[r1][c1];
-    char target_piece = board->grid[r2][c2];
-    bool is_white = is_white_piece(moving_piece);
-    if (!is_empty_space(target_piece)) {
-        if (is_white_piece(target_piece) == is_white) {
-            //attempt to move into allied unit
-            return false;
-        }
-    }
-
-    //---Test for king danger and piece danger---
-
-    //Temporarily make move attempt
-    board->grid[r2][c2] = moving_piece;
-    board->grid[r1][c1] = EMPTY_SPACE;
-
-    int rk, ck;
-    for (int row = 0; row < 8; row++)
-        for (int col = 0; col < 8; col++) {
-            if ((board->grid[row][col] == BLACK_KING && !is_white)
-                || (board->grid[row][col] == WHITE_KING && is_white)) {
-                rk = row;
-                ck = col;
-                goto FoundKing;
-            }
-        }
-    println_error("CRITICAL ERROR 21357987: King not found in board!!?!?");
-    return false;
-
-    FoundKing:
-    // for each 'inverse-reachable' position on the board, check if the unit there is an enemy that can reach
-    // start with 8 directions
-    for (int row_delta = -1; row_delta <= 1; row_delta++)
-        for (int col_delta = -1; col_delta <= 1; col_delta++) {
-            if (row_delta == 0 && col_delta == 0)
-                continue;
-            if (has_enemy_in_that_direction(board, is_white, rk, ck, row_delta, col_delta)) {
-                //king will be threatened! no need to check anything more.
-                //Undo move
-                board->grid[r2][c2] = target_piece;
-                board->grid[r1][c1] = moving_piece;
-                return false;
-            }
-        }
-
-    // also check knights
-    int knight_x_deltas[8] = {+1, +2, +2, +1, -1, -2, -2, -1}; //start from up-up-right and move clockwise
-    int knight_y_deltas[8] = {-2, -1, +1, +2, +2, +1, -1, -2}; //start from up-up-right and move clockwise
-    for (int i = 0; i < 8; i++) {
-        int row_from_k = rk + knight_x_deltas[i];
-        int col_from_k = ck + knight_y_deltas[i];
-        if (row_from_k < 0 || row_from_k >= 8 || col_from_k < 0 || col_from_k >= 8)
-            continue;
-        char piece_k = board->grid[row_from_k][col_from_k];
-        if (!is_empty_space(piece_k) && (is_white_piece(piece_k) != is_white)) {
-            if (piece_k == WHITE_KNIGHT || piece_k == BLACK_KNIGHT) {
-                //king will be threatened! no need to check anything more.
-                //Undo move
-                board->grid[r2][c2] = target_piece;
-                board->grid[r1][c1] = moving_piece;
-                return false;
-            }
-        }
-    }
-
-    // Undo the temporary move
-    board->grid[r2][c2] = target_piece;
-    board->grid[r1][c1] = moving_piece;
-
-    return true;
 }
 
 bool has_any_possible_moves(Board *board, int row, int col) {

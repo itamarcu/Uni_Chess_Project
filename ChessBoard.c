@@ -1,5 +1,5 @@
 #include "ChessBoard.h"
-
+#include "Auxiliary.h"
 
 Board *make_starting_board() {
     Board *board = malloc(sizeof(Board));

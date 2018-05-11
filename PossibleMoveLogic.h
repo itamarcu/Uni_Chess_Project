@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 #include "ChessGameSettings.h"
-#include "ChessGameLogic.h"
+#include "Auxiliary.h"
 
 #define MOVES_ARRAY_SIZE 32
 

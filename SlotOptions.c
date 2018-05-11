@@ -20,7 +20,7 @@ widget_t *create_slot_options(
         int number_of_slots,
         int x_pos,
         int y_pos,
-        void (*action)(widget_t *src, int clicked_index)) {
+        void (*action)(widget_t *, int)) {
     widget_t *res = 0;
     slot_options_t *data = 0;
     SDL_Surface *blank_slot_surface = 0;
@@ -141,7 +141,7 @@ widget_t *create_slot_options(
         if (sprintf(slot_num_str, "%d", l + 1) < 0) {
             goto FREE_ON_ERROR;
         }
-        if (sprintf(full_path, "%s%s.save", GAME_SLOTS_PATH, slot_num_str) < 0) {
+        if (sprintf(full_path, "%s" SEP "%s.save", SAVED_GAMES_DIRECTORY, slot_num_str) < 0) {
             goto FREE_ON_ERROR;
         }
         if (does_file_exist(full_path) && !is_file_empty(full_path))

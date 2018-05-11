@@ -375,7 +375,7 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
     if (sprintf(slot_num_str, "%d", clicked_index + 1) < 0) {
         return; // TO-DO fatal error to handle.
     }
-    if (sprintf(full_path, "%s%s.save", GAME_SLOTS_PATH, slot_num_str) < 0) {
+    if (sprintf(full_path, "%s" SEP "%s.save", SAVED_GAMES_DIRECTORY, slot_num_str) < 0) {
         return; // TO-DO fatal error to handle.
     }
     if (slot_options->is_loading_mode) {

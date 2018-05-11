@@ -8,20 +8,20 @@
 #include "Window.h"
 #include "FileOperations.h"
 
-#define BLANK_SLOT_PATH "..\\pictures\\blank_slot.bmp"
-#define ARROW_UP_PATH "..\\pictures\\arrow_up.bmp"
-#define ARROW_DOWN_PATH "..\\pictures\\arrow_down.bmp"
-#define ZERO_PATH "..\\pictures\\0.bmp"
-#define ONE_PATH "..\\pictures\\1.bmp"
-#define TWO_PATH "..\\pictures\\2.bmp"
-#define THREE_PATH "..\\pictures\\3.bmp"
-#define FOUR_PATH "..\\pictures\\4.bmp"
-#define FIVE_PATH "..\\pictures\\5.bmp"
-#define SIX_PATH "..\\pictures\\6.bmp"
-#define SEVEN_PATH "..\\pictures\\7.bmp"
-#define EIGHT_PATH "..\\pictures\\8.bmp"
-#define NINE_PATH "..\\pictures\\9.bmp"
-#define GAME_SLOTS_PATH "..\\saved-games\\"
+#define BLANK_SLOT_PATH (PICTURES_DIRECTORY SEP "blank_slot.bmp")
+#define ARROW_UP_PATH (PICTURES_DIRECTORY SEP "arrow_up.bmp")
+#define ARROW_DOWN_PATH (PICTURES_DIRECTORY SEP "arrow_down.bmp")
+#define ZERO_PATH (PICTURES_DIRECTORY SEP "0.bmp")
+#define ONE_PATH (PICTURES_DIRECTORY SEP "1.bmp")
+#define TWO_PATH (PICTURES_DIRECTORY SEP "2.bmp")
+#define THREE_PATH (PICTURES_DIRECTORY SEP "3.bmp")
+#define FOUR_PATH (PICTURES_DIRECTORY SEP "4.bmp")
+#define FIVE_PATH (PICTURES_DIRECTORY SEP "5.bmp")
+#define SIX_PATH (PICTURES_DIRECTORY SEP "6.bmp")
+#define SEVEN_PATH (PICTURES_DIRECTORY SEP "7.bmp")
+#define EIGHT_PATH (PICTURES_DIRECTORY SEP "8.bmp")
+#define NINE_PATH (PICTURES_DIRECTORY SEP "9.bmp")
+#define SAVED_GAMES_DIRECTORY "saved-games"
 
 #define SLOT_WIDTH 180
 #define SLOT_HEIGHT 60

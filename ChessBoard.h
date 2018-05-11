@@ -21,7 +21,6 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include "Auxiliary.h"
 
 /**
  * An 8x8 grid of characters. Rows 1-8, columns A-H.
