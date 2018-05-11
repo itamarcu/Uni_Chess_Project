@@ -28,6 +28,7 @@
 #define CAPTURE_SQUARE_PATH "..\\pictures\\capture_square.bmp"
 #define THREATENED_CAPTURE_SQUARE_PATH "..\\pictures\\threatened_capture_square.bmp"
 #define FOCUSED_SQUARE_PATH "..\\pictures\\focused_square.bmp"
+#define FOCUSED_SQUARE_ENEMY_PATH "..\\pictures\\focused_square_enemy.bmp"
 
 #define BOARD_W_H 700
 #define AVERAGE_SQUARE_WIDTH 83.125
