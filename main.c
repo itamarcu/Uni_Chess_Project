@@ -22,10 +22,12 @@ int main(int argc, char *argv[]) {
     reset_default_settings(game);
     game->board = NULL;
     game->history = NULL;
+
     if (game->program_mode == PROGRAM_MODE_CONSOLE) {
         CUI_main_loop(game);
     } else
         GUI_main_loop(game);
+
     free_game(game);
     return 0;
 }
