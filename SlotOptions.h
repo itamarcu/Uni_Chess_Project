@@ -41,10 +41,4 @@ widget_t *create_slot_options(
         int y_pos,
         void (*action)(widget_t *src, int clicked_index));
 
-void destroy_slot_options(widget_t *src);
-
-void handle_slot_options_event(widget_t *src, SDL_Event *event);
-
-void draw_slot_options(widget_t *widget);
-
 #endif //SLOTOPTIONS_H_

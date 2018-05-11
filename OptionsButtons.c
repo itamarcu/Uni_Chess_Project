@@ -1,6 +1,12 @@
 #include "OptionsButtons.h"
 #include "Button.h"
 
+void destroy_options_buttons(widget_t *src);
+
+void handle_options_buttons_event(widget_t *src, SDL_Event *e);
+
+void draw_options_buttons(widget_t *src);
+
 widget_t *create_options_buttons(window_t *window, Game *game, widget_t **buttons, int num_of_buttons) {
     widget_t *res = (widget_t *) malloc(sizeof(widget_t));
     if (res == NULL)

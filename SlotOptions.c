@@ -1,18 +1,12 @@
 #include "SlotOptions.h"
 
-int pow_2(int base, int exp) {
-    int result = 1;
-    while (true) {
-        if (exp & 1)
-            result *= base;
-        exp >>= 1;
-        if (!exp)
-            break;
-        base *= base;
-    }
+int pow_2(int base, int exp);
 
-    return result;
-}
+void destroy_slot_options(widget_t *src);
+
+void handle_slot_options_event(widget_t *src, SDL_Event *event);
+
+void draw_slot_options(widget_t *widget);
 
 widget_t *create_slot_options(
         window_t *window,
@@ -219,6 +213,20 @@ widget_t *create_slot_options(
     free(data);
     free(res);
     return NULL;
+}
+
+int pow_2(int base, int exp) {
+    int result = 1;
+    while (true) {
+        if (exp & 1)
+            result *= base;
+        exp >>= 1;
+        if (!exp)
+            break;
+        base *= base;
+    }
+
+    return result;
 }
 
 void destroy_slot_options(widget_t *src) {
