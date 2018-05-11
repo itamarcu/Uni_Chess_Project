@@ -68,7 +68,7 @@ struct options_buttons_t {
 };
 
 /**
- * slot options widget data. slot_textures will contain all the relavent numbered textures according num_of_slots
+ * slot options widget data. slot_textures will contain all the relevant numbered textures according num_of_slots
  * using the digits pictures.
  */
 struct slot_options_t {
@@ -90,7 +90,7 @@ struct slot_options_t {
 };
 
 /**
- * all the relavent data for the widget that drawing and handling the game.
+ * all the relevant data for the widget that drawing and handling the game.
  */
 struct game_gui_t {
     SDL_Texture *board_BG;

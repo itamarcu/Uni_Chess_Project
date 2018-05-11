@@ -104,9 +104,9 @@ void restart_button_action(widget_t *widget);
 
 /**
  * if the game is not saved it will show an error message as message box to the user asking the user what to do.
- * if the user will pick yes it will switch to pick a slot window and after saving will go to the relavent window.
+ * if the user will pick yes it will switch to pick a slot window and after saving will go to the relevant window.
  * if the user will pick no nothing happens.
- * if the user will continue without saving it will switch to the relavent window without saving the current game.
+ * if the user will continue without saving it will switch to the relevant window without saving the current game.
  */
 void show_unsaved_game_box_message(widget_t *widget);
 
