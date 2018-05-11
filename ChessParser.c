@@ -126,7 +126,7 @@ Command *get_user_input_as_command() {
     command->path = NULL; //should be something
     char *command_string = strtok(input, " \r\t\n");
     if (command_string != NULL) {
-        command_string = strdup_2(command_string);
+        command_string = strdup(command_string);
     } else {
         command->valid_command = false;
         return command;
