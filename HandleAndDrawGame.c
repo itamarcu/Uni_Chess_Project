@@ -52,8 +52,11 @@ widget_t *create_game_gui(window_t *window, Game *game) {
         goto FREE_ON_ERROR;
     }
     data->focused_square = create_texture_from_path(FOCUSED_SQUARE_PATH, window->renderer);
-    data->focused_square_enemy = create_texture_from_path(FOCUSED_SQUARE_ENEMY_PATH, window->renderer);
     if (data->focused_square == NULL) {
+        goto FREE_ON_ERROR;
+    }
+    data->focused_square_enemy = create_texture_from_path(FOCUSED_SQUARE_ENEMY_PATH, window->renderer);
+    if (data->focused_square_enemy == NULL) {
         goto FREE_ON_ERROR;
     }
     char *pieces_paths[12] = {BLACK_BISHOP_PATH, BLACK_KING_PATH,
@@ -182,6 +185,8 @@ void destroy_game_gui(widget_t *src) {
     for (int i = 11; i >= 0; i--) {
         SDL_DestroyTexture(data->pieces[i]);
     }
+    SDL_DestroyTexture(data->focused_square_enemy);
+    SDL_DestroyTexture(data->focused_square);
     SDL_DestroyTexture(data->threatened_capture_square);
     SDL_DestroyTexture(data->capture_square);
     SDL_DestroyTexture(data->threatened_square);
