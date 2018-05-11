@@ -68,22 +68,39 @@
 #define RESTART_BUTTON_PATH (PICTURES_DIRECTORY SEP "button_restart.bmp")
 
 
-
+/**
+ * the main loop of the graphical interface. when it ends, it frees all memory and the game ends.
+ */
 void GUI_main_loop(Game *game);
 
-
+/**
+ * building all the widgets and textures of the main menu.
+ * @return 0 on success and -1 on error.
+ */
 int build_main_menu(Game *game, windows_t *windows);
 
-
+/**
+ * building all the widgets and textures of the game mode window.
+ * @return 0 on success and -1 on error.
+ */
 int build_game_mode_window(Game *game, windows_t *windows);
 
-
+/**
+ * building all the widgets and textures of the one player options window.
+ * @return 0 on success and -1 on error.
+ */
 int build_one_player_options_window(Game *game, windows_t *windows);
 
-
+/**
+ * building all the widgets and textures of the pick a slot window.
+ * @return 0 on success and -1 on error.
+ */
 int build_pick_slot_window(Game *game, windows_t *windows);
 
-
+/**
+ * building all the widgets and textures of the game window.
+ * @return 0 on success and -1 on error.
+ */
 int build_game_window(Game *game, windows_t *windows);
 
 

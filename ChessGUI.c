@@ -1,41 +1,108 @@
 #include "ChessGUI.h"
 
+/**
+ * calling handle_window_event and draw_window on the current window.
+ * when an event happens and curr_window is changed because of it,
+ * then the new current_window is shown at the same position as the previous one and the previous is hidden.
+ * @param current_window the current shown window.
+ * @param curr_window a pointer to the current_window enum value. when its changed the loop will handle the new window.
+ */
 void handle_events_and_draw(window_t *current_window, GAME_WINDOW *curr_window, windows_t *windows);
 
+/**
+ * calling start_game on the game, and moving to the game mode window
+ */
 void new_game_button_action(widget_t *widget);
 
+/**
+ * moving to pick a slot window, after changing its slots widget parameter to loading mode.
+ */
 void load_button_main_menu_action(widget_t *widget);
 
+/**
+ * quiting the game by changing the next window frame to QUIT.
+ */
 void quit_button_action(widget_t *widget);
 
+/**
+ * changing the options in game to one player and switching to one player options window.
+ */
 void one_player_button_action(widget_t *widget);
 
+/**
+ * changing the options in game to two players and switching the game window.
+ */
 void two_players_button_action(widget_t *widget);
 
+/**
+ * changing the computer difficulty to amateur.
+ */
 void amateur_button_action(widget_t *widget);
 
+/**
+ * changing the computer difficulty to easy.
+ */
 void easy_button_action(widget_t *widget);
 
+/**
+ * changing the computer difficulty to moderate.
+ */
 void moderate_button_action(widget_t *widget);
 
+/**
+ * changing the computer difficulty to hard.
+ */
 void hard_button_action(widget_t *widget);
 
+/**
+ * changing the computer difficulty to expert.
+ */
 void expert_button_action(widget_t *widget);
 
+/**
+ * changing the user color to white.
+ */
 void white_button_action(widget_t *widget);
 
+/**
+ * changing the user color to black.
+ */
 void black_button_action(widget_t *widget);
 
+/**
+ * this function is called when picking a slot in pick a slot window.
+ * if its loading mode then it loads a game and switching to game window.
+ * if its saving mode then it will save a game and go to its next_window,
+ * that could quit the game, getting back to game window, or going to main menu.
+ */
 void save_load_game_slots_action(widget_t *src, int clicked_index);
 
+/**
+ * calling undo function and reseting the game_gui
+ */
 void undo_button_action(widget_t *widget);
 
+/**
+ * switching to pick a slot window after changing the slots widget to saving mode
+ */
 void save_button_action(widget_t *widget);
 
+/**
+ * switching to pick a slot window after changing the slots widget to loading mode - this action is from game window.
+ */
 void load_button_game_action(widget_t *widget);
 
+/**
+ * restart the game.
+ */
 void restart_button_action(widget_t *widget);
 
+/**
+ * if the game is not saved it will show an error message as message box to the user asking the user what to do.
+ * if the user will pick yes it will switch to pick a slot window and after saving will go to the relavent window.
+ * if the user will pick no nothing happens.
+ * if the user will continue without saving it will switch to the relavent window without saving the current game.
+ */
 void show_unsaved_game_box_message(widget_t *widget);
 
 void GUI_main_loop(Game *game) {
@@ -131,7 +198,7 @@ void handle_events_and_draw(window_t *current_window, GAME_WINDOW *curr_window, 
     int curr_window_posX;
     int curr_window_posY;
     draw_window(current_window);
-    while (SDL_PollEvent(&e)) {
+    if (SDL_PollEvent(&e)) {
         *curr_window = handle_window_event(current_window, &e);
     }
     if (*curr_window != prev_window) {
