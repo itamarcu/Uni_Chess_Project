@@ -572,12 +572,14 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
 
 int build_game_window(Game *game, windows_t *windows) {
     if (start_game(game) < 0) {
-        println_error("ERROR: could not start the game propely");
+        println_error("ERROR: could not start the game properly");
         return -1;
     }
     window_t *game_window = windows->game_window;
     SDL_SetRenderDrawColor(game_window->renderer, 155, 255, 255, 0);
     widget_t *game_gui_widget = create_game_gui(game_window, game);
+    if (game_gui_widget == NULL)
+        goto HANDLE_ERROR;
     add_widget_to_window(game_window, game_gui_widget);
 
     SDL_Rect undo_move_rec;
@@ -618,8 +620,7 @@ int build_game_window(Game *game, windows_t *windows) {
 
     widget_t *undo_move_button = create_button(game_window, game, UNDO_MOVE_BUTTON_PATH, undo_move_rec,
                                                NULL, undo_button_action);
-    game_gui_t *game_gui = (game_gui_t *) game_gui_widget->data;
-    game_gui->undo_button = undo_move_button;
+
     widget_t *save_button = create_button(game_window, game, SAVE_GAME_BUTTON_PATH,
                                           save_button_rec,
                                           windows->pick_slot_window, save_button_action);
@@ -636,6 +637,12 @@ int build_game_window(Game *game, windows_t *windows) {
                                           quit_button_rec,
                                           NULL, show_unsaved_game_box_message);
 
+    if (undo_move_button == NULL || save_button == NULL || load_button == NULL || restart_button == NULL ||
+        main_menu_button == NULL || quit_button == NULL)
+        goto HANDLE_ERROR;
+
+    game_gui_t *game_gui = (game_gui_t *) game_gui_widget->data;
+    game_gui->undo_button = undo_move_button;
     add_widget_to_window(game_window, undo_move_button);
     add_widget_to_window(game_window, save_button);
     add_widget_to_window(game_window, load_button);
@@ -643,6 +650,17 @@ int build_game_window(Game *game, windows_t *windows) {
     add_widget_to_window(game_window, main_menu_button);
     add_widget_to_window(game_window, quit_button);
     return 0;
+
+    HANDLE_ERROR:
+
+    println_error("ERROR: problem when trying to create the game window");
+    destroy_widget(undo_move_button);
+    destroy_widget(save_button);
+    destroy_widget(load_button);
+    destroy_widget(restart_button);
+    destroy_widget(main_menu_button);
+    destroy_widget(quit_button);
+    return -1;
 }
 
 void undo_button_action(widget_t *widget) {
