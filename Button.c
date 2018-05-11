@@ -1,6 +1,9 @@
 #include "Button.h"
 
-
+/**
+ * handling an event e on the button src. if its pressed call the button's action.
+ * if the mouse is over the button then add some transparency.
+ */
 void handle_button_event(widget_t *src, SDL_Event *e);
 
 widget_t *create_button(

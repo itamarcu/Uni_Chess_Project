@@ -20,6 +20,9 @@ typedef struct windows_t windows_t;
 // This is the number of shown options at a given time in the slot_options widget (this is not the total number of options ! ! !):
 #define NUMBER_OF_DRAWN_OPTIONS 5
 
+/**
+ * all the differnt windows in enum.
+ */
 typedef enum _GAME_WINDOW {
     MAIN_MENU,
     GAME_MODE,
@@ -29,6 +32,11 @@ typedef enum _GAME_WINDOW {
     QUIT
 } GAME_WINDOW;
 
+/**
+ * a widget can contain different datas. it can be button_t, game_gui_t, options_buttons_t, and slot_options_t.
+ * every kind of widget should fill the widget drawing function, handle event function and destroy function.
+ * if is_disabled == true then the widget should do nothing at handle_event.
+ */
 struct widget_t {
     window_t *window;
     window_t *next_window;
@@ -40,6 +48,9 @@ struct widget_t {
     void *data;
 };
 
+/**
+ * a button widget data.
+ */
 struct button_t {
     SDL_Texture *texture;
     SDL_Rect location;
@@ -47,12 +58,19 @@ struct button_t {
     void (*action)(widget_t *src);
 };
 
+/**
+ * options buttons widget data. just a list of buttons that only one can be picked at a time.
+ */
 struct options_buttons_t {
     widget_t **buttons;
     int num_of_buttons;
     int current_pushed_button;
 };
 
+/**
+ * slot options widget data. slot_textures will contain all the relavent numbered textures according num_of_slots
+ * using the digits pictures.
+ */
 struct slot_options_t {
     SDL_Texture **slots_textures;
     int num_of_slots;
@@ -71,6 +89,9 @@ struct slot_options_t {
     void (*action)(widget_t *src, int clicked_index);
 };
 
+/**
+ *
+ */
 struct game_gui_t {
     SDL_Texture *board_BG;
     SDL_Texture *standard_square;
