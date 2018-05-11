@@ -208,7 +208,7 @@ void destroy_slot_options(widget_t *src) {
 
     SDL_DestroyTexture(data->arrow_up_tex);
     SDL_DestroyTexture(data->arrow_down_tex);
-    for (int i = data->num_of_slots; i >= 0; i--) {
+    for (int i = data->num_of_slots - 1; i >= 0; i--) {
         SDL_DestroyTexture(data->slots_textures[i]);
     }
     free(data->slots_textures);
