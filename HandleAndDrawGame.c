@@ -52,6 +52,7 @@ widget_t *create_game_gui(window_t *window, Game *game) {
         goto FREE_ON_ERROR;
     }
     data->focused_square = create_texture_from_path(FOCUSED_SQUARE_PATH, window->renderer);
+    data->focused_square_enemy = create_texture_from_path(FOCUSED_SQUARE_ENEMY_PATH, window->renderer);
     if (data->focused_square == NULL) {
         goto FREE_ON_ERROR;
     }
@@ -86,6 +87,7 @@ widget_t *create_game_gui(window_t *window, Game *game) {
         }
     }
     data->is_piece_focused = false;
+    data->is_focused_piece_belonging_to_enemy = false;
     res->window = window;
     res->game = game;
     res->destroy = destroy_game_gui;
@@ -262,6 +264,9 @@ void handle_game_gui_event(widget_t *src, SDL_Event *e) {
                             game_gui->is_piece_focused = true;
                             game_gui->focused_piece_row = i;
                             game_gui->focused_piece_col = j;
+                            game_gui->is_focused_piece_belonging_to_enemy = (
+                                    is_white_piece(src->game->board->grid[i][j]) !=
+                                    (src->game->current_player == WHITE));
                             return;
                         }
                     }
@@ -323,7 +328,9 @@ void draw_game_gui(widget_t *src) {
     game_gui_t *game_gui = (game_gui_t *) src->data;
     SDL_RenderCopy(src->window->renderer, game_gui->board_BG, NULL, &game_gui->board_dst_rect);
     if (game_gui->is_piece_focused) {
-        SDL_RenderCopy(src->window->renderer, game_gui->focused_square, NULL,
+        SDL_Texture *texture = game_gui->is_focused_piece_belonging_to_enemy ? game_gui->focused_square_enemy
+                                                                             : game_gui->focused_square;
+        SDL_RenderCopy(src->window->renderer, texture, NULL,
                        &game_gui->board_square_rects[game_gui->focused_piece_row][game_gui->focused_piece_col]);
     }
     for (int i = 0; i < 8; ++i) {
