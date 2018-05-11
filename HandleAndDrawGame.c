@@ -197,6 +197,20 @@ void reset_game_gui(game_gui_t *game_gui, Game *game) {
     }
 }
 
+void maybe_make_first_computer_turn(Game *game, game_gui_t *game_gui, window_t *window) {
+    // Possibly make computer's move, if game just started and computer is white
+    if (game->state == GAME_STATE_GAME && game->game_mode == GAME_MODE_SINGLEPLAYER &&
+        ((game->current_player == WHITE) != (game->user_color == WHITE))) {
+        ComputerMove move = computer_move(game);
+        move_was_made(game, move.r1, move.c1, move.r2, move.c2);
+
+//        reset_game_gui(game_gui, game);
+
+
+        if_end_game_or_check_handle(game, window);
+    }
+}
+
 void destroy_game_gui(widget_t *src) {
     game_gui_t *data = (game_gui_t *) src->data;
     for (int i = 11; i >= 0; i--) {
@@ -304,23 +318,23 @@ void if_end_game_or_check_handle(Game *game, window_t *game_window) {
     if (!pressing_auto_move_key() && !pressing_double_auto_move_key() &&
         check_if_king_is_threatened(game->board, true) &&
         game->current_player == WHITE) {
-        show_message_box(game_window, buttons, 1, "Pay Attention!", "White Player - you just got checked!");
+        show_message_box(game_window, buttons, 1, "Pay Attention!", "White Player - you just got checked!", 0);
     }
     if (!pressing_auto_move_key() && !pressing_double_auto_move_key() &&
         check_if_king_is_threatened(game->board, false) &&
         game->current_player == BLACK) {
-        show_message_box(game_window, buttons, 1, "Pay Attention!", "Black Player - you just got checked!");
+        show_message_box(game_window, buttons, 1, "Pay Attention!", "Black Player - you just got checked!", 0);
     }
     if (game->state != GAME_STATE_QUIT)
         return;
     if (game->winner == GAME_WINNER_WHITE) {
-        show_message_box(game_window, buttons, 1, "Game Ended", "WHITE WON ! ! !");
+        show_message_box(game_window, buttons, 1, "Game Ended", "WHITE WON ! ! !", 0);
     }
     if (game->winner == GAME_WINNER_BLACK) {
-        show_message_box(game_window, buttons, 1, "Game Ended", "BLACK WON ! ! !");
+        show_message_box(game_window, buttons, 1, "Game Ended", "BLACK WON ! ! !", 0);
     }
     if (game->winner == GAME_WINNER_DRAW) {
-        show_message_box(game_window, buttons, 1, "Game Ended", "The game has ended with a draw");
+        show_message_box(game_window, buttons, 1, "Game Ended", "The game has ended with a draw", 0);
     }
 }
 

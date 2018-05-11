@@ -43,5 +43,7 @@ widget_t *create_game_gui(
 
 void reset_game_gui(game_gui_t *game_gui, Game *game);
 
+void maybe_make_first_computer_turn(Game *game, game_gui_t *game_gui, window_t *window);
+
 
 #endif /* HANDLE_AND_DRAW_GAME_ */

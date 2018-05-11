@@ -544,7 +544,9 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
                 src->game->history = malloc(sizeof(History));
                 src->game->history->count = 0;
                 push_move_to_history(src->game, 1, 2, 3, 4); // arbitrary values - not important
-
+                maybe_make_first_computer_turn(src->game,
+                                               (game_gui_t *) src->window->windows->game_window->widgets[0]->data,
+                                               src->window->windows->game_window);
                 reset_game_gui((game_gui_t *) src->window->windows->game_window->widgets[0]->data, src->game);
                 src->game->is_saved = true;
                 switch_to_next_window_action(src);
@@ -564,7 +566,7 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
     return;
 
     HANDLE_ERROR:
-    if (show_error_message_box(src->window, error_message) < 0) {
+    if (show_error_message_box(src->window, error_message, 0) < 0) {
         println_error(error_message);
         println_error("There was an error trying display error message box");
     }
@@ -671,7 +673,7 @@ void undo_button_action(widget_t *widget) {
             }
             break;
         case EMPTY_HISTORY:
-            show_error_message_box(widget->window, "ERROR: Empty history, no move to undo");
+            show_error_message_box(widget->window, "ERROR: Empty history, no move to undo", 0);
             break;
         default:
             println_error("Unexpected enum value after using cmd_undo");
@@ -699,6 +701,9 @@ void restart_button_action(widget_t *widget) {
         println_error_weak("ERROR: problem occurred when trying to start a new game, try again");
         return;
     }
+    maybe_make_first_computer_turn(widget->game,
+                                   (game_gui_t *) widget->window->widgets[0]->data,
+                                   widget->window);
     reset_game_gui((game_gui_t *) widget->window->widgets[0]->data, widget->game);
 }
 
@@ -712,7 +717,7 @@ void show_unsaved_game_box_message(widget_t *widget) {
                 {SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 3, "Yes"}
         };
         int button_id = show_message_box(widget->window, buttons, 3, "Continue without saving?",
-                                         "Are you sure you want to exit to menu without saving?");
+                                         "Are you sure you want to exit to menu without saving?", 3);
         slot_options_t *slot_options = NULL;
         switch (button_id) {
             case 1:
