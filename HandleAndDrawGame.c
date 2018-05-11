@@ -205,7 +205,8 @@ void maybe_make_first_computer_turn(Game *game, game_gui_t *game_gui, window_t *
         move_was_made(game, move.r1, move.c1, move.r2, move.c2);
 
 //        reset_game_gui(game_gui, game);
-
+        if (game_gui == NULL)
+            println_debug("This message is only here to keep the compiler happy while debugging");
 
         if_end_game_or_check_handle(game, window);
     }

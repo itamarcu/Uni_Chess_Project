@@ -545,13 +545,10 @@ int build_one_player_options_window(Game *game, windows_t *windows) {
 }
 
 void start_game_button_action(widget_t *widget) {
-    println_output("1");
     maybe_make_first_computer_turn(widget->game,
                                    (game_gui_t *) widget->window->widgets[0]->data,
                                    widget->window);
-    println_output("2");
     switch_window_and_change_prev_window_action(widget);
-    println_output("3");
 }
 
 void amateur_button_action(widget_t *widget) {
