@@ -32,12 +32,16 @@ widget_t *create_slot_options(
     SDL_Texture *arrow_down_texture = 0;
 
     res = (widget_t *) malloc(sizeof(widget_t));
-    if (res == NULL)
-        goto HANDLE_ERROR;
+    if (res == NULL) {
+        println_error("ERROR: Could not allocate memory when creating the slots widget");
+        return NULL;
+    }
 
     data = (slot_options_t *) malloc(sizeof(slot_options_t));
     if (data == NULL) {
-        goto HANDLE_ERROR;
+        free(res);
+        println_error("ERROR: Could not allocate memory when creating the slots widget");
+        return NULL;
     }
 
     blank_slot_surface = SDL_LoadBMP(BLANK_SLOT_PATH);
@@ -192,17 +196,15 @@ widget_t *create_slot_options(
     return res;
 
     HANDLE_ERROR:
-    println_error("ERROR: problem occurred when trying to create the slots widget");
-    if (data != NULL) {
-        free(data->current_slots_alpha_factor);
-        free(data->is_saved_slots);
-    }
+    println_error("ERROR: problem occurred when trying to create the slots widget - ,%s", SDL_GetError());
+    free(data->current_slots_alpha_factor);
+    free(data->is_saved_slots);
     SDL_DestroyTexture(arrow_down_texture);
     SDL_FreeSurface(arrow_down_surface);
     SDL_DestroyTexture(arrow_up_texture);
     SDL_FreeSurface(arrow_up_surface);
 
-    if (data != NULL && data->slots_textures != NULL) {
+    if (data->slots_textures != NULL) {
         for (int i = number_of_slots; i >= 0; i--) {
             SDL_DestroyTexture(data->slots_textures[i]);
         }
@@ -213,8 +215,7 @@ widget_t *create_slot_options(
 
     SDL_FreeSurface(numbered_slot_surface);
     SDL_FreeSurface(blank_slot_surface);
-    if (data != NULL)
-        free(data->slots_textures);
+    free(data->slots_textures);
     free(data);
     free(res);
     return NULL;

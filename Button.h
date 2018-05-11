@@ -28,8 +28,6 @@ widget_t *create_button(
 
 void destroy_button(widget_t *src);
 
-void handle_button_event(widget_t *src, SDL_Event *e);
-
 void draw_button(widget_t *src);
 
 void switch_window_and_change_prev_window_action(widget_t *widget);

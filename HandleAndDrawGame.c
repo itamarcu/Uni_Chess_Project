@@ -1,5 +1,18 @@
 #include "HandleAndDrawGame.h"
 
+
+void update_game_gui_board(game_gui_t *game_gui, Game *game);
+
+void destroy_game_gui(widget_t *src);
+
+void handle_game_gui_event(widget_t *src, SDL_Event *event);
+
+void if_end_game_or_check_handle(Game *game, window_t *game_window);
+
+void fill_highlighted_squares_from_possible_moves(game_gui_t *game_gui, PossibleMove possible_moves[32]);
+
+void draw_game_gui(widget_t *widget);
+
 bool pressing_auto_move_key() {
     return SDL_GetKeyboardState(NULL)[SDL_SCANCODE_LCTRL];
 }
@@ -22,11 +35,13 @@ widget_t *create_game_gui(window_t *window, Game *game) {
     }
     SDL_Surface *BG_surface = SDL_LoadBMP(DEFAULT_BG_PATH);
     if (BG_surface == NULL) {
+        println_error("ERROR: %s", SDL_GetError());
         goto HANDLE_ERROR;
     }
     data->board_BG = SDL_CreateTextureFromSurface(window->renderer, BG_surface);
     if (data->board_BG == NULL) {
         SDL_FreeSurface(BG_surface);
+        println_error("ERROR: %s", SDL_GetError());
         goto HANDLE_ERROR;
     }
     data->board_dst_rect.x = 0;

@@ -1,5 +1,43 @@
 #include "ChessGUI.h"
 
+void handle_events_and_draw(window_t *current_window, GAME_WINDOW *curr_window, windows_t *windows);
+
+void new_game_button_action(widget_t *widget);
+
+void load_button_main_menu_action(widget_t *widget);
+
+void quit_button_action(widget_t *widget);
+
+void one_player_button_action(widget_t *widget);
+
+void two_players_button_action(widget_t *widget);
+
+void amateur_button_action(widget_t *widget);
+
+void easy_button_action(widget_t *widget);
+
+void moderate_button_action(widget_t *widget);
+
+void hard_button_action(widget_t *widget);
+
+void expert_button_action(widget_t *widget);
+
+void white_button_action(widget_t *widget);
+
+void black_button_action(widget_t *widget);
+
+void save_load_game_slots_action(widget_t *src, int clicked_index);
+
+void undo_button_action(widget_t *widget);
+
+void save_button_action(widget_t *widget);
+
+void load_button_game_action(widget_t *widget);
+
+void restart_button_action(widget_t *widget);
+
+void show_unsaved_game_box_message(widget_t *widget);
+
 void GUI_main_loop(Game *game) {
     // initialize SDL2 for video
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {

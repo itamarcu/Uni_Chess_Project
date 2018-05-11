@@ -71,58 +71,21 @@
 
 void GUI_main_loop(Game *game);
 
-void handle_events_and_draw(window_t *current_window, GAME_WINDOW *curr_window, windows_t *windows);
-
 
 void build_main_menu(Game *game, windows_t *windows);
-
-void new_game_button_action(widget_t *widget);
-
-void load_button_main_menu_action(widget_t *widget);
-
-void quit_button_action(widget_t *widget);
 
 
 void build_game_mode_window(Game *game, windows_t *windows);
 
-void one_player_button_action(widget_t *widget);
-
-void two_players_button_action(widget_t *widget);
-
 
 void build_one_player_options_window(Game *game, windows_t *windows);
-
-void amateur_button_action(widget_t *widget);
-
-void easy_button_action(widget_t *widget);
-
-void moderate_button_action(widget_t *widget);
-
-void hard_button_action(widget_t *widget);
-
-void expert_button_action(widget_t *widget);
-
-void white_button_action(widget_t *widget);
-
-void black_button_action(widget_t *widget);
 
 
 void build_pick_slot_window(Game *game, windows_t *windows);
 
-void save_load_game_slots_action(widget_t *src, int clicked_index);
-
 
 void build_game_window(Game *game, windows_t *windows);
 
-void undo_button_action(widget_t *widget);
-
-void save_button_action(widget_t *widget);
-
-void load_button_game_action(widget_t *widget);
-
-void restart_button_action(widget_t *widget);
-
-void show_unsaved_game_box_message(widget_t *widget);
 
 
 #endif //UNI_CHESS_PROJECT_GUI_H

@@ -1,5 +1,8 @@
 #include "Button.h"
 
+
+void handle_button_event(widget_t *src, SDL_Event *e);
+
 widget_t *create_button(
         window_t *window,
         Game *game,
@@ -21,6 +24,7 @@ widget_t *create_button(
     if (surface == NULL) {
         free(data);
         free(res);
+        println_error("ERROR: %s", SDL_GetError());
         goto PRINT_ERROR_RETURN_NULL;
     }
     SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 255, 255, 255));
@@ -29,6 +33,7 @@ widget_t *create_button(
         SDL_FreeSurface(surface);
         free(data);
         free(res);
+        println_error("ERROR: %s", SDL_GetError());
         goto PRINT_ERROR_RETURN_NULL;
     }
 

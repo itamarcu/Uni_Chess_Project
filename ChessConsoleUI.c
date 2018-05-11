@@ -72,8 +72,8 @@ void CUI_settings_case(Game *game) {
                 println_output("User color is set to %s", color_string(game->user_color));
                 break;
             case CMD_LOAD:
-                //TODO load
-                println_debug("---The load command is not yet developed---");
+                if (command->valid_path && load_game_from_path(game, command->path) == false)
+                    println_error_weak("ERROR: could not load the game from the specified path, please try again");
                 break;
             case CMD_DEFAULT:
                 reset_default_settings(game);
@@ -193,8 +193,9 @@ void CUI_game_case(Game *game) {
                         }
                         break;
                     case CMD_SAVE:
-                        //TODO save command
-                        println_debug("---The save command is not yet developed---");
+                        if (save_game_to_path(game, command->path) == false)
+                            println_error_weak(
+                                    "ERROR: could not save the game to the specified path, please try again");
                         break;
                     case CMD_UNDO:
                         switch (undo_move(game)) {
