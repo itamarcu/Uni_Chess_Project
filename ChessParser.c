@@ -46,6 +46,8 @@ Command *cmd_move(Command *command) {
  * For quick debugging and less annoying syntax:
  *
  * "mov d2 d4" is equivalent to "move <2,D> to <4,D>"
+ *
+ * "mov 2d 4d" is also acceptable
  */
 Command *cmd_mov(Command *command) {
     command->game_command = CMD_MOVE;
@@ -57,14 +59,27 @@ Command *cmd_mov(Command *command) {
         command->valid_command = false;
         return command;
     }
-    command->args[0] = arg0[1] - '1';
-    command->args[1] = arg0[0] - 'A';
-    command->args[2] = arg1[1] - '1';
-    command->args[3] = arg1[0] - 'A';
-    if (arg0[0] >= 'a' && arg0[0] < 'z')
-        command->args[1] += 'A' - 'a';
-    if (arg1[0] >= 'a' && arg1[0] < 'z')
-        command->args[3] += 'A' - 'a';
+    if (arg0[0] >= '1' && arg0[0] <= '8') {
+        // mov 2a 3b
+        command->args[0] = arg0[0] - '1';
+        command->args[1] = arg0[1] - 'A';
+        command->args[2] = arg1[0] - '1';
+        command->args[3] = arg1[1] - 'A';
+        if (arg0[1] >= 'a' && arg0[1] < 'z')
+            command->args[1] += 'A' - 'a';
+        if (arg1[1] >= 'a' && arg1[1] < 'z')
+            command->args[3] += 'A' - 'a';
+    } else {
+        // mov a2 b3
+        command->args[0] = arg0[1] - '1';
+        command->args[1] = arg0[0] - 'A';
+        command->args[2] = arg1[1] - '1';
+        command->args[3] = arg1[0] - 'A';
+        if (arg0[0] >= 'a' && arg0[0] < 'z')
+            command->args[1] += 'A' - 'a';
+        if (arg1[0] >= 'a' && arg1[0] < 'z')
+            command->args[3] += 'A' - 'a';
+    }
 
     return command;
 }

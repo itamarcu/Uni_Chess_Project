@@ -32,17 +32,21 @@ void fill_highlighted_squares_from_possible_moves(game_gui_t *game_gui, Possible
  * @param src pointer to a widget containing game_gui_t as its data.
  */
 void draw_game_gui(widget_t *src);
+
 /**
- * return true if CTRL is pressed.
+ *
+ * @return true if the user is currently holding Ctrl.
  */
 bool pressing_auto_move_key() {
-    return SDL_GetKeyboardState(NULL)[SDL_SCANCODE_LCTRL];
+    return SDL_GetKeyboardState(NULL)[SDL_SCANCODE_LCTRL] || SDL_GetKeyboardState(NULL)[SDL_SCANCODE_RCTRL];
 }
+
 /**
- * return true if shift is pressed.
+ *
+ * @return true if the user is currently holding Shift.
  */
 bool pressing_double_auto_move_key() {
-    return SDL_GetKeyboardState(NULL)[SDL_SCANCODE_LSHIFT];
+    return SDL_GetKeyboardState(NULL)[SDL_SCANCODE_LSHIFT] || SDL_GetKeyboardState(NULL)[SDL_SCANCODE_RSHIFT];
 }
 
 widget_t *create_game_gui(window_t *window, Game *game) {
