@@ -5,13 +5,13 @@ void update_game_gui_board(game_gui_t *game_gui, Game *game);
 
 void destroy_game_gui(widget_t *src);
 
-void handle_game_gui_event(widget_t *src, SDL_Event *event);
+void handle_game_gui_event(widget_t *src, SDL_Event *e);
 
 void if_end_game_or_check_handle(Game *game, window_t *game_window);
 
 void fill_highlighted_squares_from_possible_moves(game_gui_t *game_gui, PossibleMove possible_moves[32]);
 
-void draw_game_gui(widget_t *widget);
+void draw_game_gui(widget_t *src);
 
 bool pressing_auto_move_key() {
     return SDL_GetKeyboardState(NULL)[SDL_SCANCODE_LCTRL];
@@ -73,13 +73,13 @@ widget_t *create_game_gui(window_t *window, Game *game) {
     if (data->focused_square_enemy == NULL) {
         goto HANDLE_ERROR;
     }
-    char *pieces_paths[12] = {BLACK_BISHOP_PATH, BLACK_KING_PATH,
-                              BLACK_KNIGHT_PATH, BLACK_PAWN_PATH,
-                              BLACK_QUEEN_PATH, BLACK_ROOK_PATH,
-                              WHITE_BISHOP_PATH, WHITE_KING_PATH,
-                              WHITE_KNIGHT_PATH, WHITE_PAWN_PATH,
-                              WHITE_QUEEN_PATH, WHITE_ROOK_PATH};
-    for (int i = 0; i < 12; i++) {
+    char *pieces_paths[NUM_COMBINED_PIECES_TYPES] = {BLACK_BISHOP_PATH, BLACK_KING_PATH,
+                                                     BLACK_KNIGHT_PATH, BLACK_PAWN_PATH,
+                                                     BLACK_QUEEN_PATH, BLACK_ROOK_PATH,
+                                                     WHITE_BISHOP_PATH, WHITE_KING_PATH,
+                                                     WHITE_KNIGHT_PATH, WHITE_PAWN_PATH,
+                                                     WHITE_QUEEN_PATH, WHITE_ROOK_PATH};
+    for (int i = 0; i < NUM_COMBINED_PIECES_TYPES; i++) {
         data->pieces[i] = create_texture_from_path(pieces_paths[i], window->renderer);
         if (data->pieces[i] == NULL) {
             goto HANDLE_ERROR;
@@ -116,7 +116,7 @@ widget_t *create_game_gui(window_t *window, Game *game) {
     HANDLE_ERROR:
     println_error("ERROR: problem occurred when trying to create the graphical game board");
     if (data != NULL) {
-        for (int i = 11; i >= 0; i--) {
+        for (int i = NUM_COMBINED_PIECES_TYPES - 1; i >= 0; i--) {
             SDL_DestroyTexture(data->pieces[i]);
         }
         SDL_DestroyTexture(data->focused_square_enemy);
@@ -214,7 +214,7 @@ void maybe_make_first_computer_turn(Game *game, game_gui_t *game_gui, window_t *
 
 void destroy_game_gui(widget_t *src) {
     game_gui_t *data = (game_gui_t *) src->data;
-    for (int i = 11; i >= 0; i--) {
+    for (int i = NUM_COMBINED_PIECES_TYPES - 1; i >= 0; i--) {
         SDL_DestroyTexture(data->pieces[i]);
     }
     SDL_DestroyTexture(data->focused_square_enemy);

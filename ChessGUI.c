@@ -203,7 +203,7 @@ void handle_events_and_draw(window_t *current_window, GAME_WINDOW *curr_window, 
     int curr_window_posX;
     int curr_window_posY;
     draw_window(current_window);
-    if (SDL_PollEvent(&e)) {
+    while (SDL_PollEvent(&e)) {
         *curr_window = handle_window_event(current_window, &e);
     }
     if (*curr_window != prev_window) {
