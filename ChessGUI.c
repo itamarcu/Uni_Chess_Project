@@ -107,7 +107,7 @@ void handle_events_and_draw(window_t *current_window, GAME_WINDOW *curr_window, 
     }
 }
 
-void *build_main_menu(Game *game, windows_t *windows) {
+void build_main_menu(Game *game, windows_t *windows) {
     window_t *main_menu = windows->main_menu;
 
     add_chess_BG_and_title(main_menu, MAIN_MENU_TITLE_PATH);
@@ -162,7 +162,7 @@ void quit_button_action(widget_t *widget) {
     widget->window->next_window_frame = QUIT;
 }
 
-void *build_game_mode_window(Game *game, windows_t *windows) {
+void build_game_mode_window(Game *game, windows_t *windows) {
     window_t *game_mode_window = windows->game_mode_window;
     add_chess_BG_and_title(game_mode_window, GAME_MODE_TITLE_PATH);
     add_back_button_to_window(game_mode_window, game);
@@ -202,7 +202,7 @@ void two_players_button_action(widget_t *widget) {
 }
 
 
-void *build_one_player_options_window(Game *game, windows_t *windows) {
+void build_one_player_options_window(Game *game, windows_t *windows) {
     window_t *options_window = windows->options_window;
     add_chess_BG_and_title(options_window, OPTIONS_WINDOW_TITLE_PATH);
     add_back_button_to_window(options_window, game);
@@ -215,7 +215,7 @@ void *build_one_player_options_window(Game *game, windows_t *windows) {
     SDL_Texture *diff_level_tex;
     if ((diff_level_tex = create_texture_from_path(DIFF_LEVEL_TEX_PATH, options_window->renderer)) == NULL) {
         destroy_window(options_window);
-        return NULL;
+        return;
     }
     add_texture_to_window(options_window, diff_level_tex, diff_level_tex_rect);
 
@@ -227,7 +227,7 @@ void *build_one_player_options_window(Game *game, windows_t *windows) {
     SDL_Texture *user_color_tex;
     if ((user_color_tex = create_texture_from_path(USER_COLOR_TEX_PATH, options_window->renderer)) == NULL) {
         destroy_window(options_window);
-        return NULL;
+        return;
     }
     add_texture_to_window(options_window, user_color_tex, user_color_tex_rect);
 
@@ -241,7 +241,7 @@ void *build_one_player_options_window(Game *game, windows_t *windows) {
                                            start_button_rect, windows->game_window,
                                            switch_window_and_change_prev_window_action);
     if (start_button == NULL) {
-        return NULL;
+        return;
     }
     add_widget_to_window(options_window, start_button);
 
@@ -353,7 +353,7 @@ void black_button_action(widget_t *widget) {
     widget->game->user_color = BLACK;
 }
 
-void *build_pick_slot_window(Game *game, windows_t *windows) {
+void build_pick_slot_window(Game *game, windows_t *windows) {
     window_t *pick_slot_window = windows->pick_slot_window;
     add_chess_BG_and_title(pick_slot_window, PICK_SLOT_TITLE_PATH);
     pick_slot_window->next_window = windows->game_window; // will change if picking a slot for saving a game instead of loading a game.
@@ -372,7 +372,9 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
     slot_options_t *slot_options = (slot_options_t *) src->data;
     char slot_num_str[10];
     char full_path[30];
-    itoa(clicked_index + 1, slot_num_str, 10);
+    if (sprintf(slot_num_str, "%d", clicked_index + 1) < 0) {
+        return; // TO-DO fatal error to handle.
+    }
     if (sprintf(full_path, "%s%s.save", GAME_SLOTS_PATH, slot_num_str) < 0) {
         return; // TO-DO fatal error to handle.
     }
@@ -411,7 +413,7 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
     }
 }
 
-void *build_game_window(Game *game, windows_t *windows) {
+void build_game_window(Game *game, windows_t *windows) {
     start_game(game);
     window_t *game_window = windows->game_window;
     SDL_SetRenderDrawColor(game_window->renderer, 155, 255, 255, 0);
@@ -493,7 +495,7 @@ void *build_game_window(Game *game, windows_t *windows) {
 //    if((user_color_tex = create_texture_from_path(USER_COLOR_TEX_PATH, game_window->renderer)) == NULL)
 //    {
 //        destroy_window(game_window);
-//        return NULL;
+//        return;
 //    }
 //    add_texture_to_window(game_window, user_color_tex, user_color_tex_rect);
 

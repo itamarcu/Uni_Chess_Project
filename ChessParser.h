@@ -3,7 +3,6 @@
 
 #include "Auxiliary.h"
 #include <stdio.h>
-#include <mem.h>
 #include <stdlib.h>
 #include <stdbool.h>
 

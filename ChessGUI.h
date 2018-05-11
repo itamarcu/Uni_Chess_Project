@@ -73,7 +73,7 @@ void GUI_main_loop(Game *game);
 
 void handle_events_and_draw(window_t *current_window, GAME_WINDOW *curr_window, windows_t *windows);
 
-void *build_main_menu(Game *game, windows_t *windows);
+void build_main_menu(Game *game, windows_t *windows);
 
 void new_game_button_action(widget_t *widget);
 
@@ -81,13 +81,13 @@ void load_button_main_menu_action(widget_t *widget);
 
 void quit_button_action(widget_t *widget);
 
-void *build_game_mode_window(Game *game, windows_t *windows);
+void build_game_mode_window(Game *game, windows_t *windows);
 
 void one_player_button_action(widget_t *widget);
 
 void two_players_button_action(widget_t *widget);
 
-void *build_one_player_options_window(Game *game, windows_t *windows);
+void build_one_player_options_window(Game *game, windows_t *windows);
 
 void amateur_button_action(widget_t *widget);
 
@@ -103,11 +103,11 @@ void white_button_action(widget_t *widget);
 
 void black_button_action(widget_t *widget);
 
-void *build_pick_slot_window(Game *game, windows_t *windows);
+void build_pick_slot_window(Game *game, windows_t *windows);
 
 void save_load_game_slots_action(widget_t *src, int clicked_index);
 
-void *build_game_window(Game *game, windows_t *windows);
+void build_game_window(Game *game, windows_t *windows);
 
 void undo_button_action(widget_t *widget);
 

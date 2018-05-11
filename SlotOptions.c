@@ -124,7 +124,9 @@ widget_t *create_slot_options(
     char slot_num_str[10];
     char full_path[30];
     for (int l = 0; l < number_of_slots; ++l) {
-        itoa(l + 1, slot_num_str, 10);
+        if (sprintf(slot_num_str, "%d", l + 1) < 0) {
+            goto FREE_ON_ERROR;
+        }
         if (sprintf(full_path, "%s%s.save", GAME_SLOTS_PATH, slot_num_str) < 0) {
             goto FREE_ON_ERROR;
         }

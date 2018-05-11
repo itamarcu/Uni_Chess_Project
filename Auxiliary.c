@@ -50,7 +50,7 @@ bool cast_str_to_int(const char *str, int *int_ptr) {
      */
     char *temp;
     *int_ptr = strtol(str, &temp, 10);
-    return *temp == 0; //should be NULL be the build warns about it (justifiably)
+    return *temp == 0; //should be NULL but the build warns about it (justifiably)
 }
 
 int sign(int x) {

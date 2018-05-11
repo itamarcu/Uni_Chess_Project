@@ -1,5 +1,15 @@
 #include "ChessParser.h"
+#include "FileOperations.h"
 
+char *strdup_2(char *src) {
+    char *ret = malloc(strlen(src) + 1);
+
+    if (ret != 0) {
+        strcpy(ret, src);
+    }
+
+    return ret;
+}
 
 Command *cmd_move(Command *command) {
     // format should be: "move <r1,c1> to <r2,c2>"
@@ -77,16 +87,12 @@ Command *cmd_auto(Command *command) {
     return command;
 }
 
-bool is_valid_path(char *path) {
-    //TODO is_valid_path()
-}
-
 Command *cmd_load(Command *command) {
     command->settings_command = CMD_LOAD;
     char *arg_string = strtok(NULL, " \r\t\n");
     if (arg_string != NULL) {
-        command->path = strdup(arg_string);
-        command->valid_path = is_valid_path(command->path);
+        command->path = strdup_2(arg_string);
+        command->valid_path = does_file_exist(command->path);
     } else command->valid_command = false;
     return command;
 }
@@ -95,8 +101,8 @@ Command *cmd_save(Command *command) {
     command->game_command = CMD_SAVE;
     char *arg_string = strtok(NULL, " \r\t\n");
     if (arg_string != NULL) {
-        command->path = strdup(arg_string);
-        command->valid_path = is_valid_path(command->path);
+        command->path = strdup_2(arg_string);
+        command->valid_path = does_file_exist(command->path);
     } else command->valid_command = false;
     return command;
 }
@@ -120,7 +126,7 @@ Command *get_user_input_as_command() {
     command->path = NULL; //should be something
     char *command_string = strtok(input, " \r\t\n");
     if (command_string != NULL) {
-        command_string = strdup(command_string);
+        command_string = strdup_2(command_string);
     } else {
         command->valid_command = false;
         return command;

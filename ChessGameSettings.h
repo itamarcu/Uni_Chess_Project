@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 #include "ChessBoard.h"
-#include "string.h"
+#include <string.h>
 
 #define PROGRAM_MODE_CONSOLE 'c'
 #define PROGRAM_MODE_GRAPHICAL 'g'
