@@ -53,6 +53,7 @@
 #define PICK_SLOT_TITLE_PATH (PICTURES_DIRECTORY SEP "title_pick-a-slot.bmp")
 #define PICK_SLOT_WINDOW_TEXTURES 3
 #define PICK_SLOT_WINDOW_WIDGETS 2
+#define NUMBER_OF_TOTAL_SLOTS 5 // The total number of slots. can be any number greater then 5.
 
 #define GAME_WINDOW_HEIGHT 800
 #define GAME_BOARD_HEIGHT 700
