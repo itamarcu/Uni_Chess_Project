@@ -3,16 +3,16 @@
 
 Board *make_starting_board() {
     Board *board = malloc(sizeof(Board));
+    if (board == NULL) {
+        println_error("MALLOC failure in make_starting_board!");
+        return NULL;
+    }
     char whiteFirstRow[8] = {
             WHITE_ROOK, WHITE_KNIGHT, WHITE_BISHOP, WHITE_QUEEN, WHITE_KING, WHITE_BISHOP, WHITE_KNIGHT, WHITE_ROOK
     };
     char blackFirstRow[8] = {
             BLACK_ROOK, BLACK_KNIGHT, BLACK_BISHOP, BLACK_QUEEN, BLACK_KING, BLACK_BISHOP, BLACK_KNIGHT, BLACK_ROOK
     };
-    if (board == NULL) {
-        println_error("MALLOC failure in make_starting_board!");
-        return NULL;
-    }
     for (int i = 2; i <= 5; i++)
         for (int j = 0; j < 8; j++)
             board->grid[i][j] = EMPTY_SPACE;

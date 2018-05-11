@@ -1,7 +1,7 @@
 #include "SlotOptions.h"
 
 /**
- * like pow() from math.h
+ * Like pow() from math.h
  */
 int pow_2(int base, int exp);
 
