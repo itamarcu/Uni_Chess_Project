@@ -8,4 +8,4 @@ Flags:
 
 Debug-flag:
 
-    -d --debug                     :  debug mode, adds a few extra prints and a console command for quick movements
+    -d --debug                     :  debug mode, adds a few extra prints
