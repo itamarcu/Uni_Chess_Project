@@ -72,19 +72,19 @@
 void GUI_main_loop(Game *game);
 
 
-void build_main_menu(Game *game, windows_t *windows);
+int build_main_menu(Game *game, windows_t *windows);
 
 
-void build_game_mode_window(Game *game, windows_t *windows);
+int build_game_mode_window(Game *game, windows_t *windows);
 
 
-void build_one_player_options_window(Game *game, windows_t *windows);
+int build_one_player_options_window(Game *game, windows_t *windows);
 
 
-void build_pick_slot_window(Game *game, windows_t *windows);
+int build_pick_slot_window(Game *game, windows_t *windows);
 
 
-void build_game_window(Game *game, windows_t *windows);
+int build_game_window(Game *game, windows_t *windows);
 
 
 

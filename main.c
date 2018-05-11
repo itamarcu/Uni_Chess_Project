@@ -8,7 +8,11 @@ int main(int argc, char *argv[]) {
     DEBUG_MODE = false;
     init_scoring_function();
 
-    Game *game = malloc(sizeof(*game));
+    Game *game = malloc(sizeof(Game));
+    if (game == NULL) {
+        println_error("ERROR: problem allocation memory for game_t");
+        return -1;
+    }
     if (argc <= 1) { //console mode is default
         game->program_mode = PROGRAM_MODE_CONSOLE;
     } else if (strcmp(argv[1], "-c") == 0) //console mode
@@ -23,7 +27,6 @@ int main(int argc, char *argv[]) {
         if (strcmp(argv[2], "-d") == 0 || strcmp(argv[2], "--debug") == 0) {
             DEBUG_MODE = true;
         }
-
     reset_default_settings(game);
     game->board = NULL;
     game->history = NULL;

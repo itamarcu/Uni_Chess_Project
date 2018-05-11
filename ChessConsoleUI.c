@@ -95,7 +95,10 @@ void CUI_settings_case(Game *game) {
                 break;
             case CMD_START:
                 println_output("Starting game...");
-                start_game(game);
+                if (start_game(game) < 0) {
+                    println_error_weak("ERROR: problem occurred when starting the game");
+                    break;
+                }
                 if (game->user_color != WHITE && game->game_mode == GAME_MODE_SINGLEPLAYER) // special case
                     print_board(game->board);
                 break;

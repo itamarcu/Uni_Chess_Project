@@ -2,16 +2,23 @@
 #include "Undo.h"
 
 
-void start_game(Game *game) {
+int start_game(Game *game) {
     game->state = GAME_STATE_GAME;
     game->current_player = WHITE;
     game->winner = GAME_WINNER_NONE;
     free_board(game->board);
     game->board = make_starting_board();
+    if (game->board == NULL)
+        return -1;
     free_history(game->history);
     game->history = malloc(sizeof(History));
+    if (game->history == NULL) {
+        println_error("ERROR: could not allocate memory for game->history");
+        return -1;
+    }
     game->history->count = 0;
     push_move_to_history(game, 1, 2, 3, 4); // arbitrary values - not important
+    return 0;
 }
 
 bool check_if_king_is_threatened(Board *board, bool checking_for_white) {

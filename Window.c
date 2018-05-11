@@ -1,6 +1,8 @@
 #include "Window.h"
 
 void destroy_window(window_t *src) {
+    if (src == NULL)
+        return;
     int i;
     for (i = 0; i < src->num_of_widgets; i++) {
         destroy_widget(src->widgets[i]);
@@ -99,22 +101,18 @@ int add_chess_BG_and_title(window_t *src, char *title_path) {
     SDL_Surface *background_surface = SDL_LoadBMP(DEFAULT_BG_PATH);
     if (background_surface == NULL) {
         printf("ERROR: unable to load image: %s\n", SDL_GetError());
-        destroy_window(src);
         return -1;
     }
     SDL_Texture *background_texture = SDL_CreateTextureFromSurface(rend, background_surface);
     if (background_texture == NULL) {
         printf("ERROR: unable to create texture: %s\n", SDL_GetError());
         SDL_FreeSurface(background_surface);
-        destroy_window(src);
         return -1;
     }
     SDL_FreeSurface(background_surface);
     SDL_Texture *title_texture;
     if ((title_texture = create_texture_from_path(title_path, rend)) == NULL) {
-        printf("ERROR: unable to create texture: %s\n", SDL_GetError());
         SDL_DestroyTexture(background_texture);
-        destroy_window(src);
         return -1;
     }
 

@@ -113,7 +113,10 @@ bool load_game_from_path(Game *game, char *path) {
         return false;
     }
 
-    start_game(game);
+    if (start_game(game) < 0) {
+        println_error_weak("ERROR: problem occurred when trying to start a new game, try again");
+        return false;
+    }
 
     char color[MAX_FILE_ROW_SIZE] = {0};
     if (fgets(color, MAX_FILE_ROW_SIZE, f) == NULL) {
@@ -257,6 +260,7 @@ bool load_game_from_path(Game *game, char *path) {
     HANDLE_ERROR:
     fclose(f);
     memcpy((void *) game, (void *) game_before_load, sizeof(struct game_t));
+    free(game_before_load);
     return false;
 
 }
