@@ -4,6 +4,7 @@ When we ran tests in the nova server through MobaXTerm, we encountered one bug w
 Since we didn't manage to fix this in time, we added a workaround - you can run the program with the "-m" mode and it will avoid using message boxes.
 The total number of slots can be redefined inside ChessGui.h, in the "define" section.
 
+We did not do the bonus (concurrency and threads), but we did highly optimize the minimax algorithm, so it shuold run even Expert difficulty mode very fast (~2 seconds worst case).
 
 Usage:
 
