@@ -1,0 +1,137 @@
+ Chess
+-------
+Specify game settings or type 'start' to begin a game with the current settings:
+Difficulty level is set to hard
+Starting game...
+8| R N B Q K B N R |
+7| M M M M M M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ _ _ _ _ |
+4| _ _ _ _ _ _ _ _ |
+3| _ _ _ _ _ _ _ _ |
+2| m m m m m m m m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+Computer: move pawn at <7,A> to <5,A>
+8| R N B Q K B N R |
+7| _ M M M M M M M |
+6| _ _ _ _ _ _ _ _ |
+5| M _ _ _ _ _ _ _ |
+4| _ _ _ _ m _ _ _ |
+3| _ _ _ _ _ _ _ _ |
+2| m m m m _ m m m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+Computer: move pawn at <5,A> to <4,A>
+8| R N B Q K B N R |
+7| _ M M M M M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ _ _ _ q |
+4| M _ _ _ m _ _ _ |
+3| _ _ _ _ _ _ _ _ |
+2| m m m m _ m m m |
+1| r n b _ k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+Computer: move rook at <8,A> to <7,A>
+8| _ N B Q K B N R |
+7| R M M M M M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ b _ _ _ _ _ q |
+4| M _ _ _ m _ _ _ |
+3| _ _ _ _ _ _ _ _ |
+2| m m m m _ m m m |
+1| r n b _ k _ n r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+Computer: move rook at <7,A> to <8,A>
+8| R N B Q K B N R |
+7| _ M M M M M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ b _ _ _ _ _ q |
+4| M _ _ _ m _ _ _ |
+3| _ _ _ _ _ _ m _ |
+2| m m m m _ m _ m |
+1| r n b _ k _ n r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+Computer: move rook at <8,A> to <7,A>
+8| _ N B Q K B N R |
+7| R M M M M M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ b _ _ _ _ _ q |
+4| M _ _ _ m _ m _ |
+3| _ _ _ _ _ _ _ _ |
+2| m m m m _ m _ m |
+1| r n b _ k _ n r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+Computer: move rook at <7,A> to <8,A>
+8| R N B Q K B N R |
+7| _ M M M M M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ b _ _ _ _ _ q |
+4| M _ _ _ m _ m _ |
+3| _ _ _ _ _ n _ _ |
+2| m m m m _ m _ m |
+1| r n b _ k _ _ r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+Computer: move rook at <8,A> to <7,A>
+8| _ N B Q K B N R |
+7| R M M M M M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ b _ _ _ _ _ q |
+4| M _ _ _ m _ m _ |
+3| _ _ _ m _ n _ _ |
+2| m m m _ _ m _ m |
+1| r n b _ k _ _ r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+Computer: move rook at <7,A> to <8,A>
+8| R N B Q K B N R |
+7| _ M M M M M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ b _ _ _ _ _ q |
+4| M _ _ _ m _ m _ |
+3| _ _ _ m _ n _ _ |
+2| m m m _ k m _ m |
+1| r n b _ _ _ _ r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+Illegal move
+Enter your move (white player):
+Illegal move
+Enter your move (white player):
+The specified position does not contain your piece
+Enter your move (white player):
+Computer: move pawn at <7,G> to <6,G>
+8| R N B Q K B N R |
+7| _ M M M M M _ M |
+6| _ _ _ _ _ _ M _ |
+5| _ b _ _ n _ _ q |
+4| M _ _ _ m _ m _ |
+3| _ _ _ m _ _ _ _ |
+2| m m m _ k m _ m |
+1| r n b _ _ _ _ r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+The specified position does not contain your piece
+Enter your move (white player):
+The specified position does not contain your piece
+Enter your move (white player):
+The specified position does not contain your piece
+Enter your move (white player):
+Exiting...

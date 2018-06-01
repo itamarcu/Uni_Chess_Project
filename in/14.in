@@ -1,0 +1,7 @@
+game_mode 2
+start
+move <2,A> to <4,A>
+move <7,G> to <6,G>
+move <2,B> to <3,B>
+save in/14.xml
+quit

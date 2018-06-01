@@ -1,0 +1,8 @@
+game_mode 2
+start
+move <2,D> to <4,D>
+move <8,G> to <6,F>
+move <2,B> to <3,B>
+move <6,F> to <4,E>
+save in/11.xml
+quit

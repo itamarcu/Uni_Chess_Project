@@ -1,0 +1,5 @@
+load in/11.xml
+start
+move <2,H> to <3,H>
+move <4,E> to <2,F>
+quit

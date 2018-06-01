@@ -1,0 +1,6 @@
+load in/16.xml
+start
+undo
+undo
+move <1,G> to <3,F>
+quit

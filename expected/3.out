@@ -1,0 +1,26 @@
+ Chess
+-------
+Specify game settings or type 'start' to begin a game with the current settings:
+Wrong game mode
+ERROR: invalid command
+Game mode is set to 2-player
+ERROR: invalid command
+Game mode is set to 1-player
+ERROR: invalid command
+Wrong difficulty level. The value should be between 1 to 5
+ERROR: invalid command
+Difficulty level is set to amateur
+ERROR: invalid command
+Difficulty level is set to easy
+ERROR: invalid command
+Difficulty level is set to moderate
+ERROR: invalid command
+Difficulty level is set to hard
+ERROR: invalid command
+User color is set to black
+ERROR: invalid command
+User color is set to white
+ERROR: invalid command
+Game mode is set to 2-player
+ERROR: invalid command
+Exiting...

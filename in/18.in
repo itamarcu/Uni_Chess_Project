@@ -1,0 +1,7 @@
+game_mode 2
+start
+move <2,E> to <4,E>
+move <7,E> to <5,E>
+move <2,F> to <4,F>
+undo
+quit

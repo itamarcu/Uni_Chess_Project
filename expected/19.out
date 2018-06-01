@@ -1,0 +1,178 @@
+ Chess
+-------
+Specify game settings or type 'start' to begin a game with the current settings:
+Game mode is set to 2-player
+Starting game...
+8| R N B Q K B N R |
+7| M M M M M M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ _ _ _ _ |
+4| _ _ _ _ _ _ _ _ |
+3| _ _ _ _ _ _ _ _ |
+2| m m m m m m m m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+8| R N B Q K B N R |
+7| M M M M M M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ _ _ _ _ |
+4| _ _ _ _ m _ _ _ |
+3| _ _ _ _ _ _ _ _ |
+2| m m m m _ m m m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (black player):
+8| R N B Q K B N R |
+7| M M M M _ M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ M _ _ _ |
+4| _ _ _ _ m _ _ _ |
+3| _ _ _ _ _ _ _ _ |
+2| m m m m _ m m m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+8| R N B Q K B N R |
+7| M M M M _ M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ M _ _ _ |
+4| _ _ _ _ m m _ _ |
+3| _ _ _ _ _ _ _ _ |
+2| m m m m _ _ m m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (black player):
+8| R N B Q K B N R |
+7| M M M M _ M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ _ _ _ _ |
+4| _ _ _ _ m M _ _ |
+3| _ _ _ _ _ _ _ _ |
+2| m m m m _ _ m m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+8| R N B Q K B N R |
+7| M M M M _ M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ _ _ _ _ |
+4| _ _ _ _ m M _ _ |
+3| _ m _ _ _ _ _ _ |
+2| m _ m m _ _ m m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (black player):
+Check: white king is threatened
+8| R N B _ K B N R |
+7| M M M M _ M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ _ _ _ _ |
+4| _ _ _ _ m M _ Q |
+3| _ m _ _ _ _ _ _ |
+2| m _ m m _ _ m m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+8| R N B _ K B N R |
+7| M M M M _ M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ _ _ _ _ |
+4| _ _ _ _ m M _ Q |
+3| _ m _ _ _ _ m _ |
+2| m _ m m _ _ _ m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (black player):
+8| R N B _ K B N R |
+7| M M M M _ M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ _ _ _ _ |
+4| _ _ _ _ m _ _ Q |
+3| _ m _ _ _ _ M _ |
+2| m _ m m _ _ _ m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+8| R N B _ K B N R |
+7| M M M M _ M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ _ _ _ _ |
+4| _ _ _ _ m _ _ Q |
+3| _ m _ _ _ _ M m |
+2| m _ m m _ _ _ _ |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (black player):
+Undo move for white player: <3,H> -> <2,H>
+Undo move for black player: <3,G> -> <4,F>
+8| R N B _ K B N R |
+7| M M M M _ M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ _ _ _ _ |
+4| _ _ _ _ m M _ Q |
+3| _ m _ _ _ _ m _ |
+2| m _ m m _ _ _ m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (black player):
+8| R N B _ _ B N R |
+7| M M M M K M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ _ _ _ _ |
+4| _ _ _ _ m M _ Q |
+3| _ m _ _ _ _ m _ |
+2| m _ m m _ _ _ m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (white player):
+8| R N B _ _ B N R |
+7| M M M M K M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ _ _ _ _ |
+4| _ m _ _ m M _ Q |
+3| _ _ _ _ _ _ m _ |
+2| m _ m m _ _ _ m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (black player):
+Undo move for white player: <4,B> -> <3,B>
+Undo move for black player: <7,E> -> <8,E>
+8| R N B _ K B N R |
+7| M M M M _ M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ _ _ _ _ |
+4| _ _ _ _ m M _ Q |
+3| _ m _ _ _ _ m _ |
+2| m _ m m _ _ _ m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (black player):
+Undo move for white player: <3,G> -> <2,G>
+Undo move for black player: <4,H> -> <8,D>
+8| R N B Q K B N R |
+7| M M M M _ M M M |
+6| _ _ _ _ _ _ _ _ |
+5| _ _ _ _ _ _ _ _ |
+4| _ _ _ _ m M _ _ |
+3| _ m _ _ _ _ _ _ |
+2| m _ m m _ _ m m |
+1| r n b q k b n r |
+  -----------------
+   A B C D E F G H
+Enter your move (black player):
+Exiting...

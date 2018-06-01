@@ -1,0 +1,3 @@
+load in/11.xml
+print_settings
+quit

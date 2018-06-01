@@ -1,0 +1,14 @@
+game_mode 2
+start
+move <2,D> to <4,D>
+move <8,G> to <6,F>
+move <1,B> to <2,D>
+move <7,E> to <5,E>
+move <4,D> to <5,E>
+move <6,F> to <4,G>
+move <2,H> to <3,H>
+move <4,G> to <3,E>
+move <2,C> to <4,C>
+move <3,E> to <1,D>
+save in/16.xml
+quit

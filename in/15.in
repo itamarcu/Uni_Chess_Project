@@ -1,0 +1,4 @@
+load in/14.xml
+start
+move <8,G> to <6,H>
+quit
