@@ -114,6 +114,7 @@ bool load_game_from_path(Game *game, char *path) {
         return false;
     }
 
+    reset_game_board(game);
     if (start_game(game) < 0) {
         println_error_weak("ERROR: problem occurred when trying to start a new game, try again");
         free(game_before_load);
@@ -127,7 +128,6 @@ bool load_game_from_path(Game *game, char *path) {
     if (strcmp(color, "white\n") == 0)
         game->current_player = WHITE;
     else {
-
         if (strcmp(color, "black\n") == 0)
             game->current_player = BLACK;
         else {
@@ -258,6 +258,7 @@ bool load_game_from_path(Game *game, char *path) {
 
     fclose(f);
     free(game_before_load);
+    game->state = GAME_STATE_SETTINGS;
     return true;
 
     HANDLE_ERROR:

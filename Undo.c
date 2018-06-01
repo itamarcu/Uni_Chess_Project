@@ -17,7 +17,7 @@ void undo_one_move(Game *game) {
         char r2 = (char) ((m >> 8) + '1');
         char c2 = (char) ((m >> 0) + 'A');
         char *player = color_string(game->current_player);
-        println_output("Undo move for %s player: <%c,%c> -> <%c,%c>", player, r1, c1, r2, c2); // (CORRECT ORDER!)
+        println_output("Undo move for %s player: <%c,%c> -> <%c,%c>", player, r2, c2, r1, c1); // NEW -> OLD
     }
 
     free_board(game->history->prev_boards[0]);

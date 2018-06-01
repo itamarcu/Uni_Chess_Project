@@ -22,6 +22,7 @@
 
 bool DEBUG_MODE;
 bool NO_MESSAGE_BOX_MODE;
+bool SORT_POSSIBLE_MOVES;
 
 typedef enum {
     SUCCESS,

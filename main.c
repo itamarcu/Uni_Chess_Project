@@ -7,6 +7,7 @@
 int main(int argc, char *argv[]) {
     DEBUG_MODE = false;
     NO_MESSAGE_BOX_MODE = false;
+    SORT_POSSIBLE_MOVES = true;
     init_scoring_function();
 
     Game *game = malloc(sizeof(Game));
@@ -36,6 +37,8 @@ int main(int argc, char *argv[]) {
     reset_default_settings(game);
     game->board = NULL;
     game->history = NULL;
+
+    reset_game_board(game);
 
     if (game->program_mode == PROGRAM_MODE_CONSOLE) {
         CUI_main_loop(game);

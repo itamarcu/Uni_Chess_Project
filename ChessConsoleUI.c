@@ -68,7 +68,11 @@ void CUI_settings_case(Game *game) {
                     println_error_weak("Error: invalid command");
                     break;
                 }
-                game->user_color = command->args[0];
+                if (command->args[0] < 0 || command->args[0] > 1) {
+                    println_error_weak("Wrong user color. The value should be 0 or 1");
+                    break;
+                }
+                game->user_color = command->args[0] + 1;
                 println_output("User color is set to %s", color_string(game->user_color));
                 break;
             case CMD_LOAD:
@@ -218,6 +222,7 @@ void CUI_game_case(Game *game) {
                         break;
                     case CMD_RESET:
                         game->state = GAME_STATE_SETTINGS;
+                        reset_game_board(game);
                         println_output("Restarting...");
                         println_output(
                                 "Specify game settings or type 'start' to begin a game with the current settings:");
@@ -256,7 +261,7 @@ void CUI_game_case(Game *game) {
         }
 
         ComputerMove move = computer_move(game);
-        println_output("Computer: move %s at <%c,%c> to <%c,%c>", name_of_piece(game->board->grid[move.r1][move.r2]),
+        println_output("Computer: move %s at <%c,%c> to <%c,%c>", name_of_piece(game->board->grid[move.r2][move.c2]),
                        move.r1 + '1', move.c1 + 'A',
                        move.r2 + '1', move.c2 + 'A');
         move_was_made(game, move.r1, move.c1, move.r2, move.c2);
@@ -265,7 +270,7 @@ void CUI_game_case(Game *game) {
 
 
 void CUI_main_loop(Game *game) {
-    println_output("Chess");
+    println_output(" Chess"); //extra space is part of requirements...
     println_output("-------");
     println_output("Specify game settings or type 'start' to begin a game with the current settings:");
     while (game->state != GAME_STATE_QUIT) {

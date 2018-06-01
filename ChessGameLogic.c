@@ -1,15 +1,17 @@
 #include "ChessGameLogic.h"
 #include "Undo.h"
 
-
-int start_game(Game *game) {
-    game->state = GAME_STATE_GAME;
-    game->current_player = WHITE;
-    game->winner = GAME_WINNER_NONE;
+void reset_game_board(Game *game) {
     free_board(game->board);
     game->board = make_starting_board();
     if (game->board == NULL)
-        return -1;
+        println_error("ERROR: could not allocate memory for game->board");
+    game->current_player = WHITE;
+}
+
+int start_game(Game *game) {
+    game->state = GAME_STATE_GAME;
+    game->winner = GAME_WINNER_NONE;
     free_history(game->history);
     game->history = malloc(sizeof(History));
     if (game->history == NULL) {
@@ -41,7 +43,7 @@ bool check_if_king_is_threatened(Board *board, bool checking_for_white) {
     for (int row = 0; row < 8; row++)
         for (int col = 0; col < 8; col++) {
             if (!is_empty_space(board->grid[row][col]) &&
-                is_white_piece(board->grid[row][col]) != checking_for_white) {
+                (is_white_piece(board->grid[row][col]) != checking_for_white)) {
                 if (is_partially_legal_move(board->grid, row, col, rk, ck)) {
                     return true;
                 }
@@ -66,10 +68,9 @@ void move_was_made(Game *game, int r1, int c1, int r2, int c2) {
             game->winner = GAME_WINNER_WHITE;
         else
             game->winner = GAME_WINNER_DRAW;
-    }
-
-    if (game->program_mode == PROGRAM_MODE_CONSOLE && check_if_king_is_threatened(game->board, !game->current_player))
-        println_output("Check: %s king is threatened", color_string(!game->current_player));
+    } else if (game->program_mode == PROGRAM_MODE_CONSOLE &&
+               check_if_king_is_threatened(game->board, game->current_player != WHITE))
+        println_output("Check: %s king is threatened", color_string(game->current_player != WHITE));
 
     change_current_player(game);
 }

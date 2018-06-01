@@ -299,6 +299,7 @@ int build_main_menu(Game *game, windows_t *windows) {
 }
 
 void new_game_button_action(widget_t *widget) {
+    reset_game_board(widget->game);
     if (start_game(widget->game) < 0) {
         println_error_weak("ERROR: problem occurred when trying to start a new game, try again");
         return;
@@ -629,6 +630,7 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
             if (load_game_from_path(src->game, full_path) == false) {
                 goto HANDLE_ERROR;
             } else {
+                src->game->state = GAME_STATE_GAME;
                 free_history(src->game->history);
                 src->game->history = malloc(sizeof(History));
                 src->game->history->count = 0;
@@ -646,11 +648,10 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
                         src->game->winner = GAME_WINNER_WHITE;
                     else
                         src->game->winner = GAME_WINNER_DRAW;
-                }
-
-                maybe_make_first_computer_turn(src->game,
-                                               (game_gui_t *) src->window->windows->game_window->widgets[0]->data,
-                                               src->window->windows->game_window);
+                } else
+                    maybe_make_first_computer_turn(src->game,
+                                                   (game_gui_t *) src->window->windows->game_window->widgets[0]->data,
+                                                   src->window->windows->game_window);
                 reset_game_gui((game_gui_t *) src->window->windows->game_window->widgets[0]->data, src->game);
                 src->game->is_saved = true;
                 switch_to_next_window_action(src);
@@ -677,6 +678,7 @@ void save_load_game_slots_action(widget_t *src, int clicked_index) {
 }
 
 int build_game_window(Game *game, windows_t *windows) {
+    reset_game_board(game);
     if (start_game(game) < 0) {
         println_error("ERROR: could not start the game properly");
         return -1;
@@ -801,6 +803,7 @@ void load_button_game_action(widget_t *widget) {
 }
 
 void restart_button_action(widget_t *widget) {
+    reset_game_board(widget->game);
     if (start_game(widget->game) < 0) {
         println_error_weak("ERROR: problem occurred when trying to start a new game, try again");
         return;

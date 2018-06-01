@@ -30,6 +30,8 @@ bool check_if_player_can_move(Board *board, bool checking_for_white);
  */
 void change_current_player(Game *game);
 
+void reset_game_board(Game *game);
+
 int start_game(Game *game);
 
 GAME_ACTION_RESULT console_cmd_move(Game *game, int r1, int c1, int r2, int c2);

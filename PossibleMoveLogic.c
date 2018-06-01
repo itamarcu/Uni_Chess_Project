@@ -237,6 +237,19 @@ void add_move_to_possibilities(Board *board, PossibleMove *moves, int index, int
         update_move_by_potential_threats(board, moves + index, r1, c1);
 }
 
+int move_ordering_comparator(const void *p1_, const void *p2_) {
+    const PossibleMove *p1 = p1_, *p2 = p2_;
+    if (!p1->is_legal)
+        return 1;
+    if (!p2->is_legal)
+        return -1;
+    if (p1->col != p2->col)
+        return p1->col - p2->col;
+    if (p1->row != p2->row)
+        return p1->row - p2->row;
+    return 0;
+}
+
 GAME_ACTION_RESULT
 get_possible_moves(Board *board, int row, int col, PossibleMove possible_moves[MOVES_ARRAY_SIZE]) {
     if (row < 0 || row >= 8 || col < 0 || col >= 8) {
@@ -395,6 +408,11 @@ get_possible_moves(Board *board, int row, int col, PossibleMove possible_moves[M
         default:
             println_error("BUG 123978134 with piece %c (%d)", piece, piece);
             break;
+    }
+
+    if (SORT_POSSIBLE_MOVES) {
+        qsort(possible_moves, (size_t) next_move_index, sizeof possible_moves[0],
+              move_ordering_comparator);
     }
 
     return SUCCESS;
