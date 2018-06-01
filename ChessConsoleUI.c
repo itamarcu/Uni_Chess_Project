@@ -119,11 +119,11 @@ void CUI_game_case(Game *game) {
         print_board(game->board);
 //        if (DEBUG_MODE)
 //            println_debug("[BOARD SCORE: %d]", calculate_simple_board_score(game->board));
-        println_output("Enter your move (%s player):", color_string(game->current_player));
 
         bool turn_was_made = false;
 
         while (!turn_was_made) {
+            println_output("Enter your move (%s player):", color_string(game->current_player));
             Command *command = get_user_input_as_command();
             if (command == NULL) {
                 println_error("Real error - malloc failed for command.");
@@ -297,6 +297,6 @@ void CUI_main_loop(Game *game) {
     }
 
 
-    // The project instructions were unclear about printing at endgame - I'm doing it anyways
-    print_board(game->board);
+    // Board should not be printed after the game ends, due to project requirements >_<
+//    print_board(game->board);
 }

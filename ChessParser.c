@@ -88,16 +88,16 @@ Command *cmd_get_moves(Command *command) {
     command->game_command = CMD_GET_MOVES;
 
     char *arg0 = strtok(NULL, " \r\t\n");
-    if (arg0 == NULL || strlen(arg0) != 3 || arg0[1] != ',') {
+    if (arg0 == NULL || strlen(arg0) != 5 || arg0[2] != ',') {
         command->valid_command = false;
         return command;
     }
 
-    command->args[0] = arg0[0] - '1';
-    command->args[1] = arg0[2] - 'A';
+    command->args[0] = arg0[1] - '1';
+    command->args[1] = arg0[3] - 'A';
     if (DEBUG_MODE) //While debugging, lowercase is allowed :)
     {
-        if (arg0[2] >= 'a' && arg0[2] < 'z')
+        if (arg0[3] >= 'a' && arg0[3] < 'z')
             command->args[1] += 'A' - 'a';
     }
 

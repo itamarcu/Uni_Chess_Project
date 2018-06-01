@@ -68,8 +68,10 @@ void move_was_made(Game *game, int r1, int c1, int r2, int c2) {
             game->winner = GAME_WINNER_DRAW;
     }
 
-    change_current_player(game);
+    if (game->program_mode == PROGRAM_MODE_CONSOLE && check_if_king_is_threatened(game->board, !game->current_player))
+        println_output("Check: %s king is threatened", color_string(!game->current_player));
 
+    change_current_player(game);
 }
 
 /**
